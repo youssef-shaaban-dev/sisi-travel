@@ -32,7 +32,7 @@ export default function FloatingWhatsApp() {
     >
       <MessageCircle className="w-7 h-7 fill-current animate-pulse" />
       <span className="hidden sm:inline font-black text-base tracking-wide">
-        استفسر عبر الواتساب مباشرة
+        استفسر عبر الواتساب
       </span>
     </a>
   );

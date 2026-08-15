@@ -1,8 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Building2, Plane, ArrowLeft, MessageCircle } from 'lucide-react';
-import { TravelProgram, getWhatsAppLink } from '@/data/programsData';
+import { Calendar, Building2, Plane, ArrowLeft } from 'lucide-react';
+import { TravelProgram } from '@/data/programsData';
 import Badge from '@/components/ui/Badge';
 
 interface ProgramCardProps {
@@ -12,15 +12,15 @@ interface ProgramCardProps {
 export default function ProgramCard({ program }: ProgramCardProps) {
   return (
     <article className="bg-white rounded-3xl overflow-hidden border-2 border-brand-sand brand-card-shadow brand-card-hover flex flex-col h-full group">
-      {/* Card Image */}
-      <div className="relative h-64 w-full overflow-hidden bg-brand-burgundy-dark">
+      {/* Clickable Card Image */}
+      <Link href={`/programs/${program.slug}`} className="relative h-64 w-full overflow-hidden bg-brand-burgundy-dark block cursor-pointer">
         <Image
           src={program.featuredImage}
           alt={program.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
 
         {/* Category Badge Top Right */}
         <div className="absolute top-4 right-4 z-10">
@@ -34,14 +34,16 @@ export default function ProgramCard({ program }: ProgramCardProps) {
           <Calendar className="w-4 h-4 text-brand-gold" />
           <span>{program.durationDays} يوماً ({program.durationNights} ليلة)</span>
         </div>
-      </div>
+      </Link>
 
       {/* Card Content */}
       <div className="p-7 flex-1 flex flex-col justify-between space-y-5">
         <div className="space-y-4">
-          <h3 className="text-2xl font-black text-brand-burgundy-dark group-hover:text-brand-burgundy transition-colors leading-snug">
-            {program.title}
-          </h3>
+          <Link href={`/programs/${program.slug}`} className="block">
+            <h3 className="text-2xl font-black text-brand-burgundy-dark group-hover:text-brand-burgundy transition-colors leading-snug">
+              {program.title}
+            </h3>
+          </Link>
 
           <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed font-medium">
             {program.subtitle}
@@ -74,20 +76,9 @@ export default function ProgramCard({ program }: ProgramCardProps) {
             href={`/programs/${program.slug}`}
             className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-2xl bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-black transition-all shadow-md group-hover:shadow-lg"
           >
-            <span>عرض التفاصيل</span>
+            <span>تفاصيل البرنامج</span>
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           </Link>
-
-          {/* Quick WhatsApp Inquiry */}
-          <a
-            href={getWhatsAppLink(program.title)}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="استفسر عبر واتساب"
-            className="p-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500 text-emerald-600 hover:text-white transition-all border border-emerald-500/30 flex-shrink-0"
-          >
-            <MessageCircle className="w-5 h-5 fill-current" />
-          </a>
         </div>
       </div>
     </article>
