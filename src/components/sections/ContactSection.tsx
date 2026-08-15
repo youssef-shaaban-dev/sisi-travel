@@ -22,7 +22,7 @@ export default function ContactSection() {
               </div>
 
               <h3 className="text-2xl sm:text-4xl font-extrabold text-white">
-                تواصل مريح ومباشر عبر واتساب
+                تواصل عبر واتساب
               </h3>
 
               <p className="max-w-xl mx-auto text-sm sm:text-base text-gray-200 leading-relaxed">
@@ -37,7 +37,7 @@ export default function ContactSection() {
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-base shadow-xl hover:scale-105 transition-all"
                 >
                   <MessageCircle className="w-6 h-6 fill-current" />
-                  <span>محادثة واتساب متميزة مباشرة</span>
+                  <span>تواصل عبر واتساب مباشرة</span>
                 </a>
               </div>
             </div>
