@@ -293,14 +293,6 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                     <MessageCircle className="w-5 h-5 fill-current" />
                     <span>استفسر عن هذا البرنامج عبر واتساب</span>
                   </a>
-
-                  <a
-                    href={`tel:${COMPANY_DETAILS.phone1Raw}`}
-                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-bold transition-colors border border-brand-gold/40"
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span>اتصل بمسؤول الرحلة مباشر</span>
-                  </a>
                 </div>
 
                 <div className="pt-2 text-center text-[11px] text-gray-500 flex items-center justify-center gap-1.5">

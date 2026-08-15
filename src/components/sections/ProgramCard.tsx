@@ -1,5 +1,9 @@
+'use client';
+
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { Calendar, Building2, Plane, ArrowLeft } from 'lucide-react';
 import { TravelProgram } from '@/data/programsData';
 import Badge from '@/components/ui/Badge';
@@ -10,26 +14,35 @@ interface ProgramCardProps {
 
 export default function ProgramCard({ program }: ProgramCardProps) {
   return (
-    <article className="bg-white rounded-3xl overflow-hidden border-2 border-brand-sand brand-card-shadow brand-card-hover flex flex-col h-full group">
-      {/* Clickable Card Image */}
+    <motion.article
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-white rounded-3xl overflow-hidden border-2 border-brand-sand brand-card-shadow flex flex-col h-full group hover:border-brand-burgundy/40 hover:shadow-2xl transition-all duration-300"
+    >
+      {/* Clickable Card Image with Motion Zoom */}
       <Link href={`/programs/${program.slug}`} className="relative h-64 w-full overflow-hidden bg-brand-burgundy-dark block cursor-pointer">
-        <Image
-          src={program.featuredImage}
-          alt={program.title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+        <motion.div className="w-full h-full relative" whileHover={{ scale: 1.07 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
+          <Image
+            src={program.featuredImage}
+            alt={program.title}
+            fill
+            className="object-cover"
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
 
         {/* Category Badge Top Right */}
-        <div className="absolute top-4 right-4 z-10">
-          <Badge variant={program.category === 'vip' ? 'gold' : program.category === 'hajj' ? 'burgundy' : 'olive'} className="text-sm px-3.5 py-1.5 font-black">
+        <div className="absolute top-4 right-4 z-10 pointer-events-none">
+          <Badge variant={program.category === 'vip' ? 'gold' : program.category === 'hajj' ? 'burgundy' : 'olive'} className="text-sm px-3.5 py-1.5 font-black shadow-md">
             {program.badgeText}
           </Badge>
         </div>
 
         {/* Duration Badge Bottom Right */}
-        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white text-sm font-black border border-brand-gold/40">
+        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-white text-sm font-black border border-brand-gold/40 shadow-md">
           <Calendar className="w-4 h-4 text-brand-gold" />
           <span>{program.durationDays} يوماً ({program.durationNights} ليلة)</span>
         </div>
@@ -73,13 +86,13 @@ export default function ProgramCard({ program }: ProgramCardProps) {
           {/* Details Page Link */}
           <Link
             href={`/programs/${program.slug}`}
-            className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-2xl bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-black transition-all shadow-md group-hover:shadow-lg"
+            className="flex-1 inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-2xl bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-black transition-all shadow-md group-hover:shadow-xl"
           >
             <span>تفاصيل البرنامج</span>
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1.5 transition-transform" />
           </Link>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
