@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-burgundy: #531F23;
-  --color-brand-burgundy-dark: #281015;
-  --color-brand-burgundy-light: #6E2B30;
+  --color-brand-burgundy: #444C39;
+  --color-brand-burgundy-dark: #1E2319;
+  --color-brand-burgundy-light: #57614B;
   --color-brand-olive: #444C39;
   --color-brand-sage: #707C5D;
   --color-brand-sand: #E0D9C9;
@@ -15,9 +15,9 @@
 
 @layer base {
   :root {
-    --brand-burgundy: #531F23;
-    --brand-burgundy-dark: #281015;
-    --brand-burgundy-light: #6E2B30;
+    --brand-burgundy: #444C39;
+    --brand-burgundy-dark: #1E2319;
+    --brand-burgundy-light: #57614B;
     --brand-olive: #444C39;
     --brand-sage: #707C5D;
     --brand-sand: #E0D9C9;
@@ -43,7 +43,7 @@
 
 /* Custom Glass & Shadows */
 .brand-card-shadow {
-  box-shadow: 0 4px 20px -2px rgba(40, 16, 21, 0.06);
+  box-shadow: 0 4px 20px -2px rgba(30, 35, 25, 0.06);
 }
 
 .brand-card-hover {
@@ -52,5 +52,5 @@
 
 .brand-card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px -4px rgba(40, 16, 21, 0.12);
+  box-shadow: 0 12px 28px -4px rgba(30, 35, 25, 0.12);
 }

@@ -99,7 +99,7 @@ export default function HajjSection() {
           {hajjPrograms.map((program) => (
             <div
               key={program.id}
-              className="bg-[#3C151A] rounded-2xl p-6 border border-brand-gold/25 hover:border-brand-gold/60 transition-all shadow-lg flex flex-col justify-between"
+              className="bg-[#262E21] rounded-2xl p-6 border border-brand-gold/25 hover:border-brand-gold/60 transition-all shadow-lg flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
