@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Calendar, Building2, Plane, ArrowLeft } from 'lucide-react';
+import { Calendar, Building2, Plane, ArrowLeft, Tag } from 'lucide-react';
 import { TravelProgram } from '@/data/programsData';
 import Badge from '@/components/ui/Badge';
 
@@ -77,6 +77,12 @@ export default function ProgramCard({ program }: ProgramCardProps) {
               <span className="truncate">
                 {program.airline} ({program.flightType})
               </span>
+            </div>
+
+            {/* Price Badge Highlight */}
+            <div className="flex items-center gap-2.5 font-extrabold text-brand-burgundy pt-1">
+              <Tag className="w-4 h-4 text-brand-gold flex-shrink-0" />
+              <span className="text-base text-brand-burgundy-dark">{program.price}</span>
             </div>
           </div>
         </div>

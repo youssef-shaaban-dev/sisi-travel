@@ -25,6 +25,7 @@ export interface TravelProgram {
   durationNights: number;
   meccaNights: number;
   medinaNights: number;
+  price: string;
   priceNote: string;
   badgeText: string;
   isFeatured: boolean;
@@ -65,7 +66,8 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
     durationNights: 9,
     meccaNights: 5,
     medinaNights: 4,
-    priceNote: 'برنامج فاخر شاملاً الطيران والتأشيرة والإقامة الفاخرة',
+    price: 'تبدأ من 85,000 ج.م',
+    priceNote: 'شاملاً الطيران المباشر والتأشيرة والإقامة الفندقية الفاخرة',
     badgeText: 'الأكثر طلباً VIP',
     isFeatured: true,
     airline: 'مصر للطيران / الخطوط السعودية',
@@ -120,7 +122,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
       },
       {
         dayNumber: 5,
-        title: 'يوم للتعبد والتسوق بالأسوق القريبة',
+        title: 'يوم للتعبد والتسوق بالأسواق القريبة',
         description: 'فرصة للتعبد في الحرم المكي واقتناء الهدايا التذكارية من المراكز التجارية المجاورة.',
       },
       {
@@ -173,7 +175,8 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
     durationNights: 14,
     meccaNights: 9,
     medinaNights: 5,
-    priceNote: 'برنامج رمضاني شامل السحور والإفطار والخدمات الكاملة',
+    price: 'تبدأ من 95,000 ج.م',
+    priceNote: 'شاملاً الإفطار والسحور والخدمات الفندقية الكاملة',
     badgeText: 'برنامج رمضاني خاص',
     isFeatured: true,
     airline: 'مصر للطيران',
@@ -242,6 +245,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
     durationNights: 11,
     meccaNights: 6,
     medinaNights: 5,
+    price: 'تبدأ من 48,000 ج.م',
     priceNote: 'عرض خاص لرحلات شوال بأسعار مناسبة للعائلات',
     badgeText: 'أجواء هادئة',
     isFeatured: false,
@@ -296,6 +300,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
     durationNights: 13,
     meccaNights: 8,
     medinaNights: 5,
+    price: 'تبدأ من 42,000 ج.م',
     priceNote: 'أفضل قيمة مقابل سعر لرحلات العمرة المنتظمة',
     badgeText: 'اقتصادي متميز',
     isFeatured: true,
@@ -351,7 +356,8 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
     durationNights: 17,
     meccaNights: 10,
     medinaNights: 4,
-    priceNote: 'برنامج حج شامل كامل المناسك والخدمات الفاخرة',
+    price: 'تبدأ من 295,000 ج.م',
+    priceNote: 'برنامج حج شامل كامل المناسك والخدمات الفاخرة بالمشاعر',
     badgeText: 'برنامج الحج 2026',
     isFeatured: true,
     airline: 'مصر للطيران (رحلات الحج الخاصة)',
@@ -425,6 +431,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
     durationNights: 9,
     meccaNights: 6,
     medinaNights: 3,
+    price: 'تبدأ من 245,000 ج.م',
     priceNote: 'برنامج حج سريع وشامل كافة خدمات المشاعر المقربة',
     badgeText: 'حج إكسبريس',
     isFeatured: false,

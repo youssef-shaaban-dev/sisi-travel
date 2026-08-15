@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Award,
   FileText,
+  Tag,
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -80,6 +81,10 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               <Badge variant={program.category === 'vip' ? 'gold' : 'burgundy'}>
                 {program.badgeText}
               </Badge>
+              <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-emerald-600" />
+                <span>السعر: {program.price}</span>
+              </span>
               <span className="text-xs font-semibold text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full border border-brand-olive/20">
                 طيران مباشر ({program.airline})
               </span>
@@ -89,7 +94,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               {program.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-gray-600 max-w-3xl leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl leading-relaxed font-medium">
               {program.subtitle}
             </p>
           </div>
@@ -252,14 +257,11 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
             <div className="lg:col-span-4">
               <div className="sticky top-28 bg-white p-6 rounded-2xl border-2 border-brand-burgundy/20 shadow-xl space-y-6">
                 <div className="space-y-2 text-center pb-4 border-b border-gray-100">
-                  <Badge variant="gold" className="mx-auto">
+                  <div className="text-2xl font-black text-brand-burgundy-dark">
+                    {program.price}
+                  </div>
+                  <p className="text-xs font-bold text-brand-gold">
                     {program.priceNote}
-                  </Badge>
-                  <h3 className="text-xl font-bold text-brand-burgundy-dark pt-2">
-                    الاستفسار والحجز المباشر
-                  </h3>
-                  <p className="text-xs text-gray-500">
-                    يمكنكم التواصل فوراً للحصول على تفاصيل المواعيد المتوفرة والحجز.
                   </p>
                 </div>
 
@@ -285,13 +287,21 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                 {/* Primary Actions */}
                 <div className="space-y-3 pt-2">
                   <a
-                    href={getWhatsAppLink(program.title)}
+                    href={getWhatsAppLink(`${program.title} (بسعر ${program.price})`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-extrabold shadow-lg transition-all"
                   >
                     <MessageCircle className="w-5 h-5 fill-current" />
                     <span>استفسر عن هذا البرنامج عبر واتساب</span>
+                  </a>
+
+                  <a
+                    href={`tel:${COMPANY_DETAILS.phone1Raw}`}
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-bold transition-colors border border-brand-gold/40"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>اتصل بمسؤول الرحلة مباشر</span>
                   </a>
                 </div>
 
