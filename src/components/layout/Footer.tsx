@@ -24,19 +24,13 @@ export default function Footer() {
           {/* Column 1: Brand Info */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-12 h-12 flex-shrink-0">
+              <div className="relative w-16 h-16 sm:h-20 sm:w-20 shrink-0">
                 <Image
                   src="/logo/logo-main.svg"
                   alt={COMPANY_DETAILS.name}
                   fill
                   className="object-contain filter brightness-0 invert"
                 />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-xl text-white">{COMPANY_DETAILS.name}</h3>
-                <span className="text-xs text-brand-gold font-medium tracking-widest uppercase">
-                  EST . {COMPANY_DETAILS.establishedYear} — للسياحة والحج
-                </span>
               </div>
             </Link>
             <p className="text-sm text-gray-300 leading-relaxed">

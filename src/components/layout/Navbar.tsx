@@ -36,15 +36,15 @@ export default function Navbar() {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-brand-burgundy-dark/95 backdrop-blur-md text-white py-3 shadow-lg border-b border-brand-gold/20'
-          : 'bg-gradient-to-b from-brand-burgundy-dark/90 via-brand-burgundy-dark/60 to-transparent text-white py-5'
+          ? 'bg-brand-burgundy-dark/95 backdrop-blur-md text-white py-3.5 shadow-xl border-b border-brand-gold/30'
+          : 'bg-gradient-to-b from-brand-burgundy-dark/95 via-brand-burgundy-dark/70 to-transparent text-white py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo on the Right in RTL */}
-          <Link href="/" className="flex items-center gap-3 group focus:outline-none">
-            <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 transition-transform group-hover:scale-105">
+          <Link href="/" className="flex items-center gap-3.5 group focus:outline-none">
+            <div className="relative w-16 h-16 sm:w-24 sm:h-24 shrink-0 transition-transform group-hover:scale-105">
               <Image
                 src="/logo/logo-main.svg"
                 alt={COMPANY_DETAILS.name}
@@ -53,23 +53,15 @@ export default function Navbar() {
                 priority
               />
             </div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white font-sans">
-                {COMPANY_DETAILS.name}
-              </span>
-              <span className="text-[10px] text-brand-gold font-medium tracking-widest uppercase">
-                EST . {COMPANY_DETAILS.establishedYear} — للسياحة والحج
-              </span>
-            </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-9">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-sm font-semibold text-gray-200 hover:text-brand-gold transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all"
+                className="text-base font-bold text-gray-100 hover:text-brand-gold transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all"
               >
                 {link.label}
               </Link>
@@ -80,18 +72,18 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center gap-3">
             <a
               href={`tel:${COMPANY_DETAILS.phone1Raw}`}
-              className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
               title="اتصل بنا"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-5 h-5" />
             </a>
             <a
               href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-bold shadow-md hover:shadow-lg transition-all border border-brand-gold/40 group"
+              className="flex items-center gap-2.5 px-5 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-base font-extrabold shadow-lg hover:shadow-xl transition-all border border-emerald-400/40 group"
             >
-              <MessageCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <MessageCircle className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
               <span>تواصل معنا</span>
             </a>
           </div>
@@ -99,42 +91,42 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 focus:outline-none"
+            className="lg:hidden p-2.5 rounded-xl bg-white/10 text-white hover:bg-white/20 focus:outline-none"
             aria-label="القائمة الرئيسية"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-brand-burgundy-dark border-b border-brand-gold/30 px-4 pt-3 pb-6 space-y-3 animate-fadeIn">
+        <div className="lg:hidden bg-brand-burgundy-dark border-b-2 border-brand-gold/40 px-5 pt-4 pb-8 space-y-4 animate-fadeIn">
           <nav className="flex flex-col space-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:bg-white/10 hover:text-brand-gold transition-colors"
+                className="px-4 py-3 rounded-xl text-lg font-bold text-gray-100 hover:bg-white/10 hover:text-brand-gold transition-colors"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
-          <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+          <div className="pt-4 border-t border-white/10 flex flex-col gap-3">
             <a
               href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-base font-bold shadow"
+              className="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-lg font-extrabold shadow-lg"
             >
-              <MessageCircle className="w-5 h-5" />
+              <MessageCircle className="w-6 h-6 fill-current" />
               <span>استفسر عبر الواتساب مباشرة</span>
             </a>
             <a
               href={`tel:${COMPANY_DETAILS.phone1Raw}`}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/10 text-white text-base font-semibold"
+              className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl bg-white/10 text-white text-base font-bold"
             >
               <Phone className="w-5 h-5" />
               <span>اتصل على {COMPANY_DETAILS.phone1}</span>

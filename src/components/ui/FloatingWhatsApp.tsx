@@ -9,7 +9,7 @@ export default function FloatingWhatsApp() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 250) {
+      if (window.scrollY > 200) {
         setVisible(true);
       } else {
         setVisible(false);
@@ -28,11 +28,11 @@ export default function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="تواصل عبر الواتساب"
-      className="fixed bottom-6 left-6 z-50 flex items-center gap-3 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-2xl hover:bg-[#20bd5a] transition-all duration-300 transform hover:scale-105 group border-2 border-white"
+      className="fixed bottom-7 left-7 z-50 flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 group border-2 border-white ring-4 ring-emerald-500/20"
     >
-      <MessageCircle className="w-6 h-6 fill-current animate-pulse" />
-      <span className="hidden sm:inline font-bold text-sm tracking-wide">
-        استفسر عبر واتساب
+      <MessageCircle className="w-7 h-7 fill-current animate-pulse" />
+      <span className="hidden sm:inline font-black text-base tracking-wide">
+        استفسر عبر الواتساب مباشرة
       </span>
     </a>
   );
