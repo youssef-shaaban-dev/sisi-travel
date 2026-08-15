@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -55,22 +56,22 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
   const relatedPrograms = UMRAH_PROGRAMS.filter((p) => p.slug !== program.slug).slice(0, 3);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F9F7F3]">
+    <div className="min-h-screen flex flex-col bg-brand-sand-light">
       <Navbar />
 
       <main className="flex-1 pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-8 overflow-x-auto py-2">
-            <Link href="/" className="hover:text-[#531F23] flex items-center gap-1">
+            <Link href="/" className="hover:text-brand-burgundy flex items-center gap-1">
               الرئيسية
             </Link>
             <span>/</span>
-            <Link href="/#umrah" className="hover:text-[#531F23]">
+            <Link href="/#umrah" className="hover:text-brand-burgundy">
               رحلات العمرة والحج
             </Link>
             <span>/</span>
-            <span className="font-bold text-[#531F23] truncate max-w-xs">{program.title}</span>
+            <span className="font-bold text-brand-burgundy truncate max-w-xs">{program.title}</span>
           </nav>
 
           {/* Program Header */}
@@ -79,12 +80,12 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               <Badge variant={program.category === 'vip' ? 'gold' : 'burgundy'}>
                 {program.badgeText}
               </Badge>
-              <span className="text-xs font-semibold text-[#444C39] bg-[#444C39]/10 px-3 py-1 rounded-full border border-[#444C39]/20">
+              <span className="text-xs font-semibold text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full border border-brand-olive/20">
                 طيران مباشر ({program.airline})
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#281015] leading-tight">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-brand-burgundy-dark leading-tight">
               {program.title}
             </h1>
 
@@ -95,7 +96,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
 
           {/* Image Gallery Showcase */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-            <div className="md:col-span-2 relative h-[320px] sm:h-[420px] rounded-2xl overflow-hidden shadow-lg border border-[#E0D9C9] bg-[#281015]">
+            <div className="md:col-span-2 relative h-[320px] sm:h-[420px] rounded-2xl overflow-hidden shadow-lg border border-brand-sand bg-brand-burgundy-dark">
               <Image
                 src={program.featuredImage}
                 alt={program.title}
@@ -106,7 +107,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
               {program.galleryImages.slice(1, 3).map((img, idx) => (
-                <div key={idx} className="relative h-[155px] sm:h-[200px] rounded-2xl overflow-hidden shadow border border-[#E0D9C9] bg-[#281015]">
+                <div key={idx} className="relative h-[155px] sm:h-[200px] rounded-2xl overflow-hidden shadow border border-brand-sand bg-brand-burgundy-dark">
                   <Image src={img} alt={`تفاصيل ${program.title}`} fill className="object-cover" />
                 </div>
               ))}
@@ -118,8 +119,8 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
             {/* Left Column: Program Information Breakdown & Itinerary */}
             <div className="lg:col-span-8 space-y-10">
               {/* Program Overview Card */}
-              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E0D9C9] brand-card-shadow space-y-4">
-                <h2 className="text-xl font-bold text-[#281015] border-r-4 border-[#531F23] pr-3">
+              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-sand brand-card-shadow space-y-4">
+                <h2 className="text-xl font-bold text-brand-burgundy-dark border-r-4 border-brand-burgundy pr-3">
                   نبذة عن الرحلة
                 </h2>
                 <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -128,53 +129,53 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
 
                 {/* Duration & Flight Specs Bar */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-100 text-xs sm:text-sm">
-                  <div className="p-3.5 rounded-xl bg-[#F9F7F3] border border-[#E0D9C9] flex items-center gap-3">
-                    <Calendar className="w-5 h-5 text-[#531F23] flex-shrink-0" />
+                  <div className="p-3.5 rounded-xl bg-brand-sand-light border border-brand-sand flex items-center gap-3">
+                    <Calendar className="w-5 h-5 text-brand-burgundy flex-shrink-0" />
                     <div>
                       <div className="text-gray-500 text-[11px]">مدة الرحلة</div>
-                      <div className="font-bold text-[#281015]">{program.durationDays} يوماً ({program.durationNights} ليلة)</div>
+                      <div className="font-bold text-brand-burgundy-dark">{program.durationDays} يوماً ({program.durationNights} ليلة)</div>
                     </div>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-[#F9F7F3] border border-[#E0D9C9] flex items-center gap-3">
-                    <Plane className="w-5 h-5 text-[#444C39] flex-shrink-0" />
+                  <div className="p-3.5 rounded-xl bg-brand-sand-light border border-brand-sand flex items-center gap-3">
+                    <Plane className="w-5 h-5 text-brand-olive flex-shrink-0" />
                     <div>
                       <div className="text-gray-500 text-[11px]">شركة الطيران</div>
-                      <div className="font-bold text-[#281015]">{program.airline}</div>
+                      <div className="font-bold text-brand-burgundy-dark">{program.airline}</div>
                     </div>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-[#F9F7F3] border border-[#E0D9C9] flex items-center gap-3 col-span-2 sm:col-span-1">
-                    <ShieldCheck className="w-5 h-5 text-[#C5A059] flex-shrink-0" />
+                  <div className="p-3.5 rounded-xl bg-brand-sand-light border border-brand-sand flex items-center gap-3 col-span-2 sm:col-span-1">
+                    <ShieldCheck className="w-5 h-5 text-brand-gold flex-shrink-0" />
                     <div>
                       <div className="text-gray-500 text-[11px]">الضمان والأمان</div>
-                      <div className="font-bold text-[#281015]">مرخص رخصة 1982</div>
+                      <div className="font-bold text-brand-burgundy-dark">مرخص رخصة 1982</div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Accommodation Hotels */}
-              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E0D9C9] brand-card-shadow space-y-6">
-                <h2 className="text-xl font-bold text-[#281015] border-r-4 border-[#531F23] pr-3">
+              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-sand brand-card-shadow space-y-6">
+                <h2 className="text-xl font-bold text-brand-burgundy-dark border-r-4 border-brand-burgundy pr-3">
                   الإقامة الفندقية المعتمدة
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {program.hotels.map((hotel, idx) => (
-                    <div key={idx} className="p-5 rounded-xl bg-[#F9F7F3] border border-[#E0D9C9] space-y-2">
+                    <div key={idx} className="p-5 rounded-xl bg-brand-sand-light border border-brand-sand space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#531F23] bg-[#531F23]/10 px-2.5 py-0.5 rounded-full">
+                        <span className="text-xs font-bold text-brand-burgundy bg-brand-burgundy/10 px-2.5 py-0.5 rounded-full">
                           {hotel.city} ({hotel.city === 'مكة المكرمة' ? `${program.meccaNights} ليالٍ` : `${program.medinaNights} ليالٍ`})
                         </span>
-                        <div className="flex text-[#C5A059]">
+                        <div className="flex text-brand-gold">
                           {Array.from({ length: hotel.stars }).map((_, i) => (
                             <span key={i}>★</span>
                           ))}
                         </div>
                       </div>
-                      <h4 className="font-bold text-base text-[#281015]">{hotel.name}</h4>
+                      <h4 className="font-bold text-base text-brand-burgundy-dark">{hotel.name}</h4>
                       <p className="text-xs text-gray-600 flex items-center gap-1">
-                        <Building2 className="w-3.5 h-3.5 text-[#531F23]" />
+                        <Building2 className="w-3.5 h-3.5 text-brand-burgundy" />
                         <span>الموقع: {hotel.distance}</span>
                       </p>
                     </div>
@@ -185,14 +186,14 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               {/* Included & Excluded Services */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Included */}
-                <div className="bg-white p-6 rounded-2xl border border-[#E0D9C9] brand-card-shadow space-y-4">
-                  <h3 className="text-lg font-bold text-[#281015] flex items-center gap-2 border-r-4 border-[#25D366] pr-3">
+                <div className="bg-white p-6 rounded-2xl border border-brand-sand brand-card-shadow space-y-4">
+                  <h3 className="text-lg font-bold text-brand-burgundy-dark flex items-center gap-2 border-r-4 border-emerald-500 pr-3">
                     <span>الخدمات المشمولة في البرنامج</span>
                   </h3>
                   <ul className="space-y-3 text-xs sm:text-sm text-gray-700">
                     {program.includedServices.map((inc, i) => (
                       <li key={i} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-[#25D366] flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
                         <span>{inc}</span>
                       </li>
                     ))}
@@ -200,8 +201,8 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                 </div>
 
                 {/* Excluded */}
-                <div className="bg-white p-6 rounded-2xl border border-[#E0D9C9] brand-card-shadow space-y-4">
-                  <h3 className="text-lg font-bold text-[#281015] flex items-center gap-2 border-r-4 border-gray-400 pr-3">
+                <div className="bg-white p-6 rounded-2xl border border-brand-sand brand-card-shadow space-y-4">
+                  <h3 className="text-lg font-bold text-brand-burgundy-dark flex items-center gap-2 border-r-4 border-gray-400 pr-3">
                     <span>الخدمات غير المشمولة</span>
                   </h3>
                   <ul className="space-y-3 text-xs sm:text-sm text-gray-700">
@@ -216,17 +217,17 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               </div>
 
               {/* Itinerary */}
-              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#E0D9C9] brand-card-shadow space-y-6">
-                <h2 className="text-xl font-bold text-[#281015] border-r-4 border-[#531F23] pr-3">
+              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-sand brand-card-shadow space-y-6">
+                <h2 className="text-xl font-bold text-brand-burgundy-dark border-r-4 border-brand-burgundy pr-3">
                   جدول برنامج الرحلة اليومي
                 </h2>
-                <div className="space-y-6 relative before:content-[''] before:absolute before:top-3 before:bottom-3 before:right-[15px] before:w-0.5 before:bg-[#E0D9C9]">
+                <div className="space-y-6 relative before:content-[''] before:absolute before:top-3 before:bottom-3 before:right-[15px] before:w-0.5 before:bg-brand-sand">
                   {program.itinerary.map((day) => (
                     <div key={day.dayNumber} className="relative pr-9 space-y-1">
-                      <div className="absolute top-1 right-0 w-8 h-8 rounded-full bg-[#531F23] text-white text-xs font-bold flex items-center justify-center border-2 border-white shadow">
+                      <div className="absolute top-1 right-0 w-8 h-8 rounded-full bg-brand-burgundy text-white text-xs font-bold flex items-center justify-center border-2 border-white shadow">
                         {day.dayNumber}
                       </div>
-                      <h4 className="font-bold text-base text-[#281015]">{day.title}</h4>
+                      <h4 className="font-bold text-base text-brand-burgundy-dark">{day.title}</h4>
                       <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{day.description}</p>
                     </div>
                   ))}
@@ -234,9 +235,9 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               </div>
 
               {/* Important Notes */}
-              <div className="bg-[#F9F7F3] p-6 rounded-2xl border border-[#E0D9C9] space-y-3">
-                <h3 className="font-bold text-base text-[#281015] flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-[#531F23]" />
+              <div className="bg-brand-sand-light p-6 rounded-2xl border border-brand-sand space-y-3">
+                <h3 className="font-bold text-base text-brand-burgundy-dark flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-brand-burgundy" />
                   <span>تعليمات وملاحظات مهمة</span>
                 </h3>
                 <ul className="list-disc list-inside space-y-1.5 text-xs text-gray-600 leading-relaxed">
@@ -249,12 +250,12 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
 
             {/* Right Column: Sticky Booking & Inquiry Card */}
             <div className="lg:col-span-4">
-              <div className="sticky top-28 bg-white p-6 rounded-2xl border-2 border-[#531F23]/20 shadow-xl space-y-6">
+              <div className="sticky top-28 bg-white p-6 rounded-2xl border-2 border-brand-burgundy/20 shadow-xl space-y-6">
                 <div className="space-y-2 text-center pb-4 border-b border-gray-100">
                   <Badge variant="gold" className="mx-auto">
                     {program.priceNote}
                   </Badge>
-                  <h3 className="text-xl font-bold text-[#281015] pt-2">
+                  <h3 className="text-xl font-bold text-brand-burgundy-dark pt-2">
                     الاستفسار والحجز المباشر
                   </h3>
                   <p className="text-xs text-gray-500">
@@ -265,19 +266,19 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                 <div className="space-y-3 text-xs text-gray-700">
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-500">اسم البرنامج:</span>
-                    <span className="font-bold text-[#281015]">{program.categoryLabel}</span>
+                    <span className="font-bold text-brand-burgundy-dark">{program.categoryLabel}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-500">المدة الكلية:</span>
-                    <span className="font-bold text-[#281015]">{program.durationDays} يوماً</span>
+                    <span className="font-bold text-brand-burgundy-dark">{program.durationDays} يوماً</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-500">فندق مكة:</span>
-                    <span className="font-bold text-[#281015] truncate max-w-[160px]">{program.hotels[0]?.name.split('(')[0]}</span>
+                    <span className="font-bold text-brand-burgundy-dark truncate max-w-[160px]">{program.hotels[0]?.name.split('(')[0]}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-500">خطوط الطيران:</span>
-                    <span className="font-bold text-[#281015]">{program.airline}</span>
+                    <span className="font-bold text-brand-burgundy-dark">{program.airline}</span>
                   </div>
                 </div>
 
@@ -287,7 +288,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                     href={getWhatsAppLink(program.title)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-extrabold shadow-lg transition-all"
+                    className="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-extrabold shadow-lg transition-all"
                   >
                     <MessageCircle className="w-5 h-5 fill-current" />
                     <span>استفسر عن هذا البرنامج عبر واتساب</span>
@@ -295,7 +296,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
 
                   <a
                     href={`tel:${COMPANY_DETAILS.phone1Raw}`}
-                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#531F23] hover:bg-[#6E2B30] text-white text-sm font-bold transition-colors border border-[#C5A059]/40"
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-bold transition-colors border border-brand-gold/40"
                   >
                     <Phone className="w-4 h-4" />
                     <span>اتصل بمسؤول الرحلة مباشر</span>
@@ -303,7 +304,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                 </div>
 
                 <div className="pt-2 text-center text-[11px] text-gray-500 flex items-center justify-center gap-1.5">
-                  <Award className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <Award className="w-3.5 h-3.5 text-brand-gold" />
                   <span>شركة سيسي ترافل — مرخصة رسمياً منذ 1982</span>
                 </div>
               </div>
@@ -311,8 +312,8 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
           </div>
 
           {/* Related Programs Section */}
-          <div className="mt-20 pt-12 border-t border-[#E0D9C9]">
-            <h3 className="text-2xl font-bold text-[#281015] mb-8 border-r-4 border-[#531F23] pr-3">
+          <div className="mt-20 pt-12 border-t border-brand-sand">
+            <h3 className="text-2xl font-bold text-brand-burgundy-dark mb-8 border-r-4 border-brand-burgundy pr-3">
               برامج رحلات أخرى قد تهمك
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

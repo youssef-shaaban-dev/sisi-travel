@@ -6,12 +6,12 @@ import { COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#281015] text-white border-t-4 border-[#531F23]">
+    <footer className="bg-brand-burgundy-dark text-white border-t-4 border-brand-burgundy">
       {/* Top Banner Accent */}
-      <div className="bg-[#531F23] py-4 text-center text-xs sm:text-sm text-[#E0D9C9] border-b border-white/10">
+      <div className="bg-brand-burgundy py-4 text-center text-xs sm:text-sm text-brand-sand border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-6">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
+            <ShieldCheck className="w-4 h-4 text-brand-gold" />
             <span>شركة سياحية مصرية مرخصة من وزارة السياحة</span>
           </div>
           <span className="hidden md:inline text-white/30">•</span>
@@ -34,7 +34,7 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="font-extrabold text-xl text-white">{COMPANY_DETAILS.name}</h3>
-                <span className="text-xs text-[#C5A059] font-medium tracking-widest uppercase">
+                <span className="text-xs text-brand-gold font-medium tracking-widest uppercase">
                   EST . {COMPANY_DETAILS.establishedYear} — للسياحة والحج
                 </span>
               </div>
@@ -47,7 +47,7 @@ export default function Footer() {
                 href={getWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold transition-all shadow"
+                className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold transition-all shadow"
               >
                 <MessageCircle className="w-4 h-4 fill-current" />
                 <span>تواصل مريح عبر واتساب</span>
@@ -57,37 +57,37 @@ export default function Footer() {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-base font-bold text-white mb-4 border-r-2 border-[#C5A059] pr-3">
+            <h4 className="text-base font-bold text-white mb-4 border-r-2 border-brand-gold pr-3">
               روابط السريعة
             </h4>
             <ul className="space-y-2.5 text-sm text-gray-300">
               <li>
-                <Link href="/#hero" className="hover:text-[#C5A059] transition-colors">
+                <Link href="/#hero" className="hover:text-brand-gold transition-colors">
                   الرئيسية
                 </Link>
               </li>
               <li>
-                <Link href="/#about" className="hover:text-[#C5A059] transition-colors">
+                <Link href="/#about" className="hover:text-brand-gold transition-colors">
                   من نحن
                 </Link>
               </li>
               <li>
-                <Link href="/#umrah" className="hover:text-[#C5A059] transition-colors">
+                <Link href="/#umrah" className="hover:text-brand-gold transition-colors">
                   برامج رحلات العمرة
                 </Link>
               </li>
               <li>
-                <Link href="/#hajj" className="hover:text-[#C5A059] transition-colors">
+                <Link href="/#hajj" className="hover:text-brand-gold transition-colors">
                   برامج الحج 2026
                 </Link>
               </li>
               <li>
-                <Link href="/#why-us" className="hover:text-[#C5A059] transition-colors">
+                <Link href="/#why-us" className="hover:text-brand-gold transition-colors">
                   لماذا تختار سيسي ترافل؟
                 </Link>
               </li>
               <li>
-                <Link href="/#contact" className="hover:text-[#C5A059] transition-colors">
+                <Link href="/#contact" className="hover:text-brand-gold transition-colors">
                   اتصل بنا
                 </Link>
               </li>
@@ -96,12 +96,12 @@ export default function Footer() {
 
           {/* Column 3: Contact Directory */}
           <div>
-            <h4 className="text-base font-bold text-white mb-4 border-r-2 border-[#C5A059] pr-3">
+            <h4 className="text-base font-bold text-white mb-4 border-r-2 border-brand-gold pr-3">
               بيانات الاتصال
             </h4>
             <ul className="space-y-3 text-sm text-gray-300">
               <li className="flex items-start gap-3">
-                <Phone className="w-4 h-4 text-[#C5A059] mt-1 flex-shrink-0" />
+                <Phone className="w-4 h-4 text-brand-gold mt-1 flex-shrink-0" />
                 <div className="space-y-1">
                   <div>
                     <a href={`tel:${COMPANY_DETAILS.phone1Raw}`} className="hover:text-white dir-ltr inline-block">
@@ -116,17 +116,17 @@ export default function Footer() {
                 </div>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
+                <Mail className="w-4 h-4 text-brand-gold flex-shrink-0" />
                 <a href={`mailto:${COMPANY_DETAILS.email}`} className="hover:text-white dir-ltr">
                   {COMPANY_DETAILS.email}
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-brand-gold flex-shrink-0" />
                 <span>{COMPANY_DETAILS.address}</span>
               </li>
               <li className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
+                <Clock className="w-4 h-4 text-brand-gold flex-shrink-0" />
                 <span>{COMPANY_DETAILS.workingHours}</span>
               </li>
             </ul>
@@ -134,7 +134,7 @@ export default function Footer() {
 
           {/* Column 4: Official Social & Brand */}
           <div>
-            <h4 className="text-base font-bold text-white mb-4 border-r-2 border-[#C5A059] pr-3">
+            <h4 className="text-base font-bold text-white mb-4 border-r-2 border-brand-gold pr-3">
               تابعنا على التواصل الاجتماعي
             </h4>
             <p className="text-sm text-gray-300 mb-4">

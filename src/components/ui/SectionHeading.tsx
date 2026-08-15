@@ -20,16 +20,16 @@ export default function SectionHeading({
       {badge && (
         <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase mb-4 ${
           dark
-            ? 'bg-[#C5A059]/20 text-[#E0D9C9] border border-[#C5A059]/40'
-            : 'bg-[#531F23]/8 text-[#531F23] border border-[#531F23]/15'
+            ? 'bg-brand-gold/20 text-brand-sand border border-brand-gold/40'
+            : 'bg-brand-burgundy/10 text-brand-burgundy border border-brand-burgundy/15'
         }`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
           {badge}
         </div>
       )}
 
       <h2 className={`text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight ${
-        dark ? 'text-white' : 'text-[#281015]'
+        dark ? 'text-white' : 'text-brand-burgundy-dark'
       }`}>
         {title}
       </h2>
@@ -43,9 +43,9 @@ export default function SectionHeading({
       )}
 
       <div className={`mt-4 flex items-center gap-1.5 ${centered ? 'justify-center' : 'justify-start'}`}>
-        <span className="w-8 h-0.5 bg-[#531F23]/40 rounded-full" />
-        <span className="w-2.5 h-2.5 rounded-full border-2 border-[#C5A059] bg-transparent" />
-        <span className="w-8 h-0.5 bg-[#531F23]/40 rounded-full" />
+        <span className="w-8 h-0.5 bg-brand-burgundy/40 rounded-full" />
+        <span className="w-2.5 h-2.5 rounded-full border-2 border-brand-gold bg-transparent" />
+        <span className="w-8 h-0.5 bg-brand-burgundy/40 rounded-full" />
       </div>
     </div>
   );

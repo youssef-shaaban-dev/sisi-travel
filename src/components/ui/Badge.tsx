@@ -8,10 +8,10 @@ interface BadgeProps {
 
 export default function Badge({ children, variant = 'burgundy', className = '' }: BadgeProps) {
   const variantStyles = {
-    burgundy: 'bg-[#531F23]/10 text-[#531F23] border-[#531F23]/20',
-    olive: 'bg-[#444C39]/10 text-[#444C39] border-[#444C39]/20',
-    gold: 'bg-[#C5A059]/15 text-[#9E7B34] border-[#C5A059]/30',
-    sand: 'bg-[#E0D9C9] text-[#281015] border-[#D4C5B3]',
+    burgundy: 'bg-brand-burgundy/10 text-brand-burgundy border-brand-burgundy/20',
+    olive: 'bg-brand-olive/10 text-brand-olive border-brand-olive/20',
+    gold: 'bg-brand-gold/15 text-amber-700 border-brand-gold/30',
+    sand: 'bg-brand-sand text-brand-burgundy-dark border-amber-200',
   };
 
   return (

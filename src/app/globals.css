@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-burgundy: #531F23;
+  --color-brand-burgundy-dark: #281015;
+  --color-brand-burgundy-light: #6E2B30;
+  --color-brand-olive: #444C39;
+  --color-brand-sage: #707C5D;
+  --color-brand-sand: #E0D9C9;
+  --color-brand-sand-light: #F9F7F3;
+  --color-brand-sand-muted: #ECE6DA;
+  --color-brand-gold: #C5A059;
+  --color-brand-gold-hover: #B08C45;
+}
+
 @layer base {
   :root {
     --brand-burgundy: #531F23;
@@ -27,30 +40,6 @@
     line-height: 1.7;
   }
 }
-
-/* Utilities for Brand Palette */
-.bg-brand-burgundy { background-color: var(--brand-burgundy); }
-.bg-brand-burgundy-dark { background-color: var(--brand-burgundy-dark); }
-.bg-brand-burgundy-light { background-color: var(--brand-burgundy-light); }
-.bg-brand-olive { background-color: var(--brand-olive); }
-.bg-brand-sage { background-color: var(--brand-sage); }
-.bg-brand-sand { background-color: var(--brand-sand); }
-.bg-brand-sand-light { background-color: var(--brand-sand-light); }
-.bg-brand-sand-muted { background-color: var(--brand-sand-muted); }
-.bg-brand-gold { background-color: var(--brand-gold); }
-
-.text-brand-burgundy { color: var(--brand-burgundy); }
-.text-brand-burgundy-dark { color: var(--brand-burgundy-dark); }
-.text-brand-olive { color: var(--brand-olive); }
-.text-brand-sage { color: var(--brand-sage); }
-.text-brand-sand { color: var(--brand-sand); }
-.text-brand-gold { color: var(--brand-gold); }
-
-.border-brand-burgundy { border-color: var(--brand-burgundy); }
-.border-brand-olive { border-color: var(--brand-olive); }
-.border-brand-sage { border-color: var(--brand-sage); }
-.border-brand-sand { border-color: var(--brand-sand); }
-.border-brand-gold { border-color: var(--brand-gold); }
 
 /* Custom Glass & Shadows */
 .brand-card-shadow {

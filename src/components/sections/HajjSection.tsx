@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Star, CheckCircle2, MessageCircle, ArrowLeft } from 'lucide-react';
@@ -8,9 +9,9 @@ export default function HajjSection() {
   const hajjPrograms = UMRAH_PROGRAMS.filter((p) => p.category === 'hajj');
 
   return (
-    <section id="hajj" className="py-24 bg-[#281015] text-white relative overflow-hidden">
+    <section id="hajj" className="py-24 bg-brand-burgundy-dark text-white relative overflow-hidden">
       {/* Subtle Background Pattern Accent */}
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(var(--color-brand-gold)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
@@ -21,7 +22,7 @@ export default function HajjSection() {
         />
 
         {/* Feature Highlight Card */}
-        <div className="bg-gradient-to-br from-[#531F23] to-[#3C151A] rounded-3xl p-8 lg:p-12 border border-[#C5A059]/30 shadow-2xl mb-12">
+        <div className="bg-gradient-to-br from-brand-burgundy to-brand-burgundy-dark rounded-3xl p-8 lg:p-12 border border-brand-gold/30 shadow-2xl mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Image Box */}
             <div className="lg:col-span-6 relative h-[320px] sm:h-[380px] rounded-2xl overflow-hidden shadow-xl border border-white/10">
@@ -31,16 +32,16 @@ export default function HajjSection() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#281015]/80 via-transparent to-transparent" />
-              <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-bold text-[#E0D9C9] border border-[#C5A059]/30">
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-dark/80 via-transparent to-transparent" />
+              <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-bold text-brand-sand border border-brand-gold/30">
                 مخيمات VIP مطورة بمشاعر منى وعرفات
               </div>
             </div>
 
             {/* Content Details */}
             <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C5A059]/20 text-[#E0D9C9] text-xs font-bold border border-[#C5A059]/40">
-                <Star className="w-3.5 h-3.5 text-[#C5A059] fill-current" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-gold/20 text-brand-sand text-xs font-bold border border-brand-gold/40">
+                <Star className="w-3.5 h-3.5 text-brand-gold fill-current" />
                 <span>خدمة الحج الفاخر والمبسط</span>
               </div>
 
@@ -54,19 +55,19 @@ export default function HajjSection() {
 
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-gray-200">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#C5A059]" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-gold" />
                   <span>فنادق 5 نجوم أمام ساحة الحرم مباشرة</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#C5A059]" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-gold" />
                   <span>مخيمات VIP مكيفة بالكامل بالعرفات ومنى</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#C5A059]" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-gold" />
                   <span>وجبات بوفيه مفتوح ومشروبات طوال اليوم</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#C5A059]" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-gold" />
                   <span>إشراف فقهي وطبي مخصص 24/7</span>
                 </li>
               </ul>
@@ -76,7 +77,7 @@ export default function HajjSection() {
                   href={getWhatsAppLink('برامج الحج لعام 2026')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-extrabold transition-all shadow-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-extrabold transition-all shadow-lg"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
                   <span>تواصل معنا لمعرفة برامج الحج</span>
@@ -98,11 +99,11 @@ export default function HajjSection() {
           {hajjPrograms.map((program) => (
             <div
               key={program.id}
-              className="bg-[#3C151A] rounded-2xl p-6 border border-[#C5A059]/25 hover:border-[#C5A059]/60 transition-all shadow-lg flex flex-col justify-between"
+              className="bg-[#3C151A] rounded-2xl p-6 border border-brand-gold/25 hover:border-brand-gold/60 transition-all shadow-lg flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#C5A059] bg-[#C5A059]/10 px-3 py-1 rounded-full border border-[#C5A059]/30">
+                  <span className="text-xs font-bold text-brand-gold bg-brand-gold/10 px-3 py-1 rounded-full border border-brand-gold/30">
                     {program.badgeText}
                   </span>
                   <span className="text-xs text-gray-400">
@@ -122,7 +123,7 @@ export default function HajjSection() {
               <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
                 <Link
                   href={`/programs/${program.slug}`}
-                  className="inline-flex items-center gap-2 text-xs font-bold text-[#C5A059] hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-brand-gold hover:text-white transition-colors"
                 >
                   <span>استعراض برنامج الرحلة الكامل</span>
                   <ArrowLeft className="w-3.5 h-3.5" />
@@ -132,7 +133,7 @@ export default function HajjSection() {
                   href={getWhatsAppLink(program.title)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg bg-[#25D366] text-white hover:opacity-90 transition-opacity"
+                  className="p-2.5 rounded-lg bg-emerald-500 text-white hover:opacity-90 transition-opacity"
                   title="استفسار مباشر عبر واتساب"
                 >
                   <MessageCircle className="w-4 h-4" />

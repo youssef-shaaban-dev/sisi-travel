@@ -1,3 +1,4 @@
+import React from 'react';
 import { Award, Compass, Headphones, ShieldCheck, Hotel, Plane } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 
@@ -36,7 +37,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-us" className="py-20 bg-white border-t border-[#E0D9C9]">
+    <section id="why-us" className="py-20 bg-white border-t border-brand-sand">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="تميز سيسي ترافل"
@@ -50,12 +51,12 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={idx}
-                className="p-8 rounded-2xl bg-[#F9F7F3] border border-[#E0D9C9] hover:border-[#531F23]/40 transition-all duration-300 brand-card-shadow hover:-translate-y-1 group"
+                className="p-8 rounded-2xl bg-brand-sand-light border border-brand-sand hover:border-brand-burgundy/40 transition-all duration-300 brand-card-shadow hover:-translate-y-1 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#531F23]/10 text-[#531F23] flex items-center justify-center mb-6 group-hover:bg-[#531F23] group-hover:text-white transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-brand-burgundy/10 text-brand-burgundy flex items-center justify-center mb-6 group-hover:bg-brand-burgundy group-hover:text-white transition-colors">
                   <IconComp className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-bold text-[#281015] mb-3 group-hover:text-[#531F23] transition-colors">
+                <h3 className="text-xl font-bold text-brand-burgundy-dark mb-3 group-hover:text-brand-burgundy transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-sm text-gray-600 leading-relaxed">

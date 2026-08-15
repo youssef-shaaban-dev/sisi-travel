@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import ProgramCard from '@/components/sections/ProgramCard';
 import { UMRAH_PROGRAMS, PROGRAM_CATEGORIES } from '@/data/programsData';
@@ -8,17 +8,17 @@ import { UMRAH_PROGRAMS, PROGRAM_CATEGORIES } from '@/data/programsData';
 export default function UmrahSection() {
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const filteredPrograms = useMemo(() => UMRAH_PROGRAMS.filter((program) => {
+  const filteredPrograms = UMRAH_PROGRAMS.filter((program) => {
     if (activeCategory === 'all') return true;
     if (activeCategory === 'vip') return program.category === 'vip';
     if (activeCategory === 'ramadan') return program.category === 'ramadan';
     if (activeCategory === 'economic') return program.category === 'economic';
     if (activeCategory === 'hajj') return program.category === 'hajj';
     return true;
-  }), [activeCategory]);
+  });
 
   return (
-    <section id="umrah" className="py-20 bg-[#F9F7F3] relative">
+    <section id="umrah" className="py-20 bg-brand-sand-light relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="رحلات العمرة"
@@ -36,8 +36,8 @@ export default function UmrahSection() {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 focus:outline-none ${
                   isActive
-                    ? 'bg-[#531F23] text-white shadow-md border border-[#531F23]'
-                    : 'bg-white text-gray-700 hover:bg-[#E0D9C9] border border-[#E0D9C9]'
+                    ? 'bg-brand-burgundy text-white shadow-md border border-brand-burgundy'
+                    : 'bg-white text-gray-700 hover:bg-brand-sand border border-brand-sand'
                 }`}
               >
                 {cat.label}

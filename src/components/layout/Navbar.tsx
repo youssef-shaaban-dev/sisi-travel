@@ -36,8 +36,8 @@ export default function Navbar() {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#281015]/95 backdrop-blur-md text-white py-3 shadow-lg border-b border-[#C5A059]/20'
-          : 'bg-gradient-to-b from-[#281015]/90 via-[#281015]/60 to-transparent text-white py-5'
+          ? 'bg-brand-burgundy-dark/95 backdrop-blur-md text-white py-3 shadow-lg border-b border-brand-gold/20'
+          : 'bg-gradient-to-b from-brand-burgundy-dark/90 via-brand-burgundy-dark/60 to-transparent text-white py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,7 +57,7 @@ export default function Navbar() {
               <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white font-sans">
                 {COMPANY_DETAILS.name}
               </span>
-              <span className="text-[10px] text-[#C5A059] font-medium tracking-widest uppercase">
+              <span className="text-[10px] text-brand-gold font-medium tracking-widest uppercase">
                 EST . {COMPANY_DETAILS.establishedYear} — للسياحة والحج
               </span>
             </div>
@@ -69,7 +69,7 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-sm font-semibold text-gray-200 hover:text-[#C5A059] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-[#C5A059] hover:after:w-full after:transition-all"
+                className="text-sm font-semibold text-gray-200 hover:text-brand-gold transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-0.5 after:bg-brand-gold hover:after:w-full after:transition-all"
               >
                 {link.label}
               </Link>
@@ -89,9 +89,9 @@ export default function Navbar() {
               href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#531F23] hover:bg-[#6E2B30] text-white text-sm font-bold shadow-md hover:shadow-lg transition-all border border-[#C5A059]/40 group"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-bold shadow-md hover:shadow-lg transition-all border border-brand-gold/40 group"
             >
-              <MessageCircle className="w-4 h-4 text-[#25D366] group-hover:scale-110 transition-transform" />
+              <MessageCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
               <span>تواصل معنا</span>
             </a>
           </div>
@@ -109,14 +109,14 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#281015] border-b border-[#C5A059]/30 px-4 pt-3 pb-6 space-y-3 animate-fadeIn">
+        <div className="lg:hidden bg-brand-burgundy-dark border-b border-brand-gold/30 px-4 pt-3 pb-6 space-y-3 animate-fadeIn">
           <nav className="flex flex-col space-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:bg-white/10 hover:text-[#C5A059] transition-colors"
+                className="px-3 py-2.5 rounded-lg text-base font-semibold text-gray-200 hover:bg-white/10 hover:text-brand-gold transition-colors"
               >
                 {link.label}
               </Link>
@@ -127,7 +127,7 @@ export default function Navbar() {
               href={getWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#25D366] text-white text-base font-bold shadow"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-base font-bold shadow"
             >
               <MessageCircle className="w-5 h-5" />
               <span>استفسر عبر الواتساب مباشرة</span>
