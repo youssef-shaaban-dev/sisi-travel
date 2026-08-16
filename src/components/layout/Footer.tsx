@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, MapPin, Clock, MessageCircle, ShieldCheck } from 'lucide-react';
-import { COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
+import { Phone, MapPin, Clock, ShieldCheck } from 'lucide-react';
+import { COMPANY_DETAILS } from '@/data/programsData';
 
 export default function Footer() {
   return (
@@ -36,20 +38,9 @@ export default function Footer() {
             <p className="text-sm text-gray-300 leading-relaxed">
               {COMPANY_DETAILS.description}
             </p>
-            <div className="pt-2">
-              <a
-                href={getWhatsAppLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold transition-all shadow"
-              >
-                <MessageCircle className="w-4 h-4 fill-current" />
-                <span>تواصل عبر واتساب</span>
-              </a>
-            </div>
           </div>
 
-          {/* Column 2: Quick Links */}
+          {/* Column 2: Quick Links (Matched with Navbar) */}
           <div>
             <h4 className="text-base font-bold text-white mb-4 border-r-2 border-brand-gold pr-3">
               روابط السريعة
@@ -67,17 +58,17 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/#umrah" className="hover:text-brand-gold transition-colors">
-                  برامج رحلات العمرة
+                  رحلات العمرة
                 </Link>
               </li>
               <li>
                 <Link href="/#hajj" className="hover:text-brand-gold transition-colors">
-                  برامج الحج 2027
+                  برامج الحج
                 </Link>
               </li>
               <li>
                 <Link href="/#why-us" className="hover:text-brand-gold transition-colors">
-                  لماذا تختار سيسي ترافل؟
+                  لماذا سيسي ترافل
                 </Link>
               </li>
               <li>
@@ -117,18 +108,18 @@ export default function Footer() {
               تابعنا على التواصل الاجتماعي
             </h4>
             <p className="text-sm text-gray-300 mb-4">
-              تابع صفحاتنا الرسمية للاطلاع على أحدث عروض العمرة وبرامج الحج الموسمية.
+              تابع صفحتنا الرسمية للاطلاع على أحدث عروض العمرة وبرامج الحج الموسمية.
             </p>
             <a
               href={COMPANY_DETAILS.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all border border-white/15"
+              className="inline-flex items-center justify-center p-3.5 rounded-full bg-[#1877F2] hover:bg-[#166fe5] text-white shadow-xl transition-all duration-300 hover:scale-110 border border-white/20"
+              aria-label="صفحة فيسبوك الرسمية"
             >
-              <svg className="w-5 h-5 fill-current text-[#1877F2]" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
-              <span>تابعنا على فيسبوك</span>
             </a>
           </div>
         </div>
