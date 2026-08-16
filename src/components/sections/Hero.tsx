@@ -20,13 +20,13 @@ export default function Hero() {
             src="/images/hero-kaaba.jpg"
             alt="المسجد الحرام والكعبة المشرفة"
             fill
-            className="object-cover object-center opacity-85"
+            className="object-cover object-center brightness-110 contrast-105 opacity-100"
             priority
           />
         </motion.div>
-        {/* Soft Vignette Gradients for Text Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-dark via-brand-burgundy-dark/45 to-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-burgundy-dark/50 via-transparent to-brand-burgundy-dark/50" />
+        {/* Soft Contrast Overlays for Superior Clarity and Text Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-dark/90 via-black/25 to-black/30" />
+        <div className="absolute inset-0 bg-black/20 backdrop-brightness-105" />
       </div>
 
       {/* Content */}
