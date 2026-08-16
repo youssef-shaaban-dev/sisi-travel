@@ -12,12 +12,12 @@ const tajawal = Tajawal({
 });
 
 export const metadata: Metadata = {
-  title: `${COMPANY_DETAILS.name} | رحلات الحج والعمرة — تأسست عام 1982`,
+  title: `${COMPANY_DETAILS.name} | رحلات الحج والعمرة - تأسست عام 1982`,
   description: 'اكتشف أرقى برامج الحج والعمرة مع سيسي ترافل. أكثر من 4 عقود من الخبرة والالتزام بتقديم أفضل إقامة طيران وتنظيم دقيق لضيوف الرحمن.',
   keywords: [
     'سيسي ترافل',
     'رحلات العمرة مصر',
-    'برامج الحج 2026',
+    'برامج الحج 2027',
     'عمرة 5 نجوم مكة',
     'عمرة رمضان',
     'حج وعمرة القاهرة',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: COMPANY_DETAILS.name }],
   openGraph: {
-    title: `${COMPANY_DETAILS.name} | رحلات الحج والعمرة — تأسست عام 1982`,
+    title: `${COMPANY_DETAILS.name} | رحلات الحج والعمرة - تأسست عام 1982`,
     description: COMPANY_DETAILS.description,
     url: 'https://www.sisitravel.com',
     siteName: COMPANY_DETAILS.name,

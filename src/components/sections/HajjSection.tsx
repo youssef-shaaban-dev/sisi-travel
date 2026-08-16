@@ -20,8 +20,8 @@ export default function HajjSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
-          badge="فريضة العمر والختام المبارك"
-          title="برامج الحج — تنظيماً يليق بعظمة الفريضة"
+          badge="فريضة الحج"
+          title="برامج الحج لعام 2027 - تنظيماً يليق بعظمة الفريضة"
           subtitle="نضع بين أيديكم 40 عاماً من الخبرة في إدارة موسم الحج، مع تنوع متكامل بين الحج الفاخر والحج الاقتصادي والحج البري."
         />
 

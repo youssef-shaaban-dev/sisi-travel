@@ -58,7 +58,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
   {
     id: 'umrah-vip-5stars',
     slug: 'umrah-vip-5stars',
-    title: 'عمرة الخمس نجوم الـ VIP — إقامة فاخرة صف أول',
+    title: 'عمرة الخمس نجوم الـ VIP - إقامة فاخرة صف أول',
     category: 'vip',
     categoryLabel: 'عمرة 5 نجوم VIP',
     subtitle: 'تجربة إيمانية استثنائية مع إقامة في أرقى الفنادق المطلة مباشرة على الحرم المكي الشريف.',
@@ -168,7 +168,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
   {
     id: 'umrah-ramadan-full',
     slug: 'umrah-ramadan-full',
-    title: 'عمرة شهر رمضان المبارك — الجمعة الأخيرة والعيد',
+    title: 'عمرة شهر رمضان المبارك - الجمعة الأخيرة والعيد',
     category: 'ramadan',
     categoryLabel: 'عمرة رمضان',
     subtitle: 'عش أجواء الروحانية الكبرى في مكة والمدينة خلال شهر رمضان المبارك وختم القرآن.',
@@ -238,7 +238,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
   {
     id: 'umrah-shawwal',
     slug: 'umrah-shawwal',
-    title: 'عمرة شهر شوال المتميزة — هدوء وراحة بعد العيد',
+    title: 'عمرة شهر شوال المتميزة - هدوء وراحة بعد العيد',
     category: 'economic',
     categoryLabel: 'عمرة شوال',
     subtitle: 'استمتع بأداء العمرة في أجواء هادئة وأسعار متميزة خلال شهر شوال.',
@@ -293,7 +293,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
   {
     id: 'umrah-economic-plus',
     slug: 'umrah-economic-plus',
-    title: 'العمرة الاقتصادية المتميزة — جودة وخدمة بسعر مناسب',
+    title: 'العمرة الاقتصادية المتميزة - جودة وخدمة بسعر مناسب',
     category: 'economic',
     categoryLabel: 'عمرة اقتصادية',
     subtitle: 'توازن مثالي بين السعر المناسب والخدمة المنتظمة مع فنادق راقية وقريبة.',
@@ -351,7 +351,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   {
     id: 'hajj-luxury-1',
     slug: 'hajj-luxury-1',
-    title: 'برنامج الحج الفاخر (1) — صف أول وقطار الحرمين السريع',
+    title: 'برنامج الحج الفاخر (1) - صف أول وقطار الحرمين السريع',
     category: 'hajj-luxury',
     categoryLabel: 'حج فاخر',
     subtitle: 'إقامة 5 نجوم بالفنادق المطلة على الحرم ومخيمات فاخرة بالمشاعر المقدسة شاملاً قطار الحرمين.',
@@ -425,7 +425,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   {
     id: 'hajj-luxury-kadana',
     slug: 'hajj-luxury-kadana',
-    title: 'برنامج الحج الفاخر (2) — عمائر كدانه المميزة',
+    title: 'برنامج الحج الفاخر (2) - عمائر كدانه المميزة',
     category: 'hajj-luxury',
     categoryLabel: 'حج فاخر (كدانه)',
     subtitle: 'إقامة في عمائر كدانه الفاخرة بالمشاعر المقدسة وفنادق 5 نجوم بالمدينة ومكة.',
@@ -461,7 +461,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
       },
     ],
     includedServices: [
-      'إقامة عمائر كدانه المميزة — مستوى 5 نجوم مع إقامة كاملة (إفطار، غداء، عشاء)',
+      'إقامة عمائر كدانه المميزة - مستوى 5 نجوم مع إقامة كاملة (إفطار، غداء، عشاء)',
       'أعلى نسبة نجاح بالقرعة تصل إلى 70%',
       'قطار الحرمين السريع وباصات حديثة موديل العام خاصة بالمناسك',
       'إشراف إداري مرافق للرحلة مع واعظ ديني لمرافقة وشرح المناسك',
@@ -486,7 +486,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   {
     id: 'hajj-luxury-distinct',
     slug: 'hajj-luxury-distinct',
-    title: 'برنامج الحج المميز (3) — 15 يوماً إقامة راقية',
+    title: 'برنامج الحج المميز (3) - 15 يوماً إقامة راقية',
     category: 'hajj-luxury',
     categoryLabel: 'حج مميز',
     subtitle: 'إقامة ممتدة 15 يوماً بفنادق شذا ريجنسي بالمدينة وموفنبيك هاجر بمكة.',
@@ -545,7 +545,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   {
     id: 'hajj-economic-1',
     slug: 'hajj-economic-1',
-    title: 'برنامج الحج الاقتصادي (1) — هيلتون مكة وأرجوان الذهبي',
+    title: 'برنامج الحج الاقتصادي (1) - هيلتون مكة وأرجوان الذهبي',
     category: 'hajj-economic',
     categoryLabel: 'حج اقتصادي',
     subtitle: 'إقامة 22 يوماً شاملة 9 أيام كاملة على ساحة الحرم المكي وأداء عمرة إضافية.',
@@ -605,7 +605,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   {
     id: 'hajj-economic-2',
     slug: 'hajj-economic-2',
-    title: 'برنامج الحج الاقتصادي (2) — فندق الشهداء 5 نجوم',
+    title: 'برنامج الحج الاقتصادي (2) - فندق الشهداء 5 نجوم',
     category: 'hajj-economic',
     categoryLabel: 'حج اقتصادي',
     subtitle: 'إقامة 22 يوماً بفندق الشهداء 5 نجوم بمكة وفندق أرجوان الذهبي بالمدينة.',
@@ -659,7 +659,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   {
     id: 'hajj-land-1',
     slug: 'hajj-land-1',
-    title: 'برنامج الحج البري المميز — باصات سياحية فاخرة 24 يوماً',
+    title: 'برنامج الحج البري المميز - باصات سياحية فاخرة 24 يوماً',
     category: 'hajj-land',
     categoryLabel: 'حج بري',
     subtitle: 'رحلة 24 يوماً بالحافلات السياحية الحديثة المكيفة من القاهرة وتغطية شاملة للمناسك.',
@@ -730,7 +730,7 @@ export const COMPANY_DETAILS = {
   englishName: 'Sisi Travel',
   establishedYear: 1982,
   slogan: 'رحلتكم إلى الأراضي المقدسة تبدأ بثقة واطمئنان',
-  description: 'شركة سيسي ترافل للسياحة والحج والعمرة — تأسست عام 1982 وتتمتع بخبرة متراكمة تتجاوز 4 عقود في تقديم أرقى خدمات الحج والعمرة والرحلات السياحية بأعلى معايير الراحة والتنظيم.',
+  description: 'شركة سيسي ترافل للسياحة والحج والعمرة - تأسست عام 1982 وتتمتع بخبرة متراكمة تتجاوز 4 عقود في تقديم أرقى خدمات الحج والعمرة والرحلات السياحية بأعلى معايير الراحة والتنظيم.',
   phone1: '+20 11 5001 1400',
   phone1Raw: '+201150011400',
   phone2: '+20 10 0543 7711',

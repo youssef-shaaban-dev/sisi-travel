@@ -60,7 +60,7 @@ export default function AboutSection() {
                   <div>
                     <h4 className="font-bold text-base text-white">{COMPANY_DETAILS.name}</h4>
                     <p className="text-xs text-brand-sand mt-0.5 font-medium">
-                      تأسست عام 1982 — سياحة • حج • عمرة
+                      تأسست عام 1982 - سياحة • حج • عمرة
                     </p>
                   </div>
                 </div>

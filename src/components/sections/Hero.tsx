@@ -40,7 +40,7 @@ export default function Hero() {
         >
           <Award className="w-5 h-5 text-brand-gold" />
           <span className="text-sm sm:text-base font-black text-brand-sand tracking-wide">
-            تأسست عام {COMPANY_DETAILS.establishedYear} — أكثر من 4 عقود من الخبرة والتميز
+            تأسست عام {COMPANY_DETAILS.establishedYear} - أكثر من 4 عقود من الخبرة والتميز
           </span>
         </motion.div>
 

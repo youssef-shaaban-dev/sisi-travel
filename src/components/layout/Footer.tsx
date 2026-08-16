@@ -72,7 +72,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/#hajj" className="hover:text-brand-gold transition-colors">
-                  برامج الحج 2026
+                  برامج الحج 2027
                 </Link>
               </li>
               <li>
@@ -151,10 +151,10 @@ export default function Footer() {
         {/* Bottom Copyright */}
         <div className="mt-12 pt-6 border-t border-white/10 text-center text-xs text-gray-400 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>
-            جميع الحقوق محفوظة © {new Date().getFullYear()} — شركة {COMPANY_DETAILS.name} للسياحة والحج والعمرة.
+            جميع الحقوق محفوظة © {new Date().getFullYear()} - شركة {COMPANY_DETAILS.name} للسياحة والحج والعمرة.
           </p>
           <p className="text-gray-500">
-            تأسست عام 1982 — خبرة وتألق يستمر لأكثر من 40 عاماً.
+            تأسست عام 1982 - خبرة وتألق يستمر لأكثر من 40 عاماً.
           </p>
         </div>
       </div>
