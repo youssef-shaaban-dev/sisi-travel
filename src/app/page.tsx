@@ -6,7 +6,7 @@ import AboutSection from '@/components/sections/AboutSection';
 import UmrahSection from '@/components/sections/UmrahSection';
 import HajjSection from '@/components/sections/HajjSection';
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
-import HowItWorks from '@/components/sections/HowItWorks';
+import FaqSection from '@/components/sections/FaqSection';
 import ContactSection from '@/components/sections/ContactSection';
 
 export default function HomePage() {
@@ -19,7 +19,7 @@ export default function HomePage() {
         <UmrahSection />
         <HajjSection />
         <WhyChooseUs />
-        <HowItWorks />
+        <FaqSection />
         <ContactSection />
       </main>
       <Footer />
