@@ -3,18 +3,14 @@
 import React, { useState } from 'react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import ProgramCard from '@/components/sections/ProgramCard';
-import { UMRAH_PROGRAMS, PROGRAM_CATEGORIES } from '@/data/programsData';
+import { UMRAH_PROGRAMS, UMRAH_CATEGORIES } from '@/data/programsData';
 
 export default function UmrahSection() {
   const [activeCategory, setActiveCategory] = useState('all');
 
   const filteredPrograms = UMRAH_PROGRAMS.filter((program) => {
     if (activeCategory === 'all') return true;
-    if (activeCategory === 'vip') return program.category === 'vip';
-    if (activeCategory === 'ramadan') return program.category === 'ramadan';
-    if (activeCategory === 'economic') return program.category === 'economic';
-    if (activeCategory === 'hajj') return program.category === 'hajj';
-    return true;
+    return program.category === activeCategory;
   });
 
   return (
@@ -27,8 +23,8 @@ export default function UmrahSection() {
         />
 
         {/* Category Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {PROGRAM_CATEGORIES.map((cat) => {
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12">
+          {UMRAH_CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button

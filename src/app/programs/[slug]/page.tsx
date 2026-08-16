@@ -19,21 +19,21 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Badge from '@/components/ui/Badge';
 import ProgramCard from '@/components/sections/ProgramCard';
-import { UMRAH_PROGRAMS, COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
+import { ALL_PROGRAMS, COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return UMRAH_PROGRAMS.map((program) => ({
+  return ALL_PROGRAMS.map((program) => ({
     slug: program.slug,
   }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
   const resolvedParams = await params;
-  const program = UMRAH_PROGRAMS.find((p) => p.slug === resolvedParams.slug);
+  const program = ALL_PROGRAMS.find((p) => p.slug === resolvedParams.slug);
 
   if (!program) {
     return { title: 'البرنامج غير موجود | سيسي ترافل' };
@@ -47,14 +47,14 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ProgramDetailsPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const program = UMRAH_PROGRAMS.find((p) => p.slug === resolvedParams.slug);
+  const program = ALL_PROGRAMS.find((p) => p.slug === resolvedParams.slug);
 
   if (!program) {
     notFound();
   }
 
   // Related programs
-  const relatedPrograms = UMRAH_PROGRAMS.filter((p) => p.slug !== program.slug).slice(0, 3);
+  const relatedPrograms = ALL_PROGRAMS.filter((p) => p.slug !== program.slug).slice(0, 3);
 
   return (
     <div className="min-h-screen flex flex-col bg-brand-sand-light">

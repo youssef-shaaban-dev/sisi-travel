@@ -36,7 +36,16 @@ export default function ProgramCard({ program }: ProgramCardProps) {
 
         {/* Category Badge Top Right */}
         <div className="absolute top-4 right-4 z-10 pointer-events-none">
-          <Badge variant={program.category === 'vip' ? 'gold' : program.category === 'hajj' ? 'burgundy' : 'olive'} className="text-sm px-3.5 py-1.5 font-black shadow-md">
+          <Badge
+            variant={
+              program.category === 'vip' || program.category === 'hajj-luxury'
+                ? 'gold'
+                : program.category === 'hajj-economic'
+                ? 'burgundy'
+                : 'olive'
+            }
+            className="text-sm px-3.5 py-1.5 font-black shadow-md"
+          >
             {program.badgeText}
           </Badge>
         </div>
