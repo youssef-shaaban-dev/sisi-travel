@@ -125,12 +125,20 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright */}
-        <div className="mt-12 pt-6 border-t border-white/10 text-center text-xs text-gray-400 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-6 border-t border-white/10 text-center text-xs text-gray-400 space-y-2.5">
           <p>
-            جميع الحقوق محفوظة © {new Date().getFullYear()} - شركة {COMPANY_DETAILS.name} للسياحة والحج والعمرة.
+            © {new Date().getFullYear()} {COMPANY_DETAILS.name} - جميع الحقوق محفوظة. يُحظر تماماً الاستخدام غير المصرح به، بما في ذلك تدريب نماذج الذكاء الاصطناعي، أو إعادة الإنتاج، أو الاستغلال التجاري.
           </p>
-          <p className="text-gray-500">
-            تأسست عام 1982 - خبرة وتألق يستمر لأكثر من 40 عاماً.
+          <p className="text-gray-300">
+            صُنِع بكل فخر في مصر بحب ❤️{' '}
+            <a
+              href="https://mrco-egypt.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brand-gold hover:underline font-bold"
+            >
+              تم تصميم وتطوير الموقع من خلال شركة ميركو ايجيبت
+            </a>
           </p>
         </div>
       </div>
