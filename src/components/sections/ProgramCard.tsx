@@ -40,9 +40,9 @@ export default function ProgramCard({ program }: ProgramCardProps) {
             variant={
               program.category === 'vip' || program.category === 'hajj-luxury'
                 ? 'gold'
-                : program.category === 'hajj-economic'
-                ? 'burgundy'
-                : 'olive'
+                : program.category === 'economic' || program.category === 'hajj-economic'
+                ? 'olive'
+                : 'burgundy'
             }
             className="text-sm px-3.5 py-1.5 font-black shadow-md"
           >

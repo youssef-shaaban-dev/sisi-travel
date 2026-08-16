@@ -56,6 +56,8 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
   // Related programs
   const relatedPrograms = ALL_PROGRAMS.filter((p) => p.slug !== program.slug).slice(0, 3);
 
+  const isHajj = program.category.startsWith('hajj');
+
   return (
     <div className="min-h-screen flex flex-col bg-brand-sand-light">
       <Navbar />
@@ -68,8 +70,8 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               الرئيسية
             </Link>
             <span>/</span>
-            <Link href="/#umrah" className="hover:text-brand-burgundy">
-              رحلات العمرة والحج
+            <Link href={isHajj ? '/#hajj' : '/#umrah'} className="hover:text-brand-burgundy font-medium">
+              {isHajj ? 'برامج الحج' : 'رحلات العمرة'}
             </Link>
             <span>/</span>
             <span className="font-bold text-brand-burgundy truncate max-w-xs">{program.title}</span>
@@ -78,7 +80,15 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
           {/* Program Header */}
           <div className="mb-10 space-y-4">
             <div className="flex flex-wrap items-center gap-3">
-              <Badge variant={program.category === 'vip' ? 'gold' : 'burgundy'}>
+              <Badge
+                variant={
+                  program.category === 'vip' || program.category === 'hajj-luxury'
+                    ? 'gold'
+                    : program.category === 'economic' || program.category === 'hajj-economic'
+                    ? 'olive'
+                    : 'burgundy'
+                }
+              >
                 {program.badgeText}
               </Badge>
               <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
@@ -285,7 +295,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                 </div>
 
                 {/* Primary Actions */}
-                <div className="space-y-3 pt-2">
+                <div className="pt-2">
                   <a
                     href={getWhatsAppLink(`${program.title} (بسعر ${program.price})`)}
                     target="_blank"
@@ -294,14 +304,6 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                   >
                     <MessageCircle className="w-5 h-5 fill-current" />
                     <span>استفسر عن هذا البرنامج عبر واتساب</span>
-                  </a>
-
-                  <a
-                    href={`tel:${COMPANY_DETAILS.phone1Raw}`}
-                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-sm font-bold transition-colors border border-brand-gold/40"
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span>اتصل بمسؤول الرحلة مباشر</span>
                   </a>
                 </div>
 
@@ -316,7 +318,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
           {/* Related Programs Section */}
           <div className="mt-20 pt-12 border-t border-brand-sand">
             <h3 className="text-2xl font-bold text-brand-burgundy-dark mb-8 border-r-4 border-brand-burgundy pr-3">
-              برامج رحلات أخرى قد تهمك
+             أقتراحات برامج أخرى
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {relatedPrograms.map((relProg) => (
