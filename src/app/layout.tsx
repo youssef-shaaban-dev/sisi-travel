@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/hero-kaaba.jpg',
+        url: '/images/hero-kaaba.webp',
         width: 1200,
         height: 630,
         alt: COMPANY_DETAILS.name,

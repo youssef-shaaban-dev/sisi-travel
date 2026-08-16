@@ -17,7 +17,7 @@ export default function Hero() {
           className="w-full h-full relative"
         >
           <Image
-            src="/images/hero-kaaba.jpg"
+            src="/images/hero-kaaba.webp"
             alt="المسجد الحرام والكعبة المشرفة"
             fill
             className="object-cover object-center brightness-110 contrast-105 opacity-100"
@@ -25,7 +25,7 @@ export default function Hero() {
           />
         </motion.div>
         {/* Soft Contrast Overlays for Superior Clarity and Text Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-dark/90 via-black/25 to-black/30" />
+        <div className="absolute inset-0 bg-linear-to-t from-brand-burgundy-dark/90 via-black/25 to-black/30" />
         <div className="absolute inset-0 bg-black/20 backdrop-brightness-105" />
       </div>
 

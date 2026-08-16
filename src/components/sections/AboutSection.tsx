@@ -44,7 +44,7 @@ export default function AboutSection() {
           <MotionWrapper direction="up" delay={0.2} className="lg:col-span-5 relative">
             <div className="relative h-[420px] sm:h-[480px] rounded-3xl overflow-hidden shadow-2xl border-4 border-brand-sand">
               <Image
-                src="/images/medina-mosque.jpg"
+                src="/images/medina-mosque.webp"
                 alt="المسجد النبوي الشريف"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-700"
