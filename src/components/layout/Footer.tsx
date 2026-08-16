@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-6">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-brand-gold" />
-            <span>شركة سياحية مصرية مرخصة من وزارة السياحة</span>
+            <span>{COMPANY_DETAILS.licenseText}</span>
           </div>
           <span className="hidden md:inline text-white/30">•</span>
           <div>خبرة متراكمة تتجاوز 40 عاماً في خدمة ضيوف الرحمن</div>

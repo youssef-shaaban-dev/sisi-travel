@@ -309,7 +309,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
 
                 <div className="pt-2 text-center text-[11px] text-gray-500 flex items-center justify-center gap-1.5">
                   <Award className="w-3.5 h-3.5 text-brand-gold" />
-                  <span>شركة سيسي ترافل - مرخصة رسمياً منذ 1982</span>
+                  <span>شركة سيسي ترافل (أ) - رخصة وزارة السياحة رقم 249</span>
                 </div>
               </div>
             </div>

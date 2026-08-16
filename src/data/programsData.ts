@@ -735,6 +735,8 @@ export const COMPANY_DETAILS = {
   phone1Raw: '+201150011400',
   whatsapp: '+20 11 5001 1400',
   whatsappRaw: '201150011400',
+  licenseNumber: '249',
+  licenseText: 'شركة سياحة (أ) مرخصة من وزارة السياحة - رخصة رقم 249',
   address: '161 شارع السودان ، المهندسين - الجيزة مصر',
   facebookUrl: 'https://www.facebook.com/SiSiTravelEGY/',
   workingHours: 'من الأحد إلى الخميس: 9:00 صباحاً - 6:00 مساءً',
