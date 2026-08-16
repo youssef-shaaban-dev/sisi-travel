@@ -1,5 +1,4 @@
-import React from 'react';
-import { Phone, Mail, MapPin, Clock, MessageCircle } from 'lucide-react';
+import { Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import MotionWrapper from '@/components/ui/MotionWrapper';
 import { COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
@@ -48,55 +47,26 @@ export default function ContactSection() {
             </div>
           </MotionWrapper>
 
-          {/* Contact Details Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Phone Card */}
+          {/* Contact Details Grid - 2 Centered Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-6">
+            {/* Phone & WhatsApp Card */}
             <MotionWrapper delay={0.3}>
-              <div className="bg-brand-sand-light p-7 rounded-3xl border border-brand-sand flex flex-col items-center text-center space-y-3 brand-card-shadow hover:-translate-y-1 transition-all">
+              <div className="bg-brand-sand-light p-7 rounded-3xl border border-brand-sand flex flex-col items-center text-center space-y-3 brand-card-shadow hover:-translate-y-1 transition-all h-full justify-between">
                 <div className="p-3.5 bg-brand-burgundy/10 text-brand-burgundy rounded-2xl">
                   <Phone className="w-6 h-6" />
                 </div>
-                <h4 className="font-extrabold text-lg text-brand-burgundy-dark">أرقام الهاتف</h4>
-                <div className="space-y-1.5 text-base text-gray-800 dir-ltr font-bold">
-                  <div>
-                    <a href={`tel:${COMPANY_DETAILS.phone1Raw}`} className="hover:text-brand-burgundy transition-colors">
-                      {COMPANY_DETAILS.phone1}
-                    </a>
-                  </div>
-                  <div>
-                    <a href={`tel:${COMPANY_DETAILS.phone2Raw}`} className="hover:text-brand-burgundy transition-colors">
-                      {COMPANY_DETAILS.phone2}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </MotionWrapper>
-
-            {/* Email Card */}
-            <MotionWrapper delay={0.4}>
-              <div className="bg-brand-sand-light p-7 rounded-3xl border border-brand-sand flex flex-col items-center text-center space-y-3 brand-card-shadow hover:-translate-y-1 transition-all">
-                <div className="p-3.5 bg-brand-burgundy/10 text-brand-burgundy rounded-2xl">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <h4 className="font-extrabold text-lg text-brand-burgundy-dark">البريد الإلكتروني</h4>
-                <div className="space-y-1.5 text-sm text-gray-800 dir-ltr font-bold">
-                  <div>
-                    <a href={`mailto:${COMPANY_DETAILS.email}`} className="hover:text-brand-burgundy transition-colors">
-                      {COMPANY_DETAILS.email}
-                    </a>
-                  </div>
-                  <div>
-                    <a href={`mailto:${COMPANY_DETAILS.secondaryEmail}`} className="hover:text-brand-burgundy transition-colors">
-                      {COMPANY_DETAILS.secondaryEmail}
-                    </a>
-                  </div>
+                <h4 className="font-extrabold text-lg text-brand-burgundy-dark">رقم الهاتف والواتساب</h4>
+                <div dir='ltr' className="text-lg text-gray-800 dir-ltr font-black">
+                  <a href={`tel:${COMPANY_DETAILS.phone1Raw}`} className="hover:text-brand-burgundy transition-colors">
+                    {COMPANY_DETAILS.phone1}
+                  </a>
                 </div>
               </div>
             </MotionWrapper>
 
             {/* Office & Hours Card */}
-            <MotionWrapper delay={0.5} className="sm:col-span-2 lg:col-span-1">
-              <div className="bg-brand-sand-light p-7 rounded-3xl border border-brand-sand flex flex-col items-center text-center space-y-3 brand-card-shadow hover:-translate-y-1 transition-all">
+            <MotionWrapper delay={0.4}>
+              <div className="bg-brand-sand-light p-7 rounded-3xl border border-brand-sand flex flex-col items-center text-center space-y-3 brand-card-shadow hover:-translate-y-1 transition-all h-full justify-between">
                 <div className="p-3.5 bg-brand-burgundy/10 text-brand-burgundy rounded-2xl">
                   <MapPin className="w-6 h-6" />
                 </div>

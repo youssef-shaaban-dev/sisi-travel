@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, Mail, MapPin, Clock, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Phone, MapPin, Clock, MessageCircle, ShieldCheck } from 'lucide-react';
 import { COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
 
 export default function Footer() {
@@ -94,25 +94,10 @@ export default function Footer() {
               بيانات الاتصال
             </h4>
             <ul className="space-y-3 text-sm text-gray-300">
-              <li className="flex items-start gap-3">
-                <Phone className="w-4 h-4 text-brand-gold mt-1 flex-shrink-0" />
-                <div className="space-y-1">
-                  <div>
-                    <a href={`tel:${COMPANY_DETAILS.phone1Raw}`} className="hover:text-white dir-ltr inline-block">
-                      {COMPANY_DETAILS.phone1}
-                    </a>
-                  </div>
-                  <div>
-                    <a href={`tel:${COMPANY_DETAILS.phone2Raw}`} className="hover:text-white dir-ltr inline-block">
-                      {COMPANY_DETAILS.phone2}
-                    </a>
-                  </div>
-                </div>
-              </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                <a href={`mailto:${COMPANY_DETAILS.email}`} className="hover:text-white dir-ltr">
-                  {COMPANY_DETAILS.email}
+                <Phone className="w-4 h-4 text-brand-gold flex-shrink-0" />
+                <a href={`tel:${COMPANY_DETAILS.phone1Raw}`} className="hover:text-white dir-ltr font-bold">
+                  {COMPANY_DETAILS.phone1}
                 </a>
               </li>
               <li className="flex items-center gap-3">
