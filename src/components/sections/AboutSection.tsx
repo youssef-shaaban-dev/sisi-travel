@@ -41,7 +41,7 @@ export default function AboutSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Image Column */}
-          <MotionWrapper direction="right" delay={0.2} className="lg:col-span-5 relative">
+          <MotionWrapper direction="up" delay={0.2} className="lg:col-span-5 relative">
             <div className="relative h-[420px] sm:h-[480px] rounded-3xl overflow-hidden shadow-2xl border-4 border-brand-sand">
               <Image
                 src="/images/medina-mosque.jpg"
@@ -70,7 +70,7 @@ export default function AboutSection() {
 
           {/* Text Column */}
           <div className="lg:col-span-7 space-y-6">
-            <MotionWrapper direction="left" delay={0.3}>
+            <MotionWrapper direction="up" delay={0.3}>
               <div className="space-y-4">
                 <h3 className="text-2xl sm:text-3xl font-black text-brand-burgundy-dark leading-snug">
                   خبرة متراكمة نضعها في خدمتكم لتكون رحلتكم الإيمانية ذكرى لا تُنسى

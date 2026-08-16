@@ -16,18 +16,14 @@ export default function MotionWrapper({
   direction = 'up',
   className = '',
 }: MotionWrapperProps) {
+  // Use vertical y-axis animation only to prevent horizontal viewport overflow on mobile devices
   const getVariants = () => {
     switch (direction) {
-      case 'up':
-        return { initial: { opacity: 0, y: 35 }, animate: { opacity: 1, y: 0 } };
       case 'down':
-        return { initial: { opacity: 0, y: -35 }, animate: { opacity: 1, y: 0 } };
-      case 'left':
-        return { initial: { opacity: 0, x: 35 }, animate: { opacity: 1, x: 0 } };
-      case 'right':
-        return { initial: { opacity: 0, x: -35 }, animate: { opacity: 1, x: 0 } };
+        return { initial: { opacity: 0, y: -25 }, animate: { opacity: 1, y: 0 } };
+      case 'up':
       default:
-        return { initial: { opacity: 0, y: 35 }, animate: { opacity: 1, y: 0 } };
+        return { initial: { opacity: 0, y: 25 }, animate: { opacity: 1, y: 0 } };
     }
   };
 
@@ -37,9 +33,9 @@ export default function MotionWrapper({
     <motion.div
       initial={variants.initial}
       whileInView={variants.animate}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, margin: '-30px' }}
       transition={{
-        duration: 0.6,
+        duration: 0.5,
         delay,
         ease: [0.22, 1, 0.36, 1],
       }}

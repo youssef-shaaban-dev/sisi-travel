@@ -11,9 +11,9 @@ import ContactSection from '@/components/sections/ContactSection';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#F9F7F3]">
+    <div className="min-h-screen flex flex-col bg-brand-sand-light overflow-x-hidden">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 w-full overflow-x-hidden">
         <Hero />
         <AboutSection />
         <UmrahSection />
