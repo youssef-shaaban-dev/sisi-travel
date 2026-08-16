@@ -31,19 +31,6 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-        {/* Heritage Trust Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-brand-burgundy-dark/85 border-2 border-brand-gold/60 backdrop-blur-md mb-8 shadow-2xl"
-        >
-          <Award className="w-5 h-5 text-brand-gold" />
-          <span className="text-sm sm:text-base font-black text-brand-sand tracking-wide">
-            تأسست عام {COMPANY_DETAILS.establishedYear} - أكثر من 4 عقود من الخبرة والتميز
-          </span>
-        </motion.div>
-
         {/* Hero Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
