@@ -87,17 +87,13 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-gray-300">
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                <a href={`tel:${COMPANY_DETAILS.phone1Raw}`} className="hover:text-white dir-ltr font-bold">
+                <a dir='ltr' href={`tel:${COMPANY_DETAILS.phone1Raw}`} className="hover:text-white font-bold">
                   {COMPANY_DETAILS.phone1}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-brand-gold flex-shrink-0" />
                 <span>{COMPANY_DETAILS.address}</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                <span>{COMPANY_DETAILS.workingHours}</span>
               </li>
             </ul>
           </div>

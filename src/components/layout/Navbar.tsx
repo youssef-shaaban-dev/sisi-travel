@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, MessageCircle } from 'lucide-react';
-import { COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
+import { Menu, X } from 'lucide-react';
+import { COMPANY_DETAILS } from '@/data/programsData';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -69,19 +69,6 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CTA Button (WhatsApp ONLY) on Left in RTL */}
-          <div className="hidden sm:flex items-center gap-3">
-            <a
-              href={getWhatsAppLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-base font-extrabold shadow-md hover:shadow-lg transition-all border border-emerald-400/40 group"
-            >
-              <MessageCircle className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
-              <span>تواصل معنا</span>
-            </a>
-          </div>
-
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -122,25 +109,6 @@ export default function Navbar() {
                   </motion.div>
                 ))}
               </nav>
-
-              {/* WhatsApp Action Only */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.3 }}
-                className="pt-4 border-t border-white/15"
-              >
-                <a
-                  href={getWhatsAppLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white text-lg font-black shadow-xl transition-all"
-                >
-                  <MessageCircle className="w-6 h-6 fill-current" />
-                  <span>استفسر عبر الواتساب فقط</span>
-                </a>
-              </motion.div>
             </div>
           </motion.div>
         )}
