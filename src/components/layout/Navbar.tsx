@@ -42,10 +42,10 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between lg:justify-start">
           {/* Logo on the Right in RTL */}
           <Link href="/" className="flex items-center gap-3.5 group focus:outline-none">
-            <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 transition-transform group-hover:scale-105">
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 transition-transform group-hover:scale-105">
               <Image
                 src="/logo/logo-white.svg"
                 alt={COMPANY_DETAILS.name}
@@ -57,7 +57,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-9">
+          <nav className="hidden lg:flex items-center justify-center flex-1 gap-9">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
