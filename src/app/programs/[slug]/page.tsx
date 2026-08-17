@@ -91,9 +91,9 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
               >
                 {program.badgeText}
               </Badge>
-              <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-                <Tag className="w-3.5 h-3.5 text-emerald-600" />
-                <span>السعر: {program.price}</span>
+              <span className="text-xs font-black text-brand-burgundy-dark bg-amber-400 px-4 py-1.5 rounded-full border border-amber-300/80 shadow-md flex items-center gap-1.5 scale-105">
+                <Tag className="w-3.5 h-3.5 text-brand-burgundy-dark" />
+                <span>السعر تبدأ من: {program.price}</span>
               </span>
               <span className="text-xs font-semibold text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full border border-brand-olive/20">
                 طيران مباشر ({program.airline})
@@ -267,10 +267,10 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
             <div className="lg:col-span-4">
               <div className="sticky top-28 bg-white p-6 rounded-2xl border-2 border-brand-burgundy/20 shadow-xl space-y-6">
                 <div className="space-y-2 text-center pb-4 border-b border-gray-100">
-                  <div className="text-2xl font-black text-brand-burgundy-dark">
-                    {program.price}
+                  <div className="inline-block px-8 py-3 rounded-2xl bg-amber-400 shadow-md border border-amber-300">
+                    <span className="text-3xl font-black text-brand-burgundy-dark">{program.price}</span>
                   </div>
-                  <p className="text-xs font-bold text-brand-gold">
+                  <p className="text-xs font-bold text-gray-600 pt-1">
                     {program.priceNote}
                   </p>
                 </div>

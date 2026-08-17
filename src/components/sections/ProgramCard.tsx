@@ -91,7 +91,7 @@ export default function ProgramCard({ program }: ProgramCardProps) {
             {/* Price Badge Highlight */}
             <div className="flex items-center gap-2.5 font-extrabold text-brand-burgundy pt-1">
               <Tag className="w-4 h-4 text-brand-gold flex-shrink-0" />
-              <span className="text-base text-brand-burgundy-dark">{program.price}</span>
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-400 text-brand-burgundy-dark font-black text-base shadow-md border border-amber-300/80 scale-105 transition-transform"><Tag className="w-4 h-4 text-brand-burgundy-dark" /><span>{program.price}</span></span>
             </div>
           </div>
         </div>
