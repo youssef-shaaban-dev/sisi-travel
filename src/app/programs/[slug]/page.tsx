@@ -28,6 +28,12 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const programs = await serverApi.getPrograms();
+  
+  if (!programs || programs.length === 0) {
+    // Next.js requires at least one route for static export
+    return [{ slug: 'no-programs-yet' }];
+  }
+
   return programs.map((program) => ({
     slug: program.slug,
   }));
