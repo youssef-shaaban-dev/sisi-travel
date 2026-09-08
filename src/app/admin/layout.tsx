@@ -29,7 +29,8 @@ export default function AdminLayout({
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       
-      if (!session && pathname !== '/admin/login') {
+      const normalizedPath = pathname.replace(/\/$/, '')
+      if (!session && normalizedPath !== '/admin/login') {
         router.push('/admin/login')
       } else {
         setIsCheckingAuth(false)
@@ -39,7 +40,8 @@ export default function AdminLayout({
     checkAuth()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session && pathname !== '/admin/login') {
+      const normalizedPath = pathname.replace(/\/$/, '')
+      if (!session && normalizedPath !== '/admin/login') {
         router.push('/admin/login')
       }
     })
@@ -52,7 +54,9 @@ export default function AdminLayout({
     router.push('/admin/login')
   }
 
-  if (isCheckingAuth && pathname !== '/admin/login') {
+  const normalizedPath = pathname.replace(/\/$/, '')
+
+  if (isCheckingAuth && normalizedPath !== '/admin/login') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -61,7 +65,7 @@ export default function AdminLayout({
   }
 
   // Don't show sidebar on login page
-  if (pathname === '/admin/login') {
+  if (normalizedPath === '/admin/login') {
     return <>{children}</>
   }
 
@@ -88,15 +92,10 @@ export default function AdminLayout({
             </div>
             <nav className="mt-5 px-2 space-y-1">
               {navigation.map((item) => {
-                const isActive = pathname === item.href.split('?')[0] && (item.href.includes('?') ? typeof window !== 'undefined' && window.location.search.includes(item.href.split('?')[1]) : true);
-                if (item.href === '/admin' && pathname === '/admin') {
-                  // exact match for dashboard
-                }
-                
-                // Better active state handling
+                const navPath = item.href.split('?')[0].replace(/\/$/, '')
                 let isCurrent = false;
-                if (item.href === '/admin' && pathname === '/admin') isCurrent = true;
-                if (item.href !== '/admin' && pathname.startsWith(item.href.split('?')[0])) {
+                if (navPath === '/admin' && normalizedPath === '/admin') isCurrent = true;
+                if (navPath !== '/admin' && normalizedPath.startsWith(navPath)) {
                   if (item.href.includes('type=')) {
                     isCurrent = typeof window !== 'undefined' && window.location.search.includes(item.href.split('?')[1]);
                   } else {
@@ -140,9 +139,10 @@ export default function AdminLayout({
               </div>
               <nav className="mt-8 flex-1 px-2 bg-slate-900 space-y-1">
                 {navigation.map((item) => {
+                  const navPath = item.href.split('?')[0].replace(/\/$/, '')
                   let isCurrent = false;
-                  if (item.href === '/admin' && pathname === '/admin') isCurrent = true;
-                  if (item.href !== '/admin' && pathname.startsWith(item.href.split('?')[0])) {
+                  if (navPath === '/admin' && normalizedPath === '/admin') isCurrent = true;
+                  if (navPath !== '/admin' && normalizedPath.startsWith(navPath)) {
                     if (item.href.includes('type=')) {
                       isCurrent = typeof window !== 'undefined' && window.location.search.includes(item.href.split('?')[1]);
                     } else {
