@@ -13,9 +13,10 @@ export interface ProgramItineraryDay {
 
 export interface TravelProgram {
   id: string;
+  type: 'umrah' | 'hajj';
   slug: string;
   title: string;
-  category: 'vip' | 'ramadan' | 'economic' | 'hajj-luxury' | 'hajj-economic' | 'hajj-land';
+  category: string;
   categoryLabel: string;
   subtitle: string;
   summary: string;
@@ -57,6 +58,7 @@ export const PROGRAM_CATEGORIES = UMRAH_CATEGORIES;
 export const UMRAH_PROGRAMS: TravelProgram[] = [
   {
     id: 'umrah-vip-5stars',
+    type: 'umrah',
     slug: 'umrah-vip-5stars',
     title: 'عمرة الخمس نجوم الـ VIP - إقامة فاخرة صف أول',
     category: 'vip',
@@ -167,6 +169,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'umrah-ramadan-full',
+    type: 'umrah',
     slug: 'umrah-ramadan-full',
     title: 'عمرة شهر رمضان المبارك - الجمعة الأخيرة والعيد',
     category: 'ramadan',
@@ -237,6 +240,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'umrah-shawwal',
+    type: 'umrah',
     slug: 'umrah-shawwal',
     title: 'عمرة شهر شوال المتميزة - هدوء وراحة بعد العيد',
     category: 'economic',
@@ -292,6 +296,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'umrah-economic-plus',
+    type: 'umrah',
     slug: 'umrah-economic-plus',
     title: 'العمرة الاقتصادية المتميزة - جودة وخدمة بسعر مناسب',
     category: 'economic',
@@ -350,6 +355,7 @@ export const UMRAH_PROGRAMS: TravelProgram[] = [
 export const HAJJ_PROGRAMS: TravelProgram[] = [
   {
     id: 'hajj-luxury-1',
+    type: 'hajj',
     slug: 'hajj-luxury-1',
     title: 'برنامج الحج الفاخر (1) - صف أول وقطار الحرمين السريع',
     category: 'hajj-luxury',
@@ -424,6 +430,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'hajj-luxury-kadana',
+    type: 'hajj',
     slug: 'hajj-luxury-kadana',
     title: 'برنامج الحج الفاخر (2) - عمائر كدانه المميزة',
     category: 'hajj-luxury',
@@ -485,6 +492,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'hajj-luxury-distinct',
+    type: 'hajj',
     slug: 'hajj-luxury-distinct',
     title: 'برنامج الحج المميز (3) - 15 يوماً إقامة راقية',
     category: 'hajj-luxury',
@@ -544,6 +552,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'hajj-economic-1',
+    type: 'hajj',
     slug: 'hajj-economic-1',
     title: 'برنامج الحج الاقتصادي (1) - هيلتون مكة وأرجوان الذهبي',
     category: 'hajj-economic',
@@ -604,6 +613,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'hajj-economic-2',
+    type: 'hajj',
     slug: 'hajj-economic-2',
     title: 'برنامج الحج الاقتصادي (2) - فندق الشهداء 5 نجوم',
     category: 'hajj-economic',
@@ -658,6 +668,7 @@ export const HAJJ_PROGRAMS: TravelProgram[] = [
   },
   {
     id: 'hajj-land-1',
+    type: 'hajj',
     slug: 'hajj-land-1',
     title: 'برنامج الحج البري المميز - باصات سياحية فاخرة 24 يوماً',
     category: 'hajj-land',

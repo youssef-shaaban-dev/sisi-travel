@@ -1,0 +1,411 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
+import { TravelProgram} from '@/data/programsData'
+import { api } from '@/lib/api'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Loader2, Plus, Trash2, X } from 'lucide-react'
+import { useForm as useRHForm, useFieldArray as useRHFieldArray} from 'react-hook-form'
+import toast from 'react-hot-toast'
+
+interface ProgramFormProps {
+  initialData?: TravelProgram
+  isEdit?: boolean
+}
+
+// Ensure defaults for all array fields
+const defaultValues: Partial<TravelProgram> = {
+  type: 'umrah',
+  title: '',
+  slug: '',
+  category: 'economic',
+  categoryLabel: '',
+  subtitle: '',
+  summary: '',
+  featuredImage: '',
+  galleryImages: [],
+  durationDays: 1,
+  durationNights: 1,
+  meccaNights: 0,
+  medinaNights: 0,
+  price: '',
+  priceNote: '',
+  badgeText: '',
+  isFeatured: false,
+  airline: '',
+  flightType: '',
+  hotels: [],
+  includedServices: [],
+  excludedServices: [],
+  importantNotes: [],
+  itinerary: [],
+}
+
+export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const urlType = searchParams.get('type') === 'hajj' ? 'hajj' : 'umrah'
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [activeTab, setActiveTab] = useState(0)
+
+  const { register, control, handleSubmit, watch, setValue } = useRHForm<TravelProgram>({
+    defaultValues: {
+      ...defaultValues,
+      type: initialData?.type || urlType,
+      ...initialData
+    },
+  })
+
+  // Dynamic lists
+  const { fields: hotelFields, append: appendHotel, remove: removeHotel } = useRHFieldArray({ control, name: 'hotels' })
+  const { fields: itineraryFields, append: appendItinerary, remove: removeItinerary } = useRHFieldArray({ control, name: 'itinerary' })
+  
+  // For simple string arrays, we manage them via state to keep it simple, or using string inputs
+  const watchGallery = watch('galleryImages') || []
+  const watchIncluded = watch('includedServices') || []
+  const watchExcluded = watch('excludedServices') || []
+  const watchNotes = watch('importantNotes') || []
+  const watchTitle = watch('title')
+
+  // Helper to transliterate Arabic to English letters for the slug
+  const transliterateArabic = (text: string) => {
+    const arMap: Record<string, string> = {
+      'ا': 'a', 'أ': 'a', 'إ': 'e', 'آ': 'a', 'ب': 'b', 'ت': 't', 'ث': 'th',
+      'ج': 'g', 'ح': 'h', 'خ': 'kh', 'د': 'd', 'ذ': 'th', 'ر': 'r', 'ز': 'z',
+      'س': 's', 'ش': 'sh', 'ص': 's', 'ض': 'd', 'ط': 't', 'ظ': 'z', 'ع': 'a',
+      'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n',
+      'ه': 'h', 'ة': 'h', 'و': 'w', 'ؤ': 'o', 'ي': 'y', 'ى': 'a', 'ئ': 'e', 'ء': 'a'
+    }
+    return text.split('').map(char => arMap[char] || char).join('')
+  }
+
+  // Auto-generate slug from title
+  useEffect(() => {
+    if (!isEdit && typeof watchTitle === 'string') {
+      const transliterated = transliterateArabic(watchTitle)
+      const generatedSlug = transliterated
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // allow ONLY english, numbers, spaces, hyphens
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-') // remove consecutive hyphens
+      setValue('slug', generatedSlug, { shouldValidate: true })
+    }
+  }, [watchTitle, isEdit, setValue])
+
+  // Image Upload Handler
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, fieldName: 'featuredImage' | 'galleryImages') => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    try {
+      if (fieldName === 'featuredImage') {
+        // Just upload first file
+        const url = await api.uploadImage(files[0])
+        setValue('featuredImage', url)
+      } else {
+        // Upload multiple
+        const urls = await Promise.all(Array.from(files).map(f => api.uploadImage(f)))
+        setValue('galleryImages', [...watchGallery, ...urls])
+      }
+      toast.success('تم رفع الصورة بنجاح')
+    } catch (err) {
+      toast.error('فشل رفع الصورة.')
+    }
+  }
+
+  const onSubmit = async (data: TravelProgram) => {
+    setIsSubmitting(true)
+    try {
+      if (isEdit && initialData?.id) {
+        await api.updateProgram(initialData.id, data)
+        toast.success('تم تحديث البرنامج بنجاح!')
+      } else {
+        await api.createProgram(data)
+        toast.success('تمت إضافة البرنامج بنجاح!')
+      }
+      router.push('/admin/programs')
+    } catch (error) {
+      toast.error('حدث خطأ أثناء حفظ البيانات.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const tabs = ['البيانات الأساسية', 'الصور', 'الفنادق والطيران', 'خط السير', 'خدمات وملاحظات']
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 divide-y divide-gray-200">
+      
+      {/* Tabs */}
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex gap-8 overflow-x-auto" aria-label="Tabs">
+          {tabs.map((tab, idx) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setActiveTab(idx)}
+              className={`${
+                activeTab === idx
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            >
+              {tab}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      <div className="pt-6">
+        
+        {/* TAB 0: Basic Info */}
+        <div className={activeTab === 0 ? 'block space-y-6' : 'hidden'}>
+          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            {/* Type is now hidden and managed implicitly via URL or initialData */}
+            <input type="hidden" {...register('type')} />
+
+            <div className="sm:col-span-3">
+              <label className="block text-sm font-medium text-gray-700">اسم البرنامج</label>
+              <input type="text" {...register('title', { required: true })} placeholder="مثال: عمرة الخمس نجوم الـ VIP" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+
+            <div className="sm:col-span-3">
+              <label className="block text-sm font-medium text-gray-700">الرابط (Slug)</label>
+              <input type="text" {...register('slug', { required: true })} dir="ltr" placeholder="مثال: umrah-vip-5stars" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+              <p className="mt-1 text-xs text-gray-500">يتم توليده تلقائياً من اسم البرنامج.</p>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-700">التصنيف (المعرف / الرابط) - إنجليزي</label>
+              <input type="text" {...register('category', { required: true })} dir="ltr" placeholder="مثال: umrah-vip" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+              <p className="mt-1 text-xs text-gray-500">يستخدم في الرابط والبرمجة (إنجليزي فقط).</p>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-700">اسم التصنيف الظاهر للمستخدم</label>
+              <input type="text" {...register('categoryLabel')} placeholder="مثال: عمرة 5 نجوم VIP" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+              <p className="mt-1 text-xs text-gray-500">هذا الاسم سيظهر للعملاء في الموقع (مثل: حج فاخر).</p>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-700">وسام البرنامج (Badge)</label>
+              <input type="text" {...register('badgeText')} placeholder="مثال: الأكثر طلباً" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+
+            <div className="sm:col-span-6">
+              <label className="block text-sm font-medium text-gray-700">عنوان فرعي قصير (Subtitle)</label>
+              <input type="text" {...register('subtitle')} placeholder="مثال: تجربة إيمانية استثنائية مع إقامة في أرقى الفنادق" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+
+            <div className="sm:col-span-6">
+              <label className="block text-sm font-medium text-gray-700">وصف البرنامج (Summary)</label>
+              <textarea {...register('summary')} rows={3} placeholder="اكتب وصفاً جذاباً للبرنامج يظهر في صفحة التفاصيل..." className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+            
+            <div className="sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">الأيام</label>
+              <input type="number" {...register('durationDays', { valueAsNumber: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+            <div className="sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">الليالي</label>
+              <input type="number" {...register('durationNights', { valueAsNumber: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+            <div className="sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">ليالي مكة</label>
+              <input type="number" {...register('meccaNights', { valueAsNumber: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+            <div className="sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">ليالي المدينة</label>
+              <input type="number" {...register('medinaNights', { valueAsNumber: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+            
+            <div className="sm:col-span-6 flex items-center mt-4">
+              <input type="checkbox" {...register('isFeatured')} className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
+              <label className="ml-2 block text-sm text-gray-900 mr-2">إبراز البرنامج في الصفحة الرئيسية</label>
+            </div>
+          </div>
+        </div>
+
+        {/* TAB 1: Images */}
+        <div className={activeTab === 1 ? 'block space-y-6' : 'hidden'}>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">الصورة الرئيسية</label>
+            <div className="mt-1 flex items-center gap-4">
+              {watch('featuredImage') && <img src={watch('featuredImage')} className="h-20 w-20 object-cover rounded" alt="" />}
+              <label className="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <span>رفع صورة</span>
+                <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'featuredImage')} />
+              </label>
+            </div>
+          </div>
+          
+          <hr className="my-6" />
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">معرض الصور</label>
+            <div className="mt-2 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+              {watchGallery.map((url, i) => (
+                <div key={i} className="relative">
+                  <img src={url} className="h-24 w-full object-cover rounded" alt="" />
+                  <button type="button" onClick={() => setValue('galleryImages', watchGallery.filter((_, idx) => idx !== i))} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1">
+                    <X size={14} />
+                  </button>
+                </div>
+              ))}
+              <label className="cursor-pointer h-24 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center rounded-lg hover:bg-gray-50 text-gray-500">
+                <Plus size={24} />
+                <span className="text-xs mt-1">إضافة صور</span>
+                <input type="file" multiple className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'galleryImages')} />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {/* TAB 2: Hotels & Flights */}
+        <div className={activeTab === 2 ? 'block space-y-6' : 'hidden'}>
+          <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">شركات الطيران</label>
+              <input type="text" {...register('airline')} placeholder="مثال: مصر للطيران / الخطوط السعودية" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">نوع الطيران</label>
+              <input type="text" {...register('flightType')} placeholder="مثال: طيران مباشر (القاهرة - جدة)" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium">الفنادق</h3>
+              <button type="button" onClick={() => appendHotel({ name: '', city: 'مكة المكرمة', stars: 5, distance: '' })} className="text-blue-600 flex items-center text-sm font-medium">
+                <Plus size={16} className="mr-1 ml-1" /> إضافة فندق
+              </button>
+            </div>
+            <div className="space-y-4">
+              {hotelFields.map((field, index) => (
+                <div key={field.id} className="p-4 border border-gray-200 rounded-lg relative bg-gray-50">
+                  <button type="button" onClick={() => removeHotel(index)} className="absolute top-4 left-4 text-red-500">
+                    <Trash2 size={18} />
+                  </button>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-4 pr-8">
+                    <div className="col-span-2">
+                      <label className="block text-xs font-medium text-gray-700">الاسم</label>
+                      <input type="text" {...register(`hotels.${index}.name` as const)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700">المدينة</label>
+                      <select {...register(`hotels.${index}.city` as const)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border">
+                        <option value="مكة المكرمة">مكة المكرمة</option>
+                        <option value="المدينة المنورة">المدينة المنورة</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700">النجوم</label>
+                      <input type="number" {...register(`hotels.${index}.stars` as const, { valueAsNumber: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" />
+                    </div>
+                    <div className="col-span-4">
+                      <label className="block text-xs font-medium text-gray-700">المسافة/الوصف</label>
+                      <input type="text" {...register(`hotels.${index}.distance` as const)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* TAB 3: Itinerary */}
+        <div className={activeTab === 3 ? 'block space-y-6' : 'hidden'}>
+           <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium">خط سير الرحلة اليومي</h3>
+            <button type="button" onClick={() => appendItinerary({ dayNumber: itineraryFields.length + 1, title: '', description: '' })} className="text-blue-600 flex items-center text-sm font-medium">
+              <Plus size={16} className="mr-1 ml-1" /> إضافة يوم
+            </button>
+          </div>
+          <div className="space-y-4">
+            {itineraryFields.map((field, index) => (
+              <div key={field.id} className="p-4 border border-gray-200 rounded-lg relative flex gap-4">
+                <div className="w-16">
+                  <label className="block text-xs font-medium text-gray-700">اليوم</label>
+                  <input type="number" {...register(`itinerary.${index}.dayNumber` as const, { valueAsNumber: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border text-center" />
+                </div>
+                <div className="flex-1 space-y-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700">العنوان</label>
+                    <input type="text" {...register(`itinerary.${index}.title` as const)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700">التفاصيل</label>
+                    <textarea {...register(`itinerary.${index}.description` as const)} rows={2} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" />
+                  </div>
+                </div>
+                <div className="pt-6">
+                   <button type="button" onClick={() => removeItinerary(index)} className="text-red-500">
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* TAB 4: Services & Notes */}
+        <div className={activeTab === 4 ? 'block space-y-6' : 'hidden'}>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div>
+               <h3 className="text-md font-medium mb-2">الخدمات المشمولة</h3>
+               <textarea 
+                  rows={5} 
+                  className="w-full rounded-md border border-gray-300 p-2 text-sm" 
+                  placeholder="خدمة في كل سطر..."
+                  value={watchIncluded.join('\n')}
+                  onChange={(e) => setValue('includedServices', e.target.value.split('\n').filter(Boolean))}
+               />
+            </div>
+            <div>
+               <h3 className="text-md font-medium mb-2">الخدمات غير المشمولة</h3>
+               <textarea 
+                  rows={5} 
+                  className="w-full rounded-md border border-gray-300 p-2 text-sm" 
+                  placeholder="خدمة في كل سطر..."
+                  value={watchExcluded.join('\n')}
+                  onChange={(e) => setValue('excludedServices', e.target.value.split('\n').filter(Boolean))}
+               />
+            </div>
+            <div className="lg:col-span-2">
+               <h3 className="text-md font-medium mb-2">ملاحظات هامة</h3>
+               <textarea 
+                  rows={4} 
+                  className="w-full rounded-md border border-gray-300 p-2 text-sm" 
+                  placeholder="ملاحظة في كل سطر..."
+                  value={watchNotes.join('\n')}
+                  onChange={(e) => setValue('importantNotes', e.target.value.split('\n').filter(Boolean))}
+               />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="pt-5 flex justify-end">
+        <button
+          type="button"
+          onClick={() => router.push('/admin/programs')}
+          className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          إلغاء
+        </button>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="mr-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          {isSubmitting ? <Loader2 className="animate-spin h-5 w-5" /> : 'حفظ البرنامج'}
+        </button>
+      </div>
+    </form>
+  )
+}
