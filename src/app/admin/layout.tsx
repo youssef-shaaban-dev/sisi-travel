@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
-import { LayoutDashboard, Plane, LogOut, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Plane, LogOut, Menu, X, Tags } from 'lucide-react'
 import { ReactQueryProvider } from '@/components/ReactQueryProvider'
 import { Toaster } from 'react-hot-toast'
 
 const navigation = [
   { name: 'لوحة القيادة', href: '/admin', icon: LayoutDashboard },
+  { name: 'التصنيفات', href: '/admin/categories', icon: Tags },
   { name: 'برامج الحج', href: '/admin/programs?type=hajj', icon: Plane },
   { name: 'برامج العمرة', href: '/admin/programs?type=umrah', icon: Plane },
 ]
@@ -119,7 +120,7 @@ export default function AdminLayout({
             </nav>
           </div>
           <div className="flex-shrink-0 flex bg-slate-800 p-4">
-            <button onClick={handleLogout} className="flex-shrink-0 group block w-full flex items-center text-slate-300 hover:text-white">
+            <button onClick={handleLogout} className="flex-shrink-0 group block w-full flex items-center text-slate-300 hover:text-white cursor-pointer">
               <LogOut className="inline-block h-5 w-5 ml-3" />
               <div className="ml-3">
                 <p className="text-sm font-medium">تسجيل الخروج</p>
@@ -166,7 +167,7 @@ export default function AdminLayout({
               </nav>
             </div>
             <div className="flex-shrink-0 flex bg-slate-800 p-4">
-              <button onClick={handleLogout} className="flex-shrink-0 w-full group block text-right text-slate-300 hover:text-white transition-colors">
+              <button onClick={handleLogout} className="flex-shrink-0 w-full group block text-right text-slate-300 hover:text-white transition-colors cursor-pointer">
                 <div className="flex items-center">
                   <LogOut className="inline-block h-5 w-5 ml-3" />
                   <p className="text-sm font-medium">تسجيل الخروج</p>

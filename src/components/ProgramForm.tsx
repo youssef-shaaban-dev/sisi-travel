@@ -7,6 +7,7 @@ import { api } from '@/lib/api'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Loader2, Plus, Trash2, X } from 'lucide-react'
 import { useForm as useRHForm, useFieldArray as useRHFieldArray} from 'react-hook-form'
+import { useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 
 interface ProgramFormProps {
@@ -56,6 +57,12 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
       type: initialData?.type || urlType,
       ...initialData
     },
+  })
+
+  // Fetch Categories
+  const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
+    queryKey: ['categories', watch('type')],
+    queryFn: () => api.getCategories(watch('type'))
   })
 
   // Dynamic lists
@@ -178,16 +185,32 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
               <p className="mt-1 text-xs text-gray-500">يتم توليده تلقائياً من اسم البرنامج.</p>
             </div>
 
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700">التصنيف (المعرف / الرابط) - إنجليزي</label>
-              <input type="text" {...register('category', { required: true })} dir="ltr" placeholder="مثال: umrah-vip" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
-              <p className="mt-1 text-xs text-gray-500">يستخدم في الرابط والبرمجة (إنجليزي فقط).</p>
-            </div>
-
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700">اسم التصنيف الظاهر للمستخدم</label>
-              <input type="text" {...register('categoryLabel')} placeholder="مثال: عمرة 5 نجوم VIP" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
-              <p className="mt-1 text-xs text-gray-500">هذا الاسم سيظهر للعملاء في الموقع (مثل: حج فاخر).</p>
+            <div className="sm:col-span-4">
+              <label className="block text-sm font-medium text-gray-700">التصنيف</label>
+              {isLoadingCategories ? (
+                <div className="mt-1 p-2 text-sm text-gray-500">جاري تحميل التصنيفات...</div>
+              ) : (
+                <select 
+                  {...register('category', { required: true })}
+                  onChange={(e) => {
+                    const selectedCat = categories.find(c => c.slug === e.target.value);
+                    setValue('category', e.target.value, { shouldValidate: true });
+                    if (selectedCat) {
+                      setValue('categoryLabel', selectedCat.label, { shouldValidate: true });
+                    }
+                  }}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+                >
+                  <option value="">اختر التصنيف...</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.slug}>{cat.label}</option>
+                  ))}
+                </select>
+              )}
+              {categories.length === 0 && !isLoadingCategories && (
+                <p className="mt-1 text-xs text-red-500">لا توجد تصنيفات مضافة، يرجى إضافة تصنيف من قسم التصنيفات أولاً.</p>
+              )}
+              <input type="hidden" {...register('categoryLabel')} />
             </div>
 
             <div className="sm:col-span-2">

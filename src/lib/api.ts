@@ -1,6 +1,14 @@
 import { createClient } from '@/utils/supabase/client'
 import { TravelProgram } from '@/data/programsData'
 
+export interface Category {
+  id: string;
+  slug: string;
+  label: string;
+  type: string;
+  created_at?: string;
+}
+
 export const api = {
   // Programs
   getPrograms: async (category?: string) => {
@@ -40,6 +48,39 @@ export const api = {
   deleteProgram: async (id: string) => {
     const supabase = createClient()
     const { error } = await supabase.from('programs').delete().eq('id', id)
+    if (error) throw error
+    return true
+  },
+
+  // Categories
+  getCategories: async (type?: string) => {
+    const supabase = createClient()
+    let query = supabase.from('categories').select('*').order('created_at', { ascending: true })
+    if (type) {
+      query = query.eq('type', type)
+    }
+    const { data, error } = await query
+    if (error) throw error
+    return data as Category[]
+  },
+
+  createCategory: async (category: Partial<Category>) => {
+    const supabase = createClient()
+    const { data, error } = await supabase.from('categories').insert([category]).select().single()
+    if (error) throw error
+    return data
+  },
+
+  updateCategory: async (id: string, category: Partial<Category>) => {
+    const supabase = createClient()
+    const { data, error } = await supabase.from('categories').update(category).eq('id', id).select().single()
+    if (error) throw error
+    return data
+  },
+
+  deleteCategory: async (id: string) => {
+    const supabase = createClient()
+    const { error } = await supabase.from('categories').delete().eq('id', id)
     if (error) throw error
     return true
   },

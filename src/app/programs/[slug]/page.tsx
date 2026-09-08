@@ -19,21 +19,23 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Badge from '@/components/ui/Badge';
 import ProgramCard from '@/components/sections/ProgramCard';
-import { ALL_PROGRAMS, COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
+import { COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
+import { serverApi } from '@/lib/serverApi';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return ALL_PROGRAMS.map((program) => ({
+  const programs = await serverApi.getPrograms();
+  return programs.map((program) => ({
     slug: program.slug,
   }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
   const resolvedParams = await params;
-  const program = ALL_PROGRAMS.find((p) => p.slug === resolvedParams.slug);
+  const program = await serverApi.getProgramBySlug(resolvedParams.slug);
 
   if (!program) {
     return { title: 'البرنامج غير موجود | سيسي ترافل' };
@@ -47,14 +49,15 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ProgramDetailsPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const program = ALL_PROGRAMS.find((p) => p.slug === resolvedParams.slug);
+  const program = await serverApi.getProgramBySlug(resolvedParams.slug);
 
   if (!program) {
     notFound();
   }
 
   // Related programs
-  const relatedPrograms = ALL_PROGRAMS.filter((p) => p.slug !== program.slug).slice(0, 3);
+  const allPrograms = await serverApi.getPrograms();
+  const relatedPrograms = allPrograms.filter((p) => p.slug !== program.slug).slice(0, 3);
 
   const isHajj = program.category.startsWith('hajj');
 

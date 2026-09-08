@@ -1,16 +1,38 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useMemo } from 'react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import ProgramCard from '@/components/sections/ProgramCard';
-import { UMRAH_PROGRAMS, UMRAH_CATEGORIES } from '@/data/programsData';
+import { TravelProgram } from '@/data/programsData';
 
-export default function UmrahSection() {
+interface Props {
+  initialPrograms: TravelProgram[];
+}
+
+export default function UmrahSection({ initialPrograms }: Props) {
   const [activeCategory, setActiveCategory] = useState('all');
 
-  const filteredPrograms = UMRAH_PROGRAMS.filter((program) => {
+  // Extract unique categories dynamically from the programs
+  const dynamicCategories = useMemo(() => {
+    const cats = new Set<string>();
+    initialPrograms.forEach(p => {
+      if (p.categoryLabel) {
+        cats.add(p.categoryLabel);
+      }
+    });
+    
+    const catArray = Array.from(cats).map((label, idx) => ({
+      id: `cat-${idx}`,
+      label: label
+    }));
+    
+    return [{ id: 'all', label: 'الكل' }, ...catArray];
+  }, [initialPrograms]);
+
+  const filteredPrograms = initialPrograms.filter((program) => {
     if (activeCategory === 'all') return true;
-    return program.category === activeCategory;
+    const catObj = dynamicCategories.find(c => c.id === activeCategory);
+    return program.categoryLabel === catObj?.label;
   });
 
   return (
@@ -24,7 +46,7 @@ export default function UmrahSection() {
 
         {/* Category Filters */}
         <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12">
-          {UMRAH_CATEGORIES.map((cat) => {
+          {dynamicCategories.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button
