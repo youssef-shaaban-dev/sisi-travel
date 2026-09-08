@@ -25,7 +25,7 @@ export default function CategoriesPage() {
 
   // Mutations
   const createMutation = useMutation({
-    mutationFn: api.createCategory,
+    mutationFn: (category: Partial<Category>) => api.createCategory(category),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] })
       toast.success('تم إضافة التصنيف بنجاح')
@@ -52,7 +52,7 @@ export default function CategoriesPage() {
   })
 
   const deleteMutation = useMutation({
-    mutationFn: api.deleteCategory,
+    mutationFn: (id: string) => api.deleteCategory(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] })
       toast.success('تم حذف التصنيف بنجاح')
@@ -94,14 +94,33 @@ export default function CategoriesPage() {
   }
 
   const handleDelete = (id: string) => {
-    if (window.confirm('هل أنت متأكد من حذف هذا التصنيف؟')) {
-      deleteMutation.mutate(id)
-    }
+    toast((t) => (
+      <div className="flex flex-col gap-4">
+        <span className="font-bold text-gray-900 text-right">هل أنت متأكد من الحذف؟ لا يمكن التراجع.</span>
+        <div className="flex gap-2 justify-end">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id)
+              deleteMutation.mutate(id)
+            }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700"
+          >
+            نعم، احذف
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300"
+          >
+            إلغاء
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000, position: 'top-center' })
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">إدارة التصنيفات</h1>
           <p className="mt-1 text-sm text-gray-500">
@@ -114,7 +133,7 @@ export default function CategoriesPage() {
             setEditingId(null)
             setIsAdding(true)
           }}
-          className="inline-flex items-center gap-2 bg-brand-burgundy text-white px-4 py-2 rounded-lg hover:bg-brand-burgundy-light transition-colors"
+          className="inline-flex items-center justify-center gap-2 bg-brand-burgundy text-white px-4 py-2.5 rounded-lg hover:bg-brand-burgundy-light transition-colors w-full sm:w-auto"
         >
           <Plus className="w-5 h-5" />
           إضافة تصنيف

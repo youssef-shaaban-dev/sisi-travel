@@ -313,8 +313,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
                   <button type="button" onClick={() => removeHotel(index)} className="absolute top-4 left-4 text-red-500">
                     <Trash2 size={18} />
                   </button>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-4 pr-8">
-                    <div className="col-span-2">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-4 sm:pr-8 pr-0 mt-6 sm:mt-0">
+                    <div className="sm:col-span-2">
                       <label className="block text-xs font-medium text-gray-700">الاسم</label>
                       <input type="text" {...register(`hotels.${index}.name` as const)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" />
                     </div>
@@ -350,8 +350,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
           </div>
           <div className="space-y-4">
             {itineraryFields.map((field, index) => (
-              <div key={field.id} className="p-4 border border-gray-200 rounded-lg relative flex gap-4">
-                <div className="w-16">
+              <div key={field.id} className="p-4 border border-gray-200 rounded-lg relative flex flex-col sm:flex-row gap-4">
+                <div className="w-full sm:w-20">
                   <label className="block text-xs font-medium text-gray-700">اليوم</label>
                   <input type="number" {...register(`itinerary.${index}.dayNumber` as const, { valueAsNumber: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border text-center" />
                 </div>
@@ -365,8 +365,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
                     <textarea {...register(`itinerary.${index}.description` as const)} rows={2} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border" />
                   </div>
                 </div>
-                <div className="pt-6">
-                   <button type="button" onClick={() => removeItinerary(index)} className="text-red-500">
+                <div className="pt-2 sm:pt-6 absolute sm:relative top-2 left-2 sm:top-0 sm:left-0">
+                   <button type="button" onClick={() => removeItinerary(index)} className="text-red-500 bg-red-50 p-1.5 rounded-lg hover:bg-red-100 transition-colors">
                     <Trash2 size={18} />
                   </button>
                 </div>
@@ -413,18 +413,18 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
 
       </div>
 
-      <div className="pt-5 flex justify-end">
+      <div className="pt-5 flex flex-col-reverse sm:flex-row justify-end gap-3 sm:gap-0">
         <button
           type="button"
           onClick={() => router.push('/admin/programs')}
-          className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="bg-white py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full sm:w-auto"
         >
           إلغاء
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mr-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="sm:mr-3 inline-flex justify-center py-2.5 px-4 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full sm:w-auto"
         >
           {isSubmitting ? <Loader2 className="animate-spin h-5 w-5" /> : 'حفظ البرنامج'}
         </button>

@@ -31,9 +31,28 @@ function ProgramsList() {
   })
 
   const handleDelete = (id: string) => {
-    if (confirm('هل أنت متأكد من حذف هذا البرنامج؟')) {
-      deleteMutation.mutate(id)
-    }
+    toast((t) => (
+      <div className="flex flex-col gap-4">
+        <span className="font-bold text-gray-900 text-right">هل أنت متأكد من حذف هذا البرنامج؟ لا يمكن التراجع.</span>
+        <div className="flex gap-2 justify-end">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id)
+              deleteMutation.mutate(id)
+            }}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700"
+          >
+            نعم، احذف
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300"
+          >
+            إلغاء
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000, position: 'top-center' })
   }
 
   const filteredPrograms = programs?.filter((p) => p.type === activeTab) || []
@@ -59,10 +78,10 @@ function ProgramsList() {
             يمكنك تصفح وإضافة {activeTab === 'umrah' ? 'برامج العمرة' : 'برامج الحج'}، سيتم تجميعها تلقائياً حسب التصنيف.
           </p>
         </div>
-        <div className="mt-4 sm:mt-0">
+        <div className="mt-4 sm:mt-0 w-full sm:w-auto">
           <Link
             href={`/admin/programs/create?type=${activeTab}`}
-            className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
+            className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
           >
             <Plus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             إضافة برنامج جديد
