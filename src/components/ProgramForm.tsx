@@ -6,7 +6,7 @@ import { TravelProgram} from '@/data/programsData'
 import { api } from '@/lib/api'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Loader2, Plus, Trash2, X } from 'lucide-react'
-import { useForm as useRHForm, useFieldArray as useRHFieldArray} from 'react-hook-form'
+import { useForm as useRHForm, useFieldArray as useRHFieldArray, FieldErrors } from 'react-hook-form'
 import { useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { generateSlug } from '@/utils/helpers'
@@ -108,8 +108,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
 
   const onSubmit = async (data: TravelProgram) => {
     if (!data.featuredImage) {
-      toast.error('يرجى رفع الصورة الرئيسية للبرنامج (من تبويب الصور).')
-      setActiveTab(1)
+      toast.error('يرجى رفع الصورة الرئيسية للبرنامج (في تبويب البيانات الأساسية).')
+      setActiveTab(0)
       return
     }
 
@@ -123,24 +123,23 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
         toast.success('تمت إضافة البرنامج بنجاح!')
       }
       router.push('/admin/programs')
-    } catch (error :any) {
-      toast.error('حدث خطأ أثناء حفظ البيانات: ' + (error?.message || 'خطأ غير معروف'))
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : (error as { message?: string })?.message || 'خطأ غير معروف'
+      toast.error('حدث خطأ أثناء حفظ البيانات: ' + msg)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const onError = (errors : any) => {
+  const onError = (errors: FieldErrors<TravelProgram>) => {
     toast.error('يرجى ملء جميع الحقول الإجبارية (المميزة بنجمة حمراء).')
     // Auto-switch to the first tab if there are errors there
-    if (errors.title || errors.slug || errors.category || errors.price) {
+    if (errors.title || errors.slug || errors.category || errors.price || errors.featuredImage) {
       setActiveTab(0)
-    } else if (errors.featuredImage) {
-      setActiveTab(1)
     }
   }
 
-  const tabs = ['البيانات الأساسية', 'الصور', 'الفنادق والطيران', 'خط السير', 'خدمات وملاحظات']
+  const tabs = ['البيانات الأساسية', 'معرض الصور', 'الفنادق والطيران', 'خط السير', 'خدمات وملاحظات']
 
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-8 divide-y divide-gray-200">
@@ -169,6 +168,30 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
         
         {/* TAB 0: Basic Info */}
         <div className={activeTab === 0 ? 'block space-y-6' : 'hidden'}>
+          {/* Featured Image - Required */}
+          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+            <label className="block text-sm font-bold text-gray-900 mb-2">الصورة الرئيسية للبرنامج <span className="text-red-500">*</span></label>
+            <div className="flex items-center gap-4">
+              {watch('featuredImage') ? (
+                <div className="relative">
+                  <img src={watch('featuredImage')} className="h-24 w-32 object-cover rounded shadow-sm border border-gray-200" alt="Main" />
+                  <button type="button" onClick={() => setValue('featuredImage', '')} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow">
+                    <X size={14} />
+                  </button>
+                </div>
+              ) : (
+                <div className="h-24 w-32 bg-gray-100 rounded border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400">
+                  <span className="text-xs">لا توجد صورة</span>
+                </div>
+              )}
+              <label className="cursor-pointer inline-flex items-center gap-2 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                <Plus size={16} />
+                <span>{watch('featuredImage') ? 'تغيير الصورة' : 'رفع الصورة الرئيسية'}</span>
+                <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'featuredImage')} />
+              </label>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
             {/* Type is now hidden and managed implicitly via URL or initialData */}
             <input type="hidden" {...register('type')} />
@@ -261,24 +284,12 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
           </div>
         </div>
 
-        {/* TAB 1: Images */}
+        {/* TAB 1: Images (Gallery) */}
         <div className={activeTab === 1 ? 'block space-y-6' : 'hidden'}>
           <div>
-            <label className="block text-sm font-medium text-gray-700">الصورة الرئيسية <span className="text-red-500">*</span></label>
-            <div className="mt-1 flex items-center gap-4">
-              {watch('featuredImage') && <img src={watch('featuredImage')} className="h-20 w-20 object-cover rounded" alt="" />}
-              <label className="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
-                <span>رفع صورة</span>
-                <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'featuredImage')} />
-              </label>
-            </div>
-          </div>
-          
-          <hr className="my-6" />
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">معرض الصور</label>
-            <div className="mt-2 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+            <label className="block text-sm font-medium text-gray-700">معرض الصور الإضافية (اختياري)</label>
+            <p className="text-xs text-gray-500 mb-4">هذه الصور ستظهر في صفحة تفاصيل البرنامج بالأسفل.</p>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
               {watchGallery.map((url, i) => (
                 <div key={i} className="relative">
                   <img src={url} className="h-24 w-full object-cover rounded" alt="" />
