@@ -11,8 +11,8 @@ import { serverApi } from '@/lib/serverApi';
 
 export default async function HomePage() {
   const allPrograms = await serverApi.getPrograms();
-  const umrahPrograms = allPrograms.filter(p => p.category.startsWith('umrah'));
-  const hajjPrograms = allPrograms.filter(p => p.category.startsWith('hajj'));
+  const umrahPrograms = allPrograms.filter(p => p.type === 'umrah');
+  const hajjPrograms = allPrograms.filter(p => p.type === 'hajj');
   return (
     <div className="min-h-screen flex flex-col bg-brand-sand-light overflow-x-hidden">
       <Navbar />
