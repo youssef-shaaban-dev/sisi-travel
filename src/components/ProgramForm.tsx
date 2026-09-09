@@ -107,6 +107,12 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
   }
 
   const onSubmit = async (data: TravelProgram) => {
+    if (!data.featuredImage) {
+      toast.error('يرجى رفع الصورة الرئيسية للبرنامج (من تبويب الصور).')
+      setActiveTab(1)
+      return
+    }
+
     setIsSubmitting(true)
     try {
       if (isEdit && initialData?.id) {
@@ -117,17 +123,27 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
         toast.success('تمت إضافة البرنامج بنجاح!')
       }
       router.push('/admin/programs')
-    } catch (error) {
-      toast.error('حدث خطأ أثناء حفظ البيانات.')
+    } catch (error :any) {
+      toast.error('حدث خطأ أثناء حفظ البيانات: ' + (error?.message || 'خطأ غير معروف'))
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const onError = (errors : any) => {
+    toast.error('يرجى ملء جميع الحقول الإجبارية (المميزة بنجمة حمراء).')
+    // Auto-switch to the first tab if there are errors there
+    if (errors.title || errors.slug || errors.category || errors.price) {
+      setActiveTab(0)
+    } else if (errors.featuredImage) {
+      setActiveTab(1)
     }
   }
 
   const tabs = ['البيانات الأساسية', 'الصور', 'الفنادق والطيران', 'خط السير', 'خدمات وملاحظات']
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 divide-y divide-gray-200">
+    <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-8 divide-y divide-gray-200">
       
       {/* Tabs */}
       <div className="border-b border-gray-200">
@@ -158,18 +174,18 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
             <input type="hidden" {...register('type')} />
 
             <div className="sm:col-span-3">
-              <label className="block text-sm font-medium text-gray-700">اسم البرنامج</label>
+              <label className="block text-sm font-medium text-gray-700">اسم البرنامج <span className="text-red-500">*</span></label>
               <input type="text" {...register('title', { required: true })} placeholder="مثال: عمرة الخمس نجوم الـ VIP" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
             </div>
 
             <div className="sm:col-span-3">
-              <label className="block text-sm font-medium text-gray-700">الرابط (Slug)</label>
+              <label className="block text-sm font-medium text-gray-700">الرابط (Slug) <span className="text-red-500">*</span></label>
               <input type="text" {...register('slug', { required: true })} dir="ltr" placeholder="مثال: umrah-vip-5stars" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
               <p className="mt-1 text-xs text-gray-500">يتم توليده تلقائياً من اسم البرنامج.</p>
             </div>
 
             <div className="sm:col-span-4">
-              <label className="block text-sm font-medium text-gray-700">التصنيف</label>
+              <label className="block text-sm font-medium text-gray-700">التصنيف <span className="text-red-500">*</span></label>
               {isLoadingCategories ? (
                 <div className="mt-1 p-2 text-sm text-gray-500">جاري تحميل التصنيفات...</div>
               ) : (
@@ -194,6 +210,16 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
                 <p className="mt-1 text-xs text-red-500">لا توجد تصنيفات مضافة، يرجى إضافة تصنيف من قسم التصنيفات أولاً.</p>
               )}
               <input type="hidden" {...register('categoryLabel')} />
+            </div>
+
+            <div className="sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">السعر <span className="text-red-500">*</span></label>
+              <input type="text" {...register('price', { required: true })} placeholder="مثال: 45,000 ج.م" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+            </div>
+
+            <div className="sm:col-span-1">
+              <label className="block text-sm font-medium text-gray-700">ملاحظة السعر</label>
+              <input type="text" {...register('priceNote')} placeholder="مثال: للفرد في الغرفة الرباعية" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
             </div>
 
             <div className="sm:col-span-2">
@@ -238,7 +264,7 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
         {/* TAB 1: Images */}
         <div className={activeTab === 1 ? 'block space-y-6' : 'hidden'}>
           <div>
-            <label className="block text-sm font-medium text-gray-700">الصورة الرئيسية</label>
+            <label className="block text-sm font-medium text-gray-700">الصورة الرئيسية <span className="text-red-500">*</span></label>
             <div className="mt-1 flex items-center gap-4">
               {watch('featuredImage') && <img src={watch('featuredImage')} className="h-20 w-20 object-cover rounded" alt="" />}
               <label className="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
