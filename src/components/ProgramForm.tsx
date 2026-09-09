@@ -9,6 +9,7 @@ import { Loader2, Plus, Trash2, X } from 'lucide-react'
 import { useForm as useRHForm, useFieldArray as useRHFieldArray} from 'react-hook-form'
 import { useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import { generateSlug } from '@/utils/helpers'
 
 interface ProgramFormProps {
   initialData?: TravelProgram
@@ -76,28 +77,10 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
   const watchNotes = watch('importantNotes') || []
   const watchTitle = watch('title')
 
-  // Helper to transliterate Arabic to English letters for the slug
-  const transliterateArabic = (text: string) => {
-    const arMap: Record<string, string> = {
-      'ا': 'a', 'أ': 'a', 'إ': 'e', 'آ': 'a', 'ب': 'b', 'ت': 't', 'ث': 'th',
-      'ج': 'g', 'ح': 'h', 'خ': 'kh', 'د': 'd', 'ذ': 'th', 'ر': 'r', 'ز': 'z',
-      'س': 's', 'ش': 'sh', 'ص': 's', 'ض': 'd', 'ط': 't', 'ظ': 'z', 'ع': 'a',
-      'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n',
-      'ه': 'h', 'ة': 'h', 'و': 'w', 'ؤ': 'o', 'ي': 'y', 'ى': 'a', 'ئ': 'e', 'ء': 'a'
-    }
-    return text.split('').map(char => arMap[char] || char).join('')
-  }
-
   // Auto-generate slug from title
   useEffect(() => {
     if (!isEdit && typeof watchTitle === 'string') {
-      const transliterated = transliterateArabic(watchTitle)
-      const generatedSlug = transliterated
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '') // allow ONLY english, numbers, spaces, hyphens
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-') // remove consecutive hyphens
+      const generatedSlug = generateSlug(watchTitle)
       setValue('slug', generatedSlug, { shouldValidate: true })
     }
   }, [watchTitle, isEdit, setValue])

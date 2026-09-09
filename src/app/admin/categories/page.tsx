@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api, Category } from '@/lib/api'
 import { Plus, Pencil, Trash2, X, Check, Tags } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { generateSlug } from '@/utils/helpers'
 
 export default function CategoriesPage() {
   const queryClient = useQueryClient()
@@ -78,10 +79,7 @@ export default function CategoriesPage() {
     // Auto generate slug if empty
     let finalSlug = formData.slug
     if (!finalSlug && formData.label) {
-      finalSlug = formData.label
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
+      finalSlug = generateSlug(formData.label)
     }
 
     const payload = { ...formData, slug: finalSlug || `cat-${Date.now()}` }
@@ -159,7 +157,14 @@ export default function CategoriesPage() {
                   type="text"
                   required
                   value={formData.label || ''}
-                  onChange={e => setFormData({...formData, label: e.target.value})}
+                  onChange={e => {
+                    const newLabel = e.target.value;
+                    if (!editingId) {
+                      setFormData(prev => ({...prev, label: newLabel, slug: generateSlug(newLabel)}));
+                    } else {
+                      setFormData(prev => ({...prev, label: newLabel}));
+                    }
+                  }}
                   className="w-full rounded-lg border-gray-300 shadow-sm focus:border-brand-burgundy focus:ring-brand-burgundy text-right"
                   placeholder="مثال: عمرة 5 نجوم"
                 />
