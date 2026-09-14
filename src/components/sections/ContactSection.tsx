@@ -1,7 +1,7 @@
-import { Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import MotionWrapper from '@/components/ui/MotionWrapper';
-import { COMPANY_DETAILS, getWhatsAppLink } from '@/data/programsData';
+import { getWhatsAppLink } from '@/data/programsData';
 
 export default function ContactSection() {
   return (

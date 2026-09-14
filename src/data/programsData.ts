@@ -750,6 +750,7 @@ export const COMPANY_DETAILS = {
   licenseText: 'شركة سياحة (أ) مرخصة من وزارة السياحة - رخصة رقم 249',
   address: '161 شارع السودان ، المهندسين - الجيزة مصر',
   facebookUrl: 'https://www.facebook.com/SiSiTravelEGY/',
+  instagramUrl: 'https://www.instagram.com/sisitravelno1/',
   workingHours: 'من الأحد إلى الخميس: 9:00 صباحاً - 6:00 مساءً',
 };
 
