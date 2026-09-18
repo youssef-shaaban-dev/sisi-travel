@@ -168,14 +168,6 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                       <div className="font-bold text-brand-burgundy-dark">{program.airline}</div>
                     </div>
                   </div>
-
-                  <div className="p-3.5 rounded-xl bg-brand-sand-light border border-brand-sand flex items-center gap-3 col-span-2 sm:col-span-1">
-                    <ShieldCheck className="w-5 h-5 text-brand-gold flex-shrink-0" />
-                    <div>
-                      <div className="text-gray-500 text-[11px]">الضمان والأمان</div>
-                      <div className="font-bold text-brand-burgundy-dark">مرخص رخصة 1982</div>
-                    </div>
-                  </div>
                 </div>
               </div>
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import { LayoutDashboard, Plane, LogOut, Menu, X, Tags } from 'lucide-react'
@@ -89,7 +90,9 @@ export default function AdminLayout({
           </div>
           <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
             <div className="flex-shrink-0 flex items-center px-4">
-              <a href="https://sisi.travel/" className="text-white text-2xl font-bold hover:text-gray-300 transition-colors">سيسي ترافل</a>
+              <Link href="/" target='_blank' rel='noopener noreferrer' className="hover:opacity-80 transition-opacity">
+                <Image src="/logo/logo-white.svg" alt="سيسي ترافل" width={80} height={30} className="object-contain" />
+              </Link>
             </div>
             <nav className="mt-5 px-2 space-y-1">
               {navigation.map((item) => {
@@ -137,7 +140,9 @@ export default function AdminLayout({
           <div className="flex-1 flex flex-col min-h-0 bg-slate-900">
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
               <div className="flex items-center flex-shrink-0 px-4">
-                <a href="https://sisi.travel/" className="text-white text-2xl font-bold hover:text-gray-300 transition-colors">سيسي ترافل</a>
+                <Link href="/" target='_blank' rel='noopener noreferrer' className="hover:opacity-80 transition-opacity">
+                  <Image src="/logo/logo-white.svg" alt="سيسي ترافل" width={90} height={35} className="object-contain" />
+                </Link>
               </div>
               <nav className="mt-8 flex-1 px-2 bg-slate-900 space-y-1">
                 {navigation.map((item) => {
@@ -182,7 +187,9 @@ export default function AdminLayout({
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
         {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-gray-200 shadow-sm z-10 relative">
-          <a href="https://sisi.travel/" className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">سيسي ترافل</a>
+          <Link href="/" target='_blank' rel='noopener noreferrer' className="hover:opacity-80 transition-opacity">
+            <Image src="/logo/logo-main.svg" alt="سيسي ترافل" width={100} height={30} className="object-contain" />
+          </Link>
           <button
             className="-mr-2 h-10 w-10 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
             onClick={() => setSidebarOpen(true)}
