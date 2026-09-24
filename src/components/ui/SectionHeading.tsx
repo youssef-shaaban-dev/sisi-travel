@@ -6,6 +6,7 @@ interface SectionHeadingProps {
   subtitle?: string;
   centered?: boolean;
   dark?: boolean;
+  showDivider?: boolean;
 }
 
 export default function SectionHeading({
@@ -14,6 +15,7 @@ export default function SectionHeading({
   subtitle,
   centered = true,
   dark = false,
+  showDivider = true,
 }: SectionHeadingProps) {
   return (
     <div className={`mb-14 md:mb-20 ${centered ? 'text-center max-w-4xl mx-auto' : 'text-right'}`}>
@@ -41,12 +43,14 @@ export default function SectionHeading({
           {subtitle}
         </p>
       )}
-
-      <div className={`mt-5 flex items-center gap-2 ${centered ? 'justify-center' : 'justify-start'}`}>
-        <span className="w-12 h-1 bg-brand-burgundy/40 rounded-full" />
-        <span className="w-3 h-3 rounded-full border-2 border-brand-gold bg-brand-gold/20" />
-        <span className="w-12 h-1 bg-brand-burgundy/40 rounded-full" />
-      </div>
+  
+      {showDivider && (
+        <div className={`mt-5 flex items-center gap-2 ${centered ? 'justify-center' : 'justify-start'}`}>
+          <span className="w-12 h-1 bg-brand-burgundy/40 rounded-full" />
+          <span className="w-3 h-3 rounded-full border-2 border-brand-gold bg-brand-gold/20" />
+          <span className="w-12 h-1 bg-brand-burgundy/40 rounded-full" />
+        </div>
+      )}
     </div>
   );
 }

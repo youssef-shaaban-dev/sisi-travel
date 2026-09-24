@@ -45,6 +45,7 @@ export default function HajjSection({ initialPrograms }: Props) {
           badge="فريضة الحج"
           title="برامج الحج - تنظيماً يليق بعظمة الفريضة"
           subtitle="نضع بين أيديكم 40 عاماً من الخبرة في إدارة موسم الحج، مع تنوع متكامل بين الحج الفاخر والحج الاقتصادي والحج البري."
+          showDivider={true}
         />
 
         {/* Hajj Category Filters Bar */}
