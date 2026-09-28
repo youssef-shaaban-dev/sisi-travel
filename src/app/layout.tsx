@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Tajawal } from 'next/font/google';
+import { GoogleTagManager } from '@next/third-parties/google';
 import './globals.css';
 import { COMPANY_DETAILS } from '@/data/programsData';
 import FloatingWhatsApp from '@/components/ui/FloatingWhatsApp';
@@ -54,7 +55,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className={tajawal.variable}>
-      <body className="font-sans antialiased min-h-screen flex flex-col bg-[#F9F7F3] text-gray-900 selection:bg-[#531F23] selection:text-white">
+      <GoogleTagManager gtmId="GTM-T5S5M7TF" />
+      <body className="font-sans antialiased min-h-screen flex flex-col bg-brand-sand-light text-gray-900 selection:bg-brand-burgundy selection:text-white">
         {children}
         <FloatingWhatsApp />
       </body>
