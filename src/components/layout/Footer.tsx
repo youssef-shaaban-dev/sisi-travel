@@ -137,7 +137,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright */}
-        <div className="mt-12 pt-6 pb-24 md:pb-6 border-t border-white/10 text-center text-xs text-gray-400 space-y-2.5">
+        <div className="mt-12 pt-6 border-t border-white/10 text-center text-xs text-gray-400 space-y-2.5">
           <p>
             © {new Date().getFullYear()} {COMPANY_DETAILS.name} - جميع الحقوق محفوظة. يُحظر تماماً الاستخدام غير المصرح به، بما في ذلك تدريب نماذج الذكاء الاصطناعي، أو إعادة الإنتاج، أو الاستغلال التجاري.
           </p>
