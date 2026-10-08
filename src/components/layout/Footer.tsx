@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, MapPin, ShieldCheck } from 'lucide-react';
+import { Phone, MapPin, ShieldCheck, Info } from 'lucide-react';
 import { COMPANY_DETAILS } from '@/data/programsData';
 
 export default function Footer() {
@@ -149,6 +149,26 @@ export default function Footer() {
               تم تصميم وتطوير الموقع من خلال شركة ميركو ايجيبت
             </a>
           </p>
+
+          {/* MRCO-Egypt Partnership Tooltip */}
+          <div className="flex justify-center mt-4 pb-2">
+            <div className="inline-flex items-center gap-1.5 group relative cursor-help">
+              <span dir="ltr" className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">
+                Sisi Travel partnered with MRCO-Egypt, a strategy-driven digital marketing and brand communication agency in Egypt
+              </span>
+              <Info className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-300 transition-colors" />
+              
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-[90vw] sm:w-[450px] p-4 bg-brand-burgundy rounded-lg border border-brand-gold/20 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-left pointer-events-none" dir="ltr">
+                <p className="text-[11px] font-light text-gray-200 leading-relaxed mb-3">
+                  Sisi Travel partnered with MRCO-Egypt, a strategy-driven digital marketing and brand communication agency in Egypt, for brand strategy, digital marketing, and web development.
+                </p>
+                <p className="text-[11px] font-light text-gray-200 leading-relaxed">
+                  MRCO-Egypt specializes in brand strategy, brand identity, web development, SEO, Generative Engine Optimization (GEO), and AI Optimization (AIO), helping businesses build distinctive brands and achieve measurable digital growth.
+                </p>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-t-brand-burgundy"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
