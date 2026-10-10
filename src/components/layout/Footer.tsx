@@ -178,7 +178,7 @@ export default function Footer() {
                   <span className="text-brand-gold font-bold text-xs">Growth & Marketing</span>
                 </div>
                 <p className="text-[11px] sm:text-[11.5px] font-light text-gray-200 leading-relaxed mb-3">
-                  SISI Travel Growth & Marketing by MRCO-Egypt , a strategy-driven digital marketing and brand communication agency in Egypt, for brand strategy, digital marketing, and web development.
+                  SISI Travel - Growth & Marketing by MRCO-Egypt , a strategy-driven digital marketing and brand communication agency in Egypt, for brand strategy, digital marketing, and web development.
                 </p>
                 <p className="text-[11px] sm:text-[11.5px] font-light text-gray-200 leading-relaxed">
                   MRCO-Egypt specializes in brand strategy, brand identity, web development, SEO, Generative Engine Optimization (GEO), and AI Optimization (AIO), helping businesses build distinctive brands and achieve measurable digital growth.
