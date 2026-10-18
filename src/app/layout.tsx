@@ -86,64 +86,116 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': ['TravelAgency', 'LocalBusiness'],
-      '@id': `${SITE_URL}/#organization`,
-      name: 'سيسى ترافل',
-      alternateName: [
-        'سيسي ترافل',
-        'Sisi Travel',
-        'سيسى ترافل شركة سياحة مصرية',
-        'شركة سيسي ترافل للسياحة والحج والعمرة',
-      ],
-      url: SITE_URL,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE_URL}/logo/logo-mark.svg`,
-        width: 190,
-        height: 60,
-      },
-      image: `${SITE_URL}/images/hero-kaaba.webp`,
-      description: COMPANY_DETAILS.description,
-      telephone: COMPANY_DETAILS.phone1Raw,
-      priceRange: '$$$$',
-      currenciesAccepted: 'EGP, SAR',
-      paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+      '@type': 'TravelAgency',
+      '@id': 'https://sisi.travel/#organization',
+      name: 'سيسي ترافل',
+      alternateName: 'SISI Travel',
+      url: 'https://sisi.travel/',
+      description:
+        'سيسي ترافل شركة سياحة مصرية تأسست عام 1982، متخصصة في تنظيم رحلات الحج والعمرة من مصر، وتوفير برامج تشمل الإقامة الفندقية والطيران والنقل والإشراف الديني والإداري.',
+      foundingDate: '1982',
+      telephone: '+201150011400',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '161 شارع السودان ، المهندسين',
+        streetAddress: '161 شارع السودان، المهندسين',
         addressLocality: 'الجيزة',
-        addressRegion: 'الجيزة',
-        postalCode: '12655',
         addressCountry: 'EG',
       },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: '30.0630',
-        longitude: '31.1983',
+      areaServed: {
+        '@type': 'Country',
+        name: 'Egypt',
       },
-      openingHoursSpecification: [
-        {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-          opens: '09:00',
-          closes: '18:00',
-        },
-      ],
-      sameAs: [
-        COMPANY_DETAILS.facebookUrl,
-        COMPANY_DETAILS.instagramUrl,
-      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+201150011400',
+        contactType: 'customer service',
+        availableLanguage: 'Arabic',
+        areaServed: 'EG',
+      },
+      hasCredential: {
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'Tourism License',
+        name: 'رخصة سياحة فئة أ - رقم 249',
+      },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'برامج الحج والعمرة',
+        itemListElement: [
+          {
+            '@type': 'OfferCatalog',
+            name: 'برامج العمرة',
+            itemListElement: [
+              {
+                '@type': 'OfferCatalog',
+                name: 'رحلات العمرة من مصر',
+              },
+            ],
+          },
+          {
+            '@type': 'OfferCatalog',
+            name: 'برامج الحج',
+          },
+        ],
+      },
     },
     {
       '@type': 'WebSite',
-      '@id': `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: MAIN_TITLE,
-      description: 'اكتشف أرقى برامج الحج والعمرة مع سيسي ترافل. أكثر من 4 عقود من الخبرة والالتزام بتقديم أفضل إقامة طيران وتنظيم دقيق لضيوف الرحمن.',
+      '@id': 'https://sisi.travel/#website',
+      url: 'https://sisi.travel/',
+      name: 'سيسي ترافل',
+      alternateName: 'SISI Travel',
+      inLanguage: 'ar-EG',
       publisher: {
-        '@id': `${SITE_URL}/#organization`,
+        '@id': 'https://sisi.travel/#organization',
       },
-      inLanguage: 'ar',
+    },
+    {
+      '@type': 'WebPage',
+      '@id': 'https://sisi.travel/#webpage',
+      url: 'https://sisi.travel/',
+      name: 'رحلات العمرة والحج من مصر - سيسي ترافل',
+      description:
+        'اكتشف برامج الحج والعمرة من مصر مع سيسي ترافل، شركة سياحة تأسست عام 1982، تقدم خدمات الإقامة والطيران والنقل والإشراف طوال الرحلة.',
+      inLanguage: 'ar-EG',
+      isPartOf: {
+        '@id': 'https://sisi.travel/#website',
+      },
+      about: {
+        '@id': 'https://sisi.travel/#organization',
+      },
+      mainEntity: {
+        '@id': 'https://sisi.travel/#organization',
+      },
+    },
+    {
+      '@type': 'Service',
+      '@id': 'https://sisi.travel/#umrah-service',
+      name: 'رحلات العمرة من مصر',
+      serviceType: 'Umrah Travel Packages',
+      description:
+        'تنظيم برامج العمرة من مصر إلى مكة المكرمة والمدينة المنورة، مع خدمات الإقامة الفندقية والطيران والنقل والإشراف الديني والإداري.',
+      provider: {
+        '@id': 'https://sisi.travel/#organization',
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'Egypt',
+      },
+    },
+    {
+      '@type': 'Service',
+      '@id': 'https://sisi.travel/#hajj-service',
+      name: 'رحلات الحج من مصر',
+      serviceType: 'Hajj Travel Packages',
+      description:
+        'تنظيم رحلات الحج من مصر، بما يشمل برامج الحج الفاخر والاقتصادي والبري، وخدمات الإقامة والنقل والإشراف.',
+      provider: {
+        '@id': 'https://sisi.travel/#organization',
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'Egypt',
+      },
     },
   ],
 };
