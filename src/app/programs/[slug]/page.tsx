@@ -48,8 +48,22 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   return {
-    title: `${program.title} | ${COMPANY_DETAILS.name}`,
+    title: program.title,
     description: program.summary,
+    alternates: {
+      canonical: `/programs/${program.slug}/`,
+    },
+    openGraph: {
+      title: `${program.title} | سيسى ترافل شركة سياحة مصرية`,
+      description: program.summary,
+      url: `/programs/${program.slug}/`,
+      images: [
+        {
+          url: program.featuredImage,
+          alt: program.title,
+        },
+      ],
+    },
   };
 }
 
@@ -67,8 +81,39 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
 
   const isHajj = program.category.startsWith('hajj');
 
+  const tripJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TouristTrip',
+    name: program.title,
+    description: program.summary,
+    image: program.featuredImage.startsWith('http') ? program.featuredImage : `https://sisi.travel${program.featuredImage}`,
+    touristType: isHajj ? 'حجاج بيت الله الحرام' : 'معتمري بيت الله الحرام',
+    provider: {
+      '@type': 'TravelAgency',
+      name: 'سيسى ترافل',
+      url: 'https://sisi.travel',
+      telephone: COMPANY_DETAILS.phone1Raw,
+    },
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'EGP',
+      price: program.price.replace(/[^\d]/g, '') || undefined,
+      availability: 'https://schema.org/InStock',
+      url: `https://sisi.travel/programs/${program.slug}/`,
+    },
+    itinerary: program.itinerary.map((day) => ({
+      '@type': 'Day',
+      name: day.title,
+      description: day.description,
+    })),
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-brand-sand-light">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(tripJsonLd) }}
+      />
       <Navbar />
 
       <main className="flex-1 pt-28 pb-20">
