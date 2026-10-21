@@ -324,7 +324,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                 <div className="space-y-3 text-xs text-gray-700">
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-500">اسم البرنامج:</span>
-                    <span className="font-bold text-brand-burgundy-dark">{program.categoryLabel}</span>
+                    <span className="font-bold text-brand-burgundy-dark">{program.title}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
                     <span className="text-gray-500">المدة الكلية:</span>
