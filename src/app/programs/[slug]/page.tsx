@@ -331,7 +331,7 @@ export default async function ProgramDetailsPage({ params }: PageProps) {
                     <span className="font-bold text-brand-burgundy-dark">{program.durationDays} يوماً</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-500">فندق مكة:</span>
+                    <span className="text-gray-500">اسم الفندق:</span>
                     <span className="font-bold text-brand-burgundy-dark truncate max-w-[160px]">{program.hotels[0]?.name.split('(')[0]}</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-100">
