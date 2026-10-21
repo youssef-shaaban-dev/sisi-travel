@@ -4,6 +4,7 @@ import { GoogleTagManager } from '@next/third-parties/google';
 import './globals.css';
 import { COMPANY_DETAILS } from '@/data/programsData';
 import FloatingWhatsApp from '@/components/ui/FloatingWhatsApp';
+import { ReactQueryProvider } from '@/components/ReactQueryProvider';
 
 const tajawal = Tajawal({
   subsets: ['arabic'],
@@ -215,8 +216,10 @@ export default function RootLayout({
       </head>
       <GoogleTagManager gtmId="GTM-T5S5M7TF" />
       <body className="font-sans antialiased min-h-screen flex flex-col bg-brand-sand-light text-gray-900 selection:bg-brand-burgundy selection:text-white">
-        {children}
-        <FloatingWhatsApp />
+        <ReactQueryProvider>
+          {children}
+          <FloatingWhatsApp />
+        </ReactQueryProvider>
       </body>
     </html>
   );

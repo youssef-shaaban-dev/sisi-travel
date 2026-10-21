@@ -31,6 +31,16 @@ export const api = {
     return data
   },
   
+  getProgramBySlug: async (slug: string): Promise<TravelProgram | null> => {
+    const supabase = createClient()
+    const { data, error } = await supabase.from('programs').select('*').eq('slug', slug).single()
+    if (error) {
+      console.warn(`Program not found by slug: ${slug}`)
+      return null
+    }
+    return data as TravelProgram
+  },
+  
   createProgram: async (program: Partial<TravelProgram>) => {
     const supabase = createClient()
     const { data, error } = await supabase.from('programs').insert([program]).select().single()

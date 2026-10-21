@@ -76,7 +76,9 @@ export default function ProgramCard({ program }: ProgramCardProps) {
             <div className="flex items-center gap-2.5 font-bold">
               <Building2 className="w-4 h-4 text-brand-burgundy flex-shrink-0" />
               <span className="truncate">
-                مكة: {program.hotels[0]?.name.split('(')[0]}
+                {program.hotels && program.hotels.length > 0
+                  ? `${program.hotels[0].city === 'المدينة المنورة' ? 'المدينة' : 'مكة'}: ${program.hotels[0].name.split('(')[0]}`
+                  : 'فنادق مميزة'}
               </span>
             </div>
 
@@ -84,7 +86,9 @@ export default function ProgramCard({ program }: ProgramCardProps) {
             <div className="flex items-center gap-2.5 font-bold">
               <Plane className="w-4 h-4 text-brand-olive flex-shrink-0" />
               <span className="truncate">
-                {program.airline} ({program.flightType})
+                {program.airline
+                  ? `${program.airline}${program.flightType ? ` (${program.flightType})` : ''}`
+                  : program.flightType || 'طيران مباشر'}
               </span>
             </div>
 

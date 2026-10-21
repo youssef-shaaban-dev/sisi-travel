@@ -7,7 +7,7 @@ import { api } from '@/lib/api'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Loader2, Plus, Trash2, X } from 'lucide-react'
 import { useForm as useRHForm, useFieldArray as useRHFieldArray, FieldErrors } from 'react-hook-form'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { generateSlug } from '@/utils/helpers'
 
@@ -46,19 +46,37 @@ const defaultValues: Partial<TravelProgram> = {
 
 export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const urlType = searchParams.get('type') === 'hajj' ? 'hajj' : 'umrah'
   
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
 
-  const { register, control, handleSubmit, watch, setValue } = useRHForm<TravelProgram>({
+  const [includedText, setIncludedText] = useState((initialData?.includedServices || []).join('\n'))
+  const [excludedText, setExcludedText] = useState((initialData?.excludedServices || []).join('\n'))
+  const [notesText, setNotesText] = useState((initialData?.importantNotes || []).join('\n'))
+
+  const { register, control, handleSubmit, watch, setValue, reset } = useRHForm<TravelProgram>({
     defaultValues: {
       ...defaultValues,
       type: initialData?.type || urlType,
       ...initialData
     },
   })
+
+  // Synchronize form when initialData loads or changes
+  useEffect(() => {
+    if (initialData) {
+      reset({
+        ...defaultValues,
+        ...initialData,
+      })
+      setIncludedText((initialData.includedServices || []).join('\n'))
+      setExcludedText((initialData.excludedServices || []).join('\n'))
+      setNotesText((initialData.importantNotes || []).join('\n'))
+    }
+  }, [initialData, reset])
 
   // Fetch Categories
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
@@ -70,11 +88,7 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
   const { fields: hotelFields, append: appendHotel, remove: removeHotel } = useRHFieldArray({ control, name: 'hotels' })
   const { fields: itineraryFields, append: appendItinerary, remove: removeItinerary } = useRHFieldArray({ control, name: 'itinerary' })
   
-  // For simple string arrays, we manage them via state to keep it simple, or using string inputs
   const watchGallery = watch('galleryImages') || []
-  const watchIncluded = watch('includedServices') || []
-  const watchExcluded = watch('excludedServices') || []
-  const watchNotes = watch('importantNotes') || []
   const watchTitle = watch('title')
 
   // Auto-generate slug from title
@@ -92,11 +106,9 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
 
     try {
       if (fieldName === 'featuredImage') {
-        // Just upload first file
         const url = await api.uploadImage(files[0])
         setValue('featuredImage', url)
       } else {
-        // Upload multiple
         const urls = await Promise.all(Array.from(files).map(f => api.uploadImage(f)))
         setValue('galleryImages', [...watchGallery, ...urls])
       }
@@ -113,6 +125,14 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
       return
     }
 
+    // Attach processed multiline text arrays
+    data.includedServices = includedText.split('\n').map(s => s.trim()).filter(Boolean)
+    data.excludedServices = excludedText.split('\n').map(s => s.trim()).filter(Boolean)
+    data.importantNotes = notesText.split('\n').map(s => s.trim()).filter(Boolean)
+    data.hotels = data.hotels || []
+    data.itinerary = data.itinerary || []
+    data.galleryImages = data.galleryImages || []
+
     setIsSubmitting(true)
     try {
       if (isEdit && initialData?.id) {
@@ -122,6 +142,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
         await api.createProgram(data)
         toast.success('تمت إضافة البرنامج بنجاح!')
       }
+      await queryClient.invalidateQueries({ queryKey: ['programs'] })
+      await queryClient.invalidateQueries({ queryKey: ['program'] })
       router.push('/admin/programs')
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : (error as { message?: string })?.message || 'خطأ غير معروف'
@@ -216,9 +238,9 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
                   {...register('category', { required: true })}
                   onChange={(e) => {
                     const selectedCat = categories.find(c => c.slug === e.target.value);
-                    setValue('category', e.target.value, { shouldValidate: true });
+                    setValue('category', e.target.value, { shouldValidate: true, shouldDirty: true });
                     if (selectedCat) {
-                      setValue('categoryLabel', selectedCat.label, { shouldValidate: true });
+                      setValue('categoryLabel', selectedCat.label, { shouldValidate: true, shouldDirty: true });
                     }
                   }}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
@@ -404,8 +426,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
                   rows={5} 
                   className="w-full rounded-md border border-gray-300 p-2 text-sm" 
                   placeholder="خدمة في كل سطر..."
-                  value={watchIncluded.join('\n')}
-                  onChange={(e) => setValue('includedServices', e.target.value.split('\n').filter(Boolean))}
+                  value={includedText}
+                  onChange={(e) => setIncludedText(e.target.value)}
                />
             </div>
             <div>
@@ -414,8 +436,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
                   rows={5} 
                   className="w-full rounded-md border border-gray-300 p-2 text-sm" 
                   placeholder="خدمة في كل سطر..."
-                  value={watchExcluded.join('\n')}
-                  onChange={(e) => setValue('excludedServices', e.target.value.split('\n').filter(Boolean))}
+                  value={excludedText}
+                  onChange={(e) => setExcludedText(e.target.value)}
                />
             </div>
             <div className="lg:col-span-2">
@@ -424,8 +446,8 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
                   rows={4} 
                   className="w-full rounded-md border border-gray-300 p-2 text-sm" 
                   placeholder="ملاحظة في كل سطر..."
-                  value={watchNotes.join('\n')}
-                  onChange={(e) => setValue('importantNotes', e.target.value.split('\n').filter(Boolean))}
+                  value={notesText}
+                  onChange={(e) => setNotesText(e.target.value)}
                />
             </div>
           </div>

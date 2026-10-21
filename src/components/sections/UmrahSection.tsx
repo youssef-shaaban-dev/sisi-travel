@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import SectionHeading from '@/components/ui/SectionHeading';
 import ProgramCard from '@/components/sections/ProgramCard';
 import { TravelProgram } from '@/data/programsData';
+import { api } from '@/lib/api';
 
 interface Props {
   initialPrograms: TravelProgram[];
@@ -12,10 +14,21 @@ interface Props {
 export default function UmrahSection({ initialPrograms }: Props) {
   const [activeCategory, setActiveCategory] = useState('all');
 
+  const { data: programs = initialPrograms } = useQuery<TravelProgram[]>({
+    queryKey: ['programs', 'umrah'],
+    queryFn: async () => {
+      const data = await api.getPrograms();
+      return (data || []).filter((p: TravelProgram) => p.type === 'umrah');
+    },
+    initialData: initialPrograms,
+    staleTime: 1000 * 30,
+    refetchOnWindowFocus: true,
+  });
+
   // Extract unique categories dynamically from the programs
   const dynamicCategories = useMemo(() => {
     const cats = new Set<string>();
-    initialPrograms.forEach(p => {
+    programs.forEach(p => {
       if (p.categoryLabel) {
         cats.add(p.categoryLabel);
       }
@@ -27,9 +40,9 @@ export default function UmrahSection({ initialPrograms }: Props) {
     }));
     
     return [{ id: 'all', label: 'الكل' }, ...catArray];
-  }, [initialPrograms]);
+  }, [programs]);
 
-  const filteredPrograms = initialPrograms.filter((program) => {
+  const filteredPrograms = programs.filter((program) => {
     if (activeCategory === 'all') return true;
     const catObj = dynamicCategories.find(c => c.id === activeCategory);
     return program.categoryLabel === catObj?.label;
