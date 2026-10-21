@@ -57,6 +57,9 @@ export default function ProgramDetailsClient({
   const hasDuration = Boolean(program.durationDays || program.durationNights);
   const hasOverview = Boolean(program.summary?.trim() || hasDuration || hasFlightInfo);
 
+  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+  const activeImage = selectedImage || program.featuredImage || '';
+
   return (
     <div className="min-h-screen flex flex-col bg-brand-sand-light">
       <Navbar />
@@ -81,6 +84,7 @@ export default function ProgramDetailsClient({
             <div className="flex flex-wrap items-center gap-3">
               {program.badgeText?.trim() && (
                 <Badge
+                className='text-md md:text-lg'
                   variant={
                     program.category === 'vip' || program.category === 'hajj-luxury'
                       ? 'gold'
@@ -94,14 +98,14 @@ export default function ProgramDetailsClient({
               )}
 
               {program.price?.trim() && (
-                <span className="text-xs font-black text-brand-burgundy-dark bg-amber-400 px-4 py-1.5 rounded-full border border-amber-300/80 shadow-md flex items-center gap-1.5 scale-105">
+                <span className="text-md md:text-lg font-black text-brand-burgundy-dark bg-amber-400 px-4 py-1.5 rounded-full border border-amber-300/80 shadow-md flex items-center gap-1.5 scale-105">
                   <Tag className="w-3.5 h-3.5 text-brand-burgundy-dark" />
                   <span>السعر : {program.price} ج.م</span>
                 </span>
               )}
 
               {hasFlightInfo && (
-                <span className="text-xs font-semibold text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full border border-brand-olive/20">
+                <span className="text-md md:text-lg font-semibold text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full border border-brand-olive/20">
                   {program.flightType?.trim() || 'طيران مباشر'}
                   {program.airline?.trim() ? ` (${program.airline})` : ''}
                 </span>
@@ -119,33 +123,87 @@ export default function ProgramDetailsClient({
             )}
           </div>
 
-          {/* Image Gallery Showcase - Only if images exist */}
+          {/* Image Gallery Showcase */}
           {(program.featuredImage || galleryImages.length > 0) && (
-            <div className={`grid gap-4 mb-12 ${galleryImages.length > 0 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>
-              <div
-                className={`${
-                  galleryImages.length > 0 ? 'md:col-span-2' : 'col-span-1'
-                } relative h-[320px] sm:h-[420px] rounded-2xl overflow-hidden shadow-lg border border-brand-sand bg-brand-burgundy-dark`}
-              >
-                {program.featuredImage ? (
-                  <Image
-                    src={program.featuredImage}
-                    alt={program.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                ) : null}
+            <div className="mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Main Showcase Image (Original 2-column size) */}
+                <div className="md:col-span-2 relative h-[320px] sm:h-[420px] rounded-2xl overflow-hidden shadow-lg border border-brand-sand bg-brand-burgundy-dark">
+                  {(activeImage || program.featuredImage) ? (
+                    <Image
+                      src={activeImage || program.featuredImage}
+                      alt={program.title}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  ) : null}
+                </div>
+
+                {/* Right Side Gallery Column */}
+                {galleryImages.length === 1 && (
+                  <div
+                    onClick={() => setSelectedImage(galleryImages[0])}
+                    className="md:col-span-1 relative h-[320px] sm:h-[420px] rounded-2xl overflow-hidden shadow border border-brand-sand bg-brand-burgundy-dark cursor-pointer group"
+                  >
+                    <Image
+                      src={galleryImages[0]}
+                      alt={`تفاصيل ${program.title}`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+
+                {galleryImages.length >= 2 && (
+                  <div className="md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4">
+                    {galleryImages.slice(0, 2).map((img, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => setSelectedImage(img)}
+                        className="relative h-[155px] sm:h-[200px] rounded-2xl overflow-hidden shadow border border-brand-sand bg-brand-burgundy-dark cursor-pointer group"
+                      >
+                        <Image
+                          src={img}
+                          alt={`تفاصيل ${program.title}`}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {galleryImages.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
-                  {galleryImages.slice(0, 2).map((img, idx) => (
+              {/* Extra Gallery Thumbnails if more than 2 images are added in backend */}
+              {galleryImages.length > 2 && (
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {/* Thumbnail of featured image */}
+                  {program.featuredImage && (
+                    <div
+                      onClick={() => setSelectedImage(program.featuredImage)}
+                      className={`relative h-20 w-28 rounded-xl overflow-hidden shadow border-2 transition-all cursor-pointer ${
+                        activeImage === program.featuredImage
+                          ? 'border-brand-burgundy ring-2 ring-brand-burgundy/30'
+                          : 'border-brand-sand hover:border-brand-gold opacity-80 hover:opacity-100'
+                      }`}
+                    >
+                      <Image src={program.featuredImage} alt="الرئيسية" fill className="object-cover" />
+                    </div>
+                  )}
+
+                  {/* Thumbnails of all backend gallery images */}
+                  {galleryImages.map((img, idx) => (
                     <div
                       key={idx}
-                      className="relative h-[155px] sm:h-[200px] rounded-2xl overflow-hidden shadow border border-brand-sand bg-brand-burgundy-dark"
+                      onClick={() => setSelectedImage(img)}
+                      className={`relative h-20 w-28 rounded-xl overflow-hidden shadow border-2 transition-all cursor-pointer ${
+                        activeImage === img
+                          ? 'border-brand-burgundy ring-2 ring-brand-burgundy/30'
+                          : 'border-brand-sand hover:border-brand-gold opacity-80 hover:opacity-100'
+                      }`}
                     >
-                      <Image src={img} alt={`تفاصيل ${program.title}`} fill className="object-cover" />
+                      <Image src={img} alt={`صورة إضافية ${idx + 1}`} fill className="object-cover" />
                     </div>
                   ))}
                 </div>

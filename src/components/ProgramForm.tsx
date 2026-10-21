@@ -107,10 +107,10 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
     try {
       if (fieldName === 'featuredImage') {
         const url = await api.uploadImage(files[0])
-        setValue('featuredImage', url)
+        setValue('featuredImage', url, { shouldDirty: true, shouldValidate: true })
       } else {
         const urls = await Promise.all(Array.from(files).map(f => api.uploadImage(f)))
-        setValue('galleryImages', [...watchGallery, ...urls])
+        setValue('galleryImages', [...watchGallery, ...urls], { shouldDirty: true, shouldValidate: true })
       }
       toast.success('تم رفع الصورة بنجاح')
     } catch (err) {
@@ -131,7 +131,7 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
     data.importantNotes = notesText.split('\n').map(s => s.trim()).filter(Boolean)
     data.hotels = data.hotels || []
     data.itinerary = data.itinerary || []
-    data.galleryImages = data.galleryImages || []
+    data.galleryImages = watchGallery || []
 
     setIsSubmitting(true)
     try {
