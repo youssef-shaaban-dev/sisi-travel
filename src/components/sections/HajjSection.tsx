@@ -48,6 +48,10 @@ export default function HajjSection({ initialPrograms }: Props) {
     return program.categoryLabel === catObj?.label;
   });
 
+  if (programs.length === 0) {
+    return null;
+  }
+
   return (
     <section id="hajj" className="py-24 bg-brand-sand-light text-brand-burgundy-dark relative overflow-hidden border-t border-brand-sand">
       {/* Subtle Background Pattern Accent */}

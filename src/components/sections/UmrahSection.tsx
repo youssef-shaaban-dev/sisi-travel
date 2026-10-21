@@ -48,6 +48,10 @@ export default function UmrahSection({ initialPrograms }: Props) {
     return program.categoryLabel === catObj?.label;
   });
 
+  if (programs.length === 0) {
+    return null;
+  }
+
   return (
     <section id="umrah" className="py-20 bg-brand-sand-light relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

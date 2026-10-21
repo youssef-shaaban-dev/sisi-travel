@@ -35,26 +35,33 @@ export default function ProgramCard({ program }: ProgramCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
 
         {/* Category Badge Top Right */}
-        <div className="absolute top-4 right-4 z-10 pointer-events-none">
-          <Badge
-            variant={
-              program.category === 'vip' || program.category === 'hajj-luxury'
-                ? 'gold'
-                : program.category === 'economic' || program.category === 'hajj-economic'
-                ? 'olive'
-                : 'burgundy'
-            }
-            className="text-sm px-3.5 py-1.5 font-black shadow-md"
-          >
-            {program.badgeText}
-          </Badge>
-        </div>
+        {program.badgeText && (
+          <div className="absolute top-4 right-4 z-10 pointer-events-none">
+            <Badge
+              variant={
+                program.category === 'vip' || program.category === 'hajj-luxury'
+                  ? 'gold'
+                  : program.category === 'economic' || program.category === 'hajj-economic'
+                  ? 'olive'
+                  : 'burgundy'
+              }
+              className="text-sm px-3.5 py-1.5 font-black shadow-md"
+            >
+              {program.badgeText}
+            </Badge>
+          </div>
+        )}
 
         {/* Duration Badge Bottom Right */}
-        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-white text-sm font-black border border-brand-gold/40 shadow-md">
-          <Calendar className="w-4 h-4 text-brand-gold" />
-          <span>{program.durationDays} يوماً ({program.durationNights} ليلة)</span>
-        </div>
+        {(program.durationDays || program.durationNights) ? (
+          <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-white text-sm font-black border border-brand-gold/40 shadow-md">
+            <Calendar className="w-4 h-4 text-brand-gold" />
+            <span>
+              {program.durationDays ? `${program.durationDays} يوماً` : ''}
+              {program.durationNights ? ` (${program.durationNights} ليلة)` : ''}
+            </span>
+          </div>
+        ) : null}
       </Link>
 
       {/* Card Content */}
@@ -66,38 +73,49 @@ export default function ProgramCard({ program }: ProgramCardProps) {
             </h3>
           </Link>
 
-          <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed font-medium">
-            {program.subtitle}
-          </p>
+          {program.subtitle && (
+            <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed font-medium">
+              {program.subtitle}
+            </p>
+          )}
 
           {/* Key Quick Info */}
-          <div className="pt-3 space-y-2.5 border-t border-gray-100 text-sm text-gray-800">
-            {/* Hotels */}
-            <div className="flex items-center gap-2.5 font-bold">
-              <Building2 className="w-4 h-4 text-brand-burgundy flex-shrink-0" />
-              <span className="truncate">
-                {program.hotels && program.hotels.length > 0
-                  ? `${program.hotels[0].city === 'المدينة المنورة' ? 'المدينة' : 'مكة'}: ${program.hotels[0].name.split('(')[0]}`
-                  : 'فنادق مميزة'}
-              </span>
-            </div>
+          {(Boolean(program.hotels?.some(h => h.name?.trim())) || Boolean(program.airline?.trim() || program.flightType?.trim()) || Boolean(program.price?.trim())) && (
+            <div className="pt-3 space-y-2.5 border-t border-gray-100 text-sm text-gray-800">
+              {/* Hotels */}
+              {program.hotels && program.hotels.some(h => h.name?.trim()) && (
+                <div className="flex items-center gap-2.5 font-bold">
+                  <Building2 className="w-4 h-4 text-brand-burgundy flex-shrink-0" />
+                  <span className="truncate">
+                    {`${program.hotels[0].city === 'المدينة المنورة' ? 'المدينة' : 'مكة'}: ${program.hotels[0].name.split('(')[0]}`}
+                  </span>
+                </div>
+              )}
 
-            {/* Flight */}
-            <div className="flex items-center gap-2.5 font-bold">
-              <Plane className="w-4 h-4 text-brand-olive flex-shrink-0" />
-              <span className="truncate">
-                {program.airline
-                  ? `${program.airline}${program.flightType ? ` (${program.flightType})` : ''}`
-                  : program.flightType || 'طيران مباشر'}
-              </span>
-            </div>
+              {/* Flight */}
+              {(program.airline?.trim() || program.flightType?.trim()) && (
+                <div className="flex items-center gap-2.5 font-bold">
+                  <Plane className="w-4 h-4 text-brand-olive flex-shrink-0" />
+                  <span className="truncate">
+                    {program.airline?.trim()
+                      ? `${program.airline}${program.flightType?.trim() ? ` (${program.flightType})` : ''}`
+                      : program.flightType}
+                  </span>
+                </div>
+              )}
 
-            {/* Price Badge Highlight */}
-            <div className="flex items-center gap-2.5 font-extrabold text-brand-burgundy pt-1">
-              <Tag className="w-4 h-4 text-brand-gold flex-shrink-0" />
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-400 text-brand-burgundy-dark font-black text-base shadow-md border border-amber-300/80 scale-105 transition-transform"><Tag className="w-4 h-4 text-brand-burgundy-dark" /><span>{program.price} ج.م</span></span>
+              {/* Price Badge Highlight */}
+              {program.price && (
+                <div className="flex items-center gap-2.5 font-extrabold text-brand-burgundy pt-1">
+                  <Tag className="w-4 h-4 text-brand-gold flex-shrink-0" />
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-400 text-brand-burgundy-dark font-black text-base shadow-md border border-amber-300/80 scale-105 transition-transform">
+                    <Tag className="w-4 h-4 text-brand-burgundy-dark" />
+                    <span>{program.price} ج.م</span>
+                  </span>
+                </div>
+              )}
             </div>
-          </div>
+          )}
         </div>
 
         {/* Footer Actions */}
