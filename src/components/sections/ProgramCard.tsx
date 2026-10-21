@@ -84,9 +84,9 @@ export default function ProgramCard({ program }: ProgramCardProps) {
             <div className="pt-3 space-y-2.5 border-t border-gray-100 text-sm text-gray-800">
               {/* Hotels */}
               {program.hotels && program.hotels.some(h => h.name?.trim()) && (
-                <div className="flex items-center gap-2.5 font-bold">
-                  <Building2 className="w-4 h-4 text-brand-burgundy flex-shrink-0" />
-                  <span className="truncate">
+                <div className="flex items-start gap-2.5 font-bold">
+                  <Building2 className="w-4 h-4 text-brand-burgundy shrink-0 mt-0.5" />
+                  <span className="leading-snug break-words">
                     {`${program.hotels[0].city === 'المدينة المنورة' ? 'المدينة' : 'مكة'}: ${program.hotels[0].name.split('(')[0]}`}
                   </span>
                 </div>
@@ -94,9 +94,9 @@ export default function ProgramCard({ program }: ProgramCardProps) {
 
               {/* Flight */}
               {(program.airline?.trim() || program.flightType?.trim()) && (
-                <div className="flex items-center gap-2.5 font-bold">
-                  <Plane className="w-4 h-4 text-brand-olive flex-shrink-0" />
-                  <span className="truncate">
+                <div className="flex items-start gap-2.5 font-bold">
+                  <Plane className="w-4 h-4 text-brand-olive shrink-0 mt-0.5" />
+                  <span className="leading-snug break-words">
                     {program.airline?.trim()
                       ? `${program.airline}${program.flightType?.trim() ? ` (${program.flightType})` : ''}`
                       : program.flightType}
@@ -107,7 +107,6 @@ export default function ProgramCard({ program }: ProgramCardProps) {
               {/* Price Badge Highlight */}
               {program.price && (
                 <div className="flex items-center gap-2.5 font-extrabold text-brand-burgundy pt-1">
-                  <Tag className="w-4 h-4 text-brand-gold flex-shrink-0" />
                   <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-400 text-brand-burgundy-dark font-black text-base shadow-md border border-amber-300/80 scale-105 transition-transform">
                     <Tag className="w-4 h-4 text-brand-burgundy-dark" />
                     <span>{program.price} ج.م</span>

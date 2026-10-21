@@ -270,7 +270,7 @@ export default function ProgramDetailsClient({
               {hotels.length > 0 && (
                 <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-sand brand-card-shadow space-y-6">
                   <h2 className="text-xl font-bold text-brand-burgundy-dark border-r-4 border-brand-burgundy pr-3">
-                    الإقامة الفندقية المعتمدة
+                    الإقامة الفندقية
                   </h2>
                   <div className={`grid grid-cols-1 ${hotels.length > 1 ? 'sm:grid-cols-2' : ''} gap-6`}>
                     {hotels.map((hotel, idx) => (
