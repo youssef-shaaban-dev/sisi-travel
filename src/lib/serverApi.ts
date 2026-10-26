@@ -16,7 +16,7 @@ export const serverApi = {
       if (category === 'umrah' || category === 'hajj') {
         query = query.like('category', `${category}%`)
       } else {
-        query = query.eq('category', category)
+        query = query.like('category', `%${category}%`)
       }
     }
 

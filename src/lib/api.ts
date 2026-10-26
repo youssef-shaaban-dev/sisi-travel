@@ -16,7 +16,7 @@ export const api = {
     let query = supabase.from('programs').select('*').order('created_at', { ascending: false })
     
     if (category && category !== 'all') {
-      query = query.eq('category', category)
+      query = query.like('category', `%${category}%`)
     }
 
     const { data, error } = await query
@@ -95,6 +95,20 @@ export const api = {
     const supabase = createClient()
     const { error } = await supabase.from('programs').delete().eq('id', id)
     if (error) throw error
+    return true
+  },
+
+  reorderPrograms: async (orderedIds: string[]) => {
+    const supabase = createClient()
+    const now = Date.now()
+    // Update each program's created_at timestamp in descending order so index 0 is first
+    const updates = orderedIds.map((id, index) => {
+      const timestamp = new Date(now - index * 1000).toISOString()
+      return supabase.from('programs').update({ created_at: timestamp }).eq('id', id)
+    })
+    const results = await Promise.all(updates)
+    const err = results.find(r => r.error)
+    if (err && err.error) throw err.error
     return true
   },
 

@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 import { TravelProgram} from '@/data/programsData'
 import { api } from '@/lib/api'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Loader2, Plus, Trash2, X, Sparkles } from 'lucide-react'
+import { Loader2, Plus, Trash2, X, Sparkles, Check } from 'lucide-react'
 import { useForm as useRHForm, useFieldArray as useRHFieldArray, FieldErrors } from 'react-hook-form'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -21,7 +21,7 @@ const defaultValues: Partial<TravelProgram> = {
   type: 'umrah',
   title: '',
   slug: '',
-  category: 'economic',
+  category: '',
   categoryLabel: '',
   subtitle: '',
   summary: '',
@@ -85,6 +85,30 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
     queryFn: () => api.getCategories(watch('type'))
   })
 
+  // Multi-category state & helper
+  const watchCategory = watch('category') || ''
+  const selectedCategorySlugs = useMemo(() => {
+    return watchCategory
+      ? watchCategory.split(',').map((s: string) => s.trim()).filter(Boolean)
+      : []
+  }, [watchCategory])
+
+  const toggleCategory = (catSlug: string) => {
+    let newSlugs: string[]
+    if (selectedCategorySlugs.includes(catSlug)) {
+      newSlugs = selectedCategorySlugs.filter((s) => s !== catSlug)
+    } else {
+      newSlugs = [...selectedCategorySlugs, catSlug]
+    }
+
+    const newLabels = newSlugs
+      .map((slug) => categories.find((c) => c.slug === slug)?.label || slug)
+      .filter(Boolean)
+
+    setValue('category', newSlugs.join(', '), { shouldValidate: true, shouldDirty: true })
+    setValue('categoryLabel', newLabels.join(', '), { shouldValidate: true, shouldDirty: true })
+  }
+
   // Dynamic lists
   const { fields: hotelFields, append: appendHotel, remove: removeHotel } = useRHFieldArray({ control, name: 'hotels' })
   const { fields: itineraryFields, append: appendItinerary, remove: removeItinerary } = useRHFieldArray({ control, name: 'itinerary' })
@@ -122,6 +146,12 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
   const onSubmit = async (data: TravelProgram) => {
     if (!data.featuredImage) {
       toast.error('يرجى رفع الصورة الرئيسية للبرنامج (في تبويب البيانات الأساسية).')
+      setActiveTab(0)
+      return
+    }
+
+    if (!data.category || data.category.trim() === '') {
+      toast.error('يرجى اختيار تصنيف واحد على الأقل للبرنامج.')
       setActiveTab(0)
       return
     }
@@ -230,31 +260,59 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
               <p className="mt-1 text-xs text-gray-500">يتم توليده تلقائياً من اسم البرنامج.</p>
             </div>
 
-            <div className="sm:col-span-4">
-              <label className="block text-sm font-medium text-gray-700">التصنيف <span className="text-red-500">*</span></label>
+            <div className="sm:col-span-6 bg-white p-5 rounded-2xl border border-gray-200 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="block text-sm font-bold text-gray-900">
+                    التصنيفات <span className="text-red-500">*</span>
+                  </label>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    يمكنك اختيار أكثر من تصنيف للبرنامج الواحد بالنقر عليه
+                  </p>
+                </div>
+                {selectedCategorySlugs.length > 0 && (
+                  <span className="text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                    تم تحديد {selectedCategorySlugs.length} تصنيف
+                  </span>
+                )}
+              </div>
+
               {isLoadingCategories ? (
-                <div className="mt-1 p-2 text-sm text-gray-500">جاري تحميل التصنيفات...</div>
+                <div className="py-3 text-sm text-gray-500">جاري تحميل التصنيفات...</div>
+              ) : categories.length === 0 ? (
+                <p className="text-xs text-red-500">لا توجد تصنيفات مضافة، يرجى إضافة تصنيف من قسم التصنيفات أولاً.</p>
               ) : (
-                <select 
-                  {...register('category', { required: true })}
-                  onChange={(e) => {
-                    const selectedCat = categories.find(c => c.slug === e.target.value);
-                    setValue('category', e.target.value, { shouldValidate: true, shouldDirty: true });
-                    if (selectedCat) {
-                      setValue('categoryLabel', selectedCat.label, { shouldValidate: true, shouldDirty: true });
-                    }
-                  }}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
-                >
-                  <option value="">اختر التصنيف...</option>
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.slug}>{cat.label}</option>
-                  ))}
-                </select>
+                <div className="flex flex-wrap gap-2.5 pt-1">
+                  {categories.map((cat) => {
+                    const isSelected = selectedCategorySlugs.includes(cat.slug);
+                    return (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => toggleCategory(cat.slug)}
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                          isSelected
+                            ? 'bg-blue-600 text-white shadow-md border-2 border-blue-600 scale-[1.02]'
+                            : 'bg-gray-50 text-gray-700 border-2 border-gray-200 hover:border-blue-400 hover:bg-gray-100'
+                        }`}
+                      >
+                        <span
+                          className={`w-4 h-4 rounded flex items-center justify-center border text-[11px] ${
+                            isSelected
+                              ? 'bg-white text-blue-600 border-white'
+                              : 'border-gray-400 bg-white'
+                          }`}
+                        >
+                          {isSelected ? '✓' : ''}
+                        </span>
+                        <span>{cat.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               )}
-              {categories.length === 0 && !isLoadingCategories && (
-                <p className="mt-1 text-xs text-red-500">لا توجد تصنيفات مضافة، يرجى إضافة تصنيف من قسم التصنيفات أولاً.</p>
-              )}
+
+              <input type="hidden" {...register('category', { required: true })} />
               <input type="hidden" {...register('categoryLabel')} />
             </div>
 

@@ -30,7 +30,7 @@ export default function HajjSection({ initialPrograms }: Props) {
     const cats = new Set<string>();
     programs.forEach(p => {
       if (p.categoryLabel) {
-        cats.add(p.categoryLabel);
+        p.categoryLabel.split(',').map(s => s.trim()).filter(Boolean).forEach(l => cats.add(l));
       }
     });
 
@@ -45,7 +45,9 @@ export default function HajjSection({ initialPrograms }: Props) {
   const filteredPrograms = programs.filter((program) => {
     if (activeCategory === 'all') return true;
     const catObj = dynamicCategories.find(c => c.id === activeCategory);
-    return program.categoryLabel === catObj?.label;
+    if (!catObj) return true;
+    const labels = (program.categoryLabel || '').split(',').map(l => l.trim()).filter(Boolean);
+    return labels.includes(catObj.label);
   });
 
   if (programs.length === 0) {
