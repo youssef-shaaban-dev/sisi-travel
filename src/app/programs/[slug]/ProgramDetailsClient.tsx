@@ -13,6 +13,7 @@ import {
   Award,
   FileText,
   Tag,
+  Sparkles,
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import Navbar from '@/components/layout/Navbar';
@@ -82,26 +83,27 @@ export default function ProgramDetailsClient({
           {/* Program Header */}
           <div className="mb-10 space-y-4">
             <div className="flex flex-wrap items-center gap-3">
-              {program.badgeText?.trim() && (
-                <Badge
-                className='text-md md:text-lg'
-                  variant={
-                    program.category === 'vip' || program.category === 'hajj-luxury'
-                      ? 'gold'
-                      : program.category === 'economic' || program.category === 'hajj-economic'
-                      ? 'olive'
-                      : 'burgundy'
-                  }
-                >
-                  {program.badgeText}
-                </Badge>
+              {/* Special Ribbon Offer Badge */}
+              {(program.badgeText?.trim() || program.ribbonText?.trim()) && (
+                <span className="text-sm md:text-base font-black text-white bg-gradient-to-r from-red-600 via-rose-600 to-red-700 px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 border border-red-300/40">
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>{program.badgeText?.trim() || program.ribbonText?.trim()}</span>
+                </span>
               )}
 
               {program.price?.trim() && (
-                <span className="text-md md:text-lg font-black text-brand-burgundy-dark bg-amber-400 px-4 py-1.5 rounded-full border border-amber-300/80 shadow-md flex items-center gap-1.5 scale-105">
-                  <Tag className="w-3.5 h-3.5 text-brand-burgundy-dark" />
-                  <span>السعر : {program.price} ج.م</span>
-                </span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-md md:text-lg font-black text-brand-burgundy-dark bg-amber-400 px-4 py-1.5 rounded-full border border-amber-300/80 shadow-md flex items-center gap-1.5 scale-105">
+                    <Tag className="w-3.5 h-3.5 text-brand-burgundy-dark" />
+                    <span>السعر: {program.price} {program.price.includes('ج.م') ? '' : 'ج.م'}</span>
+                  </span>
+
+                  {program.originalPrice?.trim() && (
+                    <span className="text-sm md:text-base font-bold text-gray-400 line-through decoration-red-500 decoration-2 px-2 bg-gray-100 rounded-full py-1">
+                      {program.originalPrice} {program.originalPrice.includes('ج.م') ? '' : 'ج.م'}
+                    </span>
+                  )}
+                </div>
               )}
 
               {hasFlightInfo && (

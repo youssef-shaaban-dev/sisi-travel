@@ -10,10 +10,10 @@ import { ReactQueryProvider } from '@/components/ReactQueryProvider'
 import { Toaster } from 'react-hot-toast'
 
 const navigation = [
-  { name: 'لوحة القيادة', href: '/admin', icon: LayoutDashboard },
+  { name: ' الرئيسية', href: '/admin', icon: LayoutDashboard },
   { name: 'التصنيفات', href: '/admin/categories', icon: Tags },
-  { name: 'برامج الحج', href: '/admin/programs?type=hajj', icon: Plane },
   { name: 'برامج العمرة', href: '/admin/programs?type=umrah', icon: Plane },
+  { name: 'برامج الحج', href: '/admin/programs?type=hajj', icon: Plane },
 ]
 
 export default function AdminLayout({

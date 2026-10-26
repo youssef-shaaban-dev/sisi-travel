@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { TravelProgram} from '@/data/programsData'
 import { api } from '@/lib/api'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Loader2, Plus, Trash2, X } from 'lucide-react'
+import { Loader2, Plus, Trash2, X, Sparkles } from 'lucide-react'
 import { useForm as useRHForm, useFieldArray as useRHFieldArray, FieldErrors } from 'react-hook-form'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -32,6 +32,7 @@ const defaultValues: Partial<TravelProgram> = {
   meccaNights: 0,
   medinaNights: 0,
   price: '',
+  originalPrice: '',
   priceNote: '',
   badgeText: '',
   isFeatured: false,
@@ -257,19 +258,62 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
               <input type="hidden" {...register('categoryLabel')} />
             </div>
 
-            <div className="sm:col-span-1">
-              <label className="block text-sm font-medium text-gray-700">: السعر <span className="text-red-500">*</span></label>
-              <input type="text" {...register('price', { required: true })} placeholder="مثال: 45,000 ج.م" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
-            </div>
+            {/* Ribbon, Offers & Pricing Section */}
+            <div className="sm:col-span-6 bg-gradient-to-r from-amber-50/80 via-white to-red-50/40 p-5 rounded-2xl border-2 border-amber-200/80 shadow-sm space-y-4">
+              <div className="flex items-center gap-2 text-brand-burgundy font-black text-sm border-b border-amber-200/60 pb-2">
+                <Sparkles className="w-4 h-4 text-amber-600" />
+                <span>الأسعار وشريط العروض والخصومات المميزة (Ribbon & Pricing)</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-gray-800 mb-1">
+                    السعر الحالي <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    {...register('price', { required: true })}
+                    placeholder="مثال: 53,750 أو 38500"
+                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-brand-burgundy focus:ring-brand-burgundy sm:text-sm p-2.5 border bg-white font-bold"
+                  />
+                  <p className="text-[10px] text-gray-500 mt-1">السعر الفعلي المطلوب للحجز</p>
+                </div>
 
-            <div className="sm:col-span-1">
-              <label className="block text-sm font-medium text-gray-700">ملاحظة السعر</label>
-              <input type="text" {...register('priceNote')} placeholder="مثال: للفرد في الغرفة الرباعية" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
-            </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-800 mb-1">
+                    السعر قبل الخصم (مشطوب - اختياري)
+                  </label>
+                  <input
+                    type="text"
+                    {...register('originalPrice')}
+                    placeholder="مثال: 57,750"
+                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-brand-burgundy focus:ring-brand-burgundy sm:text-sm p-2.5 border bg-white"
+                  />
+                  <p className="text-[10px] text-gray-500 mt-1">يظهر مشطوباً بجانب السعر كعرض ترويجي</p>
+                </div>
 
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700">وسام البرنامج (Badge)</label>
-              <input type="text" {...register('badgeText')} placeholder="مثال: الأكثر طلباً" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-bold text-gray-800 mb-1">
+                    شريط العرض أو الخصم (مثل: خصم 4000 ج.م أو عمرة رجب)
+                  </label>
+                  <input
+                    type="text"
+                    {...register('badgeText')}
+                    placeholder="مثال: خصم 4000 ج.م أو عمرة رجب أو الأكثر طلباً"
+                    className="block w-full rounded-lg border-red-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm p-2.5 border bg-white font-bold text-red-600"
+                  />
+                  <p className="text-[10px] text-red-500 font-medium mt-1">يظهر كشريط أحمر مائل في زاوية الكارد الخارجي</p>
+                </div>
+
+                <div className="sm:col-span-2 md:col-span-4">
+                  <label className="block text-xs font-bold text-gray-800 mb-1">ملاحظة السعر</label>
+                  <input
+                    type="text"
+                    {...register('priceNote')}
+                    placeholder="مثال: للفرد في الغرفة الرباعية شاملاً الطيران والتأشيرة"
+                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-brand-burgundy focus:ring-brand-burgundy sm:text-sm p-2.5 border bg-white"
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="sm:col-span-6">

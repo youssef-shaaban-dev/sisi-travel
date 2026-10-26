@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Calendar, Building2, Plane, ArrowLeft, Tag } from 'lucide-react';
+import { Calendar, Building2, Plane, ArrowLeft, Tag, Sparkles } from 'lucide-react';
 import { TravelProgram } from '@/data/programsData';
 import Badge from '@/components/ui/Badge';
 
@@ -13,6 +13,9 @@ interface ProgramCardProps {
 }
 
 export default function ProgramCard({ program }: ProgramCardProps) {
+  // Use badgeText directly as the offer ribbon
+  const ribbonText = program.badgeText?.trim() || program.ribbonText?.trim() || '';
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 25 }}
@@ -20,7 +23,7 @@ export default function ProgramCard({ program }: ProgramCardProps) {
       viewport={{ once: true, margin: '-40px' }}
       whileHover={{ y: -8 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white rounded-3xl overflow-hidden border-2 border-brand-sand brand-card-shadow flex flex-col h-full group hover:border-brand-burgundy/40 hover:shadow-2xl transition-all duration-300"
+      className="bg-white rounded-3xl overflow-hidden border-2 border-brand-sand brand-card-shadow flex flex-col h-full group hover:border-brand-burgundy/40 hover:shadow-2xl transition-all duration-300 relative"
     >
       {/* Clickable Card Image with Motion Zoom */}
       <Link href={`/programs/${program.slug}`} className="relative h-64 w-full overflow-hidden bg-brand-burgundy-dark block cursor-pointer">
@@ -34,21 +37,13 @@ export default function ProgramCard({ program }: ProgramCardProps) {
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
 
-        {/* Category Badge Top Right */}
-        {program.badgeText && (
-          <div className="absolute top-4 right-4 z-10 pointer-events-none">
-            <Badge
-              variant={
-                program.category === 'vip' || program.category === 'hajj-luxury'
-                  ? 'gold'
-                  : program.category === 'economic' || program.category === 'hajj-economic'
-                  ? 'olive'
-                  : 'burgundy'
-              }
-              className="text-sm px-3.5 py-1.5 font-black shadow-md"
-            >
-              {program.badgeText}
-            </Badge>
+        {/* Special Discount / Offer Corner Ribbon (Top-Left) */}
+        {ribbonText && (
+          <div className="absolute top-0 left-0 w-36 h-36 overflow-hidden pointer-events-none z-20">
+            <div className="absolute top-7 -left-12 w-48 -rotate-45 bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white text-center py-1.5 shadow-2xl border-y border-white/30 font-black text-xs sm:text-sm tracking-wide flex items-center justify-center gap-1 drop-shadow-md">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+              <span className="truncate max-w-[120px]">{ribbonText}</span>
+            </div>
           </div>
         )}
 
@@ -114,13 +109,24 @@ export default function ProgramCard({ program }: ProgramCardProps) {
                 </div>
               )}
 
-              {/* Price Badge Highlight */}
+              {/* Price Badge Highlight & Strikethrough Discount */}
               {program.price && (
-                <div className="flex items-center gap-2.5 font-extrabold text-brand-burgundy pt-1">
+                <div className="flex items-center gap-2.5 font-extrabold text-brand-burgundy pt-1 flex-wrap">
                   <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-400 text-brand-burgundy-dark font-black text-base shadow-md border border-amber-300/80 scale-105 transition-transform">
                     <Tag className="w-4 h-4 text-brand-burgundy-dark" />
-                    <span>{program.price} ج.م</span>
+                    <span>{program.price} {program.price.includes('ج.م') ? '' : 'ج.م'}</span>
                   </span>
+
+                  {program.originalPrice?.trim() && (
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-gray-400 line-through decoration-red-500 decoration-2">
+                        {program.originalPrice} {program.originalPrice.includes('ج.م') ? '' : 'ج.م'}
+                      </span>
+                      <span className="text-[10px] text-red-600 font-extrabold">
+                        بدلاً من
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

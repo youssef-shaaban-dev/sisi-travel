@@ -43,16 +43,52 @@ export const api = {
   
   createProgram: async (program: Partial<TravelProgram>) => {
     const supabase = createClient()
-    const { data, error } = await supabase.from('programs').insert([program]).select().single()
-    if (error) throw error
-    return data
+    try {
+      const { data, error } = await supabase.from('programs').insert([program]).select().single()
+      if (error) throw error
+      return data
+    } catch (err: unknown) {
+      const errorObj = err as { code?: string; message?: string }
+      if (errorObj?.code === 'PGRST204' || errorObj?.message?.includes('column')) {
+        // Fallback: if columns ribbonText or originalPrice do not exist yet in database,
+        // map ribbonText to badgeText so the ribbon works immediately without crashing
+        const fallback = { ...program } as Record<string, unknown>
+        if (!fallback.badgeText && fallback.ribbonText) {
+          fallback.badgeText = fallback.ribbonText
+        }
+        delete fallback.ribbonText
+        delete fallback.originalPrice
+        const { data, error } = await supabase.from('programs').insert([fallback]).select().single()
+        if (error) throw error
+        return data
+      }
+      throw err
+    }
   },
   
   updateProgram: async (id: string, program: Partial<TravelProgram>) => {
     const supabase = createClient()
-    const { data, error } = await supabase.from('programs').update(program).eq('id', id).select().single()
-    if (error) throw error
-    return data
+    try {
+      const { data, error } = await supabase.from('programs').update(program).eq('id', id).select().single()
+      if (error) throw error
+      return data
+    } catch (err: unknown) {
+      const errorObj = err as { code?: string; message?: string }
+      if (errorObj?.code === 'PGRST204' || errorObj?.message?.includes('column')) {
+        // Fallback: if columns ribbonText or originalPrice do not exist yet in database,
+        // map ribbonText to badgeText so the ribbon works immediately without crashing
+        const fallback = { ...program } as Record<string, unknown>
+        if (!fallback.badgeText && fallback.ribbonText) {
+          fallback.badgeText = fallback.ribbonText
+        }
+        delete fallback.ribbonText
+        delete fallback.originalPrice
+        const { data, error } = await supabase.from('programs').update(fallback).eq('id', id).select().single()
+        if (error) throw error
+        return data
+      }
+      throw err
+    }
   },
   
   deleteProgram: async (id: string) => {

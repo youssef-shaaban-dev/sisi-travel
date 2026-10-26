@@ -27,8 +27,10 @@ export interface TravelProgram {
   meccaNights: number;
   medinaNights: number;
   price: string;
+  originalPrice?: string;
   priceNote: string;
   badgeText: string;
+  ribbonText?: string;
   isFeatured: boolean;
   airline: string;
   flightType: string;
