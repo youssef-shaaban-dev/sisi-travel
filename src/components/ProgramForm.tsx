@@ -337,7 +337,7 @@ export function ProgramForm({ initialData, isEdit }: ProgramFormProps) {
               <input type="text" {...register('airline')} placeholder="مثال: مصر للطيران / الخطوط السعودية" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">نوع الطيران</label>
+              <label className="block text-sm font-medium text-gray-700">خطوط الطيران</label>
               <input type="text" {...register('flightType')} placeholder="مثال: طيران مباشر (القاهرة - جدة)" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
             </div>
           </div>

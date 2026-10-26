@@ -252,7 +252,7 @@ export default function ProgramDetailsClient({
                         <div className="p-3.5 rounded-xl bg-brand-sand-light border border-brand-sand flex items-center gap-3">
                           <Plane className="w-5 h-5 text-brand-olive flex-shrink-0" />
                           <div>
-                            <div className="text-gray-500 text-[11px]">شركة ونوع الطيران</div>
+                            <div className="text-gray-500 text-[11px]">شركة و خطوط الطيران</div>
                             <div className="font-bold text-brand-burgundy-dark">
                               {program.airline?.trim() || ''}
                               {program.airline?.trim() && program.flightType?.trim() ? ' • ' : ''}
@@ -426,9 +426,9 @@ export default function ProgramDetailsClient({
                     <div key={i} className="flex justify-between py-2 border-b border-gray-100">
                       <span className="text-gray-500">
                         {h.city === 'المدينة المنورة'
-                          ? 'فندق المدينة:'
+                          ? 'فندق المدينة المنورة: '
                           : h.city === 'مكة المكرمة'
-                          ? 'فندق مكة:'
+                          ? 'فندق مكة المكرمة:  '
                           : 'اسم الفندق:'}
                       </span>
                       <span className="font-bold text-brand-burgundy-dark truncate max-w-[160px]">
@@ -446,7 +446,7 @@ export default function ProgramDetailsClient({
 
                   {program.flightType?.trim() && (
                     <div className="flex justify-between py-2 border-b border-gray-100">
-                      <span className="text-gray-500">نوع الطيران:</span>
+                      <span className="text-gray-500">خطوط الطيران:</span>
                       <span className="font-bold text-brand-burgundy-dark">{program.flightType}</span>
                     </div>
                   )}

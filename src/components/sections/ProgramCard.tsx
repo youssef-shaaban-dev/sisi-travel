@@ -83,14 +83,24 @@ export default function ProgramCard({ program }: ProgramCardProps) {
           {(Boolean(program.hotels?.some(h => h.name?.trim())) || Boolean(program.airline?.trim() || program.flightType?.trim()) || Boolean(program.price?.trim())) && (
             <div className="pt-3 space-y-2.5 border-t border-gray-100 text-sm text-gray-800">
               {/* Hotels */}
-              {program.hotels && program.hotels.some(h => h.name?.trim()) && (
-                <div className="flex items-start gap-2.5 font-bold">
-                  <Building2 className="w-4 h-4 text-brand-burgundy shrink-0 mt-0.5" />
-                  <span className="leading-snug break-words">
-                    {`${program.hotels[0].city === 'المدينة المنورة' ? 'المدينة' : 'مكة'}: ${program.hotels[0].name.split('(')[0]}`}
-                  </span>
-                </div>
-              )}
+              {program.hotels &&
+                program.hotels
+                  .filter((h) => h && h.name?.trim())
+                  .map((hotel, idx) => {
+                    const isMedina = hotel.city === 'المدينة المنورة' || hotel.city?.includes('المدينة');
+                    const isMecca = hotel.city === 'مكة المكرمة' || hotel.city?.includes('مكة');
+                    const cityLabel = isMedina ? 'فندق المدينة المنورة' : isMecca ? 'فندق مكة المكرمة' : (hotel.city || 'الفندق');
+                    const hotelName = hotel.name.split('(')[0].trim();
+
+                    return (
+                      <div key={idx} className="flex items-start gap-2.5 font-bold">
+                        <Building2 className="w-4 h-4 text-brand-burgundy shrink-0 mt-0.5" />
+                        <span className="leading-snug break-words">
+                          {`${cityLabel}: ${hotelName}`}
+                        </span>
+                      </div>
+                    );
+                  })}
 
               {/* Flight */}
               {(program.airline?.trim() || program.flightType?.trim()) && (
